@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Setthings\**" />
+    <EmbeddedResource Remove="Setthings\**" />
+    <None Remove="Setthings\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="Falcon.Service.BonusEngine.Client" Version="2.1.0" />
+    <PackageReference Include="Falcon.Service.Campaign.Client" Version="7.4.0" />
+    <PackageReference Include="Falcon.Service.CurrencyConvertor.Client" Version="3.1.0" />
+    <PackageReference Include="Falcon.Service.CustomerManagement.Client" Version="8.5.0" />
+    <PackageReference Include="Falcon.Service.CustomerProfile.Client" Version="7.7.0" />
+    <PackageReference Include="Falcon.Service.Dictionaries.Client" Version="1.3.0" />
+    <PackageReference Include="Falcon.Service.EligibilityEngine.Client" Version="3.0.0" />
+    <PackageReference Include="Falcon.Service.EmaarPropertyIntegration.Client" Version="4.5.0" />
+    <PackageReference Include="Falcon.Service.OperationsHistory.Client" Version="5.0.0" />
+    <PackageReference Include="Falcon.Service.PrivateBlockchainFacade.Client" Version="2.9.0" />
+    <PackageReference Include="Falcon.Service.PartnerManagement.Client" Version="2.3.0" />
+    <PackageReference Include="Falcon.Service.PartnersIntegration.Client" Version="5.0.0" />
+    <PackageReference Include="Falcon.Service.PushNotifications.Client" Version="1.3.2" />
+    <PackageReference Include="Falcon.Service.CrossChainTransfers.Client" Version="1.1.0" />
+    <PackageReference Include="Falcon.Service.CrossChainWalletLinker.Client" Version="1.2.0" />
+    <PackageReference Include="Falcon.Service.Sessions.Client" Version="4.0.0" />
+    <PackageReference Include="Falcon.Service.Staking.Client" Version="1.3.0" />
+    <PackageReference Include="Falcon.Service.WalletManagement.Client" Version="3.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Falcon.Service.Referral.Client" Version="6.1.0" />
+    <PackageReference Include="Polly" Version="6.1.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MAVN.Service.CustomerAPI.Core\MAVN.Service.CustomerAPI.Core.csproj" />
+  </ItemGroup>
+</Project>
