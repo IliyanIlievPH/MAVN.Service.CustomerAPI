@@ -1,0 +1,145 @@
+CustomerApiService:
+    Db:
+        LogsConnString:
+            settings-key: CustomerApiService-Db-LogsConnString
+            types:
+            - AzureTableStorage
+    CacheSettings:
+        DataCacheInstance:
+            settings-key: CustomerApiService-CacheSettings-DataCacheInstance
+        RedisConfiguration:
+            settings-key: CustomerApiService-CacheSettings-RedisConfiguration
+    PasswordValidationSettings:
+        MinLength:
+            settings-key: PasswordValidation-MinLength
+        MaxLength:
+            settings-key: PasswordValidation-MaxLength
+        MinUpperCase:
+            settings-key: PasswordValidation-MinUpperCase
+        MinLowerCase:
+            settings-key: PasswordValidation-MinLowerCase
+        MinSpecialSymbols:
+            settings-key: PasswordValidation-MinSpecialSymbols
+        MinNumbers:
+            settings-key: PasswordValidation-MinNumbers
+        AllowedSpecialSymbols:
+            settings-key: PasswordValidation-AllowedSpecialSymbols
+        AllowWhiteSpaces:
+            settings-key: PasswordValidation-AllowWhiteSpaces
+    FalconConstants:
+        EmaarToken:
+            settings-key: FalconConstant-EmaarToken
+    GoogleAuthSettings:
+        GoogleApiUrl:
+            settings-key: GoogleApiUrl
+    RequestLimitsByCustomer:
+        settings-key: CustomerApiService-RequestLimitsByCustomer
+        types:
+          - JsonArray
+    NumberDecimalPlaces:
+        settings-key: CustomerApiService-NumberDecimalPlaces
+    BaseCurrencyCode:
+        settings-key: FalconConstant-BaseCurrencyCode
+    FailedLoginAttemptsThrottling:
+        WarningThreshold:
+            settings-key: CustomerApiService-FailedLoginAttemptsThrottling-WarningThreshold
+        LockThreshold:
+            settings-key: CustomerApiService-FailedLoginAttemptsThrottling-LockThreshold
+        ThresholdPeriod:
+            settings-key: CustomerApiService-FailedLoginAttemptsThrottling-ThresholdPeriod
+        AccountLockPeriod:
+            settings-key: CustomerApiService-FailedLoginAttemptsThrottling-AccountLockPeriod
+    TransitAccountAddress:
+        settings-key: CustomerApiService-TransitAccountAddress
+SessionsServiceClient:
+    ServiceUrl:
+        settings-key: SessionsServiceUrl
+ReferralServiceClient:
+    ServiceUrl:
+        settings-key: ReferralServiceUrl
+CustomerManagementServiceClient:
+    ServiceUrl:
+        settings-key: CustomerManagementServiceUrl
+PrivateBlockchainFacadeServiceClient:
+    ServiceUrl:
+        settings-key: PrivateBlockchainFacadeServiceUrl
+CustomerProfileServiceClient:
+    ServiceUrl:
+        settings-key: CustomerProfileServiceUrl
+WalletManagementServiceClient:
+    ServiceUrl:
+        settings-key: WalletManagementServiceUrl
+OperationsHistoryServiceClient:
+    ServiceUrl:
+        settings-key: OperationsHistoryServiceUrl
+AgentManagementServiceClient:
+  ServiceUrl:
+    settings-key: AgentManagementServiceUrl
+DictionariesServiceClient:
+  ServiceUrl:
+    settings-key: DictionariesServiceUrl
+MaintenanceModeServiceClient:
+  ServiceUrl:
+    settings-key: MaintenanceModeServiceUrl
+CampaignServiceClient:
+  ServiceUrl:
+    settings-key: CampaignServiceUrl
+PartnersPaymentsServiceClient:
+  ServiceUrl:
+    settings-key: PartnersPaymentsServiceUrl
+PartnerManagementServiceClient:
+  ServiceUrl:
+    settings-key: PartnerManagementServiceUrl
+EligibilityEngineServiceClient:
+  ServiceUrl:
+    settings-key: EligibilityEngineServiceUrl
+CurrencyConverterServiceClient:
+  ServiceUrl:
+    settings-key: CurrencyConvertorServiceUrl
+SlackNotifications:
+    AzureQueue:
+        ConnectionString:
+            settings-key: SlackNotificationsConnString
+            types:
+                - AzureTableStorage
+        QueueName:
+            settings-key: SlackQueueName
+MonitoringServiceClient:
+    MonitoringServiceUrl:
+        settings-key: MonitoringServiceUrl
+MobileAppSettings:
+  SettingsUrl:
+    settings-key: CustomerApiService-MobileAppSettingsUrl
+PushNotificationsServiceClient:
+    ServiceUrl:
+        settings-key: PushNotificationsServiceUrl
+BonusEngineServiceClient:
+    ServiceUrl:
+        settings-key: BonusEngineServiceUrl
+PartnersIntegrationServiceClient:
+    ServiceUrl:
+        settings-key: PartnersIntegrationServiceUrl
+StakingServiceClient:
+    ServiceUrl:
+        settings-key: StakingServiceUrl
+CrossChainWalletLinkerServiceClient:
+    ServiceUrl:
+        settings-key: CrossChainWalletLinkerServiceUrl
+CrossChainTransfersServiceClient:
+  ServiceUrl:
+    settings-key: CrossChainTransfersServiceUrl
+EthereumBridgeServiceClient:
+  ServiceUrl:
+    settings-key: EthereumBridgeServiceUrl
+EmaarPropertyIntegrationServiceClient:
+    ServiceUrl:
+        settings-key: EmaarPropertyIntegrationServiceUrl
+PaymentTransfersServiceClient:
+    ServiceUrl :
+        settings-key: PaymentTransfersServiceUrl
+CredentialsServiceClient:
+    ServiceUrl :
+        settings-key: CredentialsServiceUrl
+VouchersServiceClient:
+  ServiceUrl :
+    settings-key: VouchersServiceUrl

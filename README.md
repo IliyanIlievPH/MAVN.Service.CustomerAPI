@@ -1,1 +1,2 @@
-# MAVN.Service.CustomerAPI
+# Lykke.Service.CustomerApi
+

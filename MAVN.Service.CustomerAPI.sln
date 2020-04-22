@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MAVN.Service.CustomerAPI", "src\MAVN.Service.CustomerAPI\MAVN.Service.CustomerAPI.csproj", "{FBB79E85-5D98-4294-8704-957CF738E738}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Infrastructure", "1. Infrastructure", "{7E25EA3D-F2C3-466A-8300-49CA73CB4432}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MAVN.Service.CustomerAPI.Core", "src\MAVN.Service.CustomerAPI.Core\MAVN.Service.CustomerAPI.Core.csproj", "{B6ADDBDB-541F-49C5-B96E-3C0968E9D4B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Tests", "2. Tests", "{F92247DB-2265-43BB-9F04-BD94A4C8EF06}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MAVN.Service.CustomerAPI.Tests", "tests\MAVN.Service.CustomerAPI.Tests\MAVN.Service.CustomerAPI.Tests.csproj", "{EEC9EE2E-28A2-434F-8D37-A87F241367D8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MAVN.Service.CustomerAPI.Services", "src\MAVN.Service.CustomerAPI.Services\MAVN.Service.CustomerAPI.Services.csproj", "{F013FA52-4048-463C-A931-20C386ECCFA5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Solution items", "0. Solution items", "{7C487841-111E-4AFC-993A-B055DA51CBA1}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+		settings.yaml = settings.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Repositories", "3. Repositories", "{518D8885-F8A1-438B-91E1-102F7D000F70}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FBB79E85-5D98-4294-8704-957CF738E738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBB79E85-5D98-4294-8704-957CF738E738}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBB79E85-5D98-4294-8704-957CF738E738}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBB79E85-5D98-4294-8704-957CF738E738}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6ADDBDB-541F-49C5-B96E-3C0968E9D4B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6ADDBDB-541F-49C5-B96E-3C0968E9D4B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6ADDBDB-541F-49C5-B96E-3C0968E9D4B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6ADDBDB-541F-49C5-B96E-3C0968E9D4B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEC9EE2E-28A2-434F-8D37-A87F241367D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEC9EE2E-28A2-434F-8D37-A87F241367D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEC9EE2E-28A2-434F-8D37-A87F241367D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEC9EE2E-28A2-434F-8D37-A87F241367D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F013FA52-4048-463C-A931-20C386ECCFA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F013FA52-4048-463C-A931-20C386ECCFA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F013FA52-4048-463C-A931-20C386ECCFA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F013FA52-4048-463C-A931-20C386ECCFA5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B6ADDBDB-541F-49C5-B96E-3C0968E9D4B4} = {7E25EA3D-F2C3-466A-8300-49CA73CB4432}
+		{EEC9EE2E-28A2-434F-8D37-A87F241367D8} = {F92247DB-2265-43BB-9F04-BD94A4C8EF06}
+		{F013FA52-4048-463C-A931-20C386ECCFA5} = {7E25EA3D-F2C3-466A-8300-49CA73CB4432}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1385F3E1-C385-4E6D-8CBB-C867C7802C6F}
+	EndGlobalSection
+EndGlobal
