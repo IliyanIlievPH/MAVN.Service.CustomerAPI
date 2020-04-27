@@ -122,8 +122,9 @@ namespace MAVN.Service.CustomerAPI.Modules
                 .WithParameter("usdAssetName", _settings.Constants.UsdAssetName)
                 .WithParameter("baseCurrencyCode", _settings.BaseCurrencyCode)
                 .WithParameter("transitAccountAddress", _settings.TransitAccountAddress)
+                .WithParameter("isPublicBlockchainFeatureDisabled", _settings.IsPublicBlockchainFeatureDisabled)
                 .As<ISettingsService>();
-            
+
             builder.RegisterType<ThrottlingSettingsService>()
                 .WithParameter(TypedParameter.From(_settings.RequestLimitsByCustomer.Select(x =>
                     new RouteThrottlingConfigurationItem

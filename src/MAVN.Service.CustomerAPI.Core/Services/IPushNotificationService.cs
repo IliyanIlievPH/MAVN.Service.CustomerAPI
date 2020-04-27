@@ -9,6 +9,6 @@ namespace MAVN.Service.CustomerAPI.Core.Services
         Task<PushNotificationRegistrationResult> RegisterForPushNotificationsAsync(string customerId,
             PushNotificationRegistrationCreateModel model);
 
-        Task CancelPushRegistrationNotificationsAsync(string infobipPushRegistrationId);
+        Task CancelPushRegistrationNotificationsAsync(string pushRegistrationToken);
     }
 }

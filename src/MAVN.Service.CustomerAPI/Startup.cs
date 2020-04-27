@@ -68,6 +68,10 @@ namespace MAVN.Service.CustomerAPI
                 options.SenderName = $"{AppEnvironment.Name} {AppEnvironment.Version}";
             });
 
+#if !DEBUG
+            services.AddApplicationInsightsTelemetry();
+#endif
+
             services.AddAutoMapper(typeof(AutoMapperProfile));
 
             services.AddHttpClient();

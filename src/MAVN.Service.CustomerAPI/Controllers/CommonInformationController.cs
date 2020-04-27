@@ -2,8 +2,8 @@
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
-using MAVN.Service.CustomerAPI.Core.Domain;
 using Lykke.Service.Dictionaries.Client;
+using MAVN.Service.CustomerAPI.Core.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MAVN.Service.CustomerAPI.Controllers
@@ -23,18 +23,18 @@ namespace MAVN.Service.CustomerAPI.Controllers
         }
 
         /// <summary>
-        /// Returns emaar common links information 
+        /// Returns common links information 
         /// </summary>
         /// <returns>
-        /// 200 - Emaar Common Information Response
+        /// 200 - Common Information Response
         /// </returns>
         [HttpGet]
-        [ProducesResponseType(typeof(EmaarCommonInformationResponse), (int)HttpStatusCode.OK)]
-        public async Task<EmaarCommonInformationResponse> GetCommonInformationAsync()
+        [ProducesResponseType(typeof(CommonInformationResponse), (int)HttpStatusCode.OK)]
+        public async Task<CommonInformationResponse> GetCommonInformationAsync()
         {
             var result = await _dictionariesClient.CommonInformation.GetCommonInformationAsync();
 
-            return _mapper.Map<EmaarCommonInformationResponse>(result);
+            return _mapper.Map<CommonInformationResponse>(result);
         }
     }
 }

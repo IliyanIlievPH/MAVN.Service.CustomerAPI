@@ -3,8 +3,8 @@ using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Falcon.Common.Middleware.Version;
-using MAVN.Service.CustomerAPI.Models.Lists;
 using Lykke.Service.Dictionaries.Client;
+using MAVN.Service.CustomerAPI.Models.Lists;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MAVN.Service.CustomerAPI.Controllers

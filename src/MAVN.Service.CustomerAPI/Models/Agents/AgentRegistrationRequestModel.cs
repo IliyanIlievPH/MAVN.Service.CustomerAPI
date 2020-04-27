@@ -25,7 +25,7 @@ namespace MAVN.Service.CustomerAPI.Models.Agents
         public int CountryOfResidenceId { get; set; }
 
         /// <summary>
-        /// The note to Emaar.
+        /// The note.
         /// </summary>
         public string Note { get; set; }
 

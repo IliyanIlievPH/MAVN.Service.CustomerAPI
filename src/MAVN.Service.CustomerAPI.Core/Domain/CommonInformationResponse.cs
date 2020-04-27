@@ -1,6 +1,6 @@
 ﻿namespace MAVN.Service.CustomerAPI.Core.Domain
 {
-    public class EmaarCommonInformationResponse
+    public class CommonInformationResponse
     {
         /// <summary>
         /// Represents information for support's phone number

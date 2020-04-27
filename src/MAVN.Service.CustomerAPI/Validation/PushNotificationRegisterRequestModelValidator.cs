@@ -1,43 +1,20 @@
 ﻿using FluentValidation;
+using JetBrains.Annotations;
 using MAVN.Service.CustomerAPI.Models.PushNotifications;
 
 namespace MAVN.Service.CustomerAPI.Validation
 {
+    [UsedImplicitly]
     public class PushNotificationRegisterRequestModelValidator : AbstractValidator<PushNotificationRegisterRequestModel>
     {
         public PushNotificationRegisterRequestModelValidator()
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
 
-            RuleFor(x => x.InfobipPushRegistrationId)
-                .NotNull()
+            RuleFor(x => x.PushRegistrationToken)
                 .NotEmpty()
-                .WithMessage("Infobip Token cannot be empty")
+                .WithMessage("Push Registration Token cannot be empty")
                 .Length(1, 255);
-
-            When(x => string.IsNullOrEmpty(x.FirebaseToken), () =>
-            {
-                RuleFor(x => x.AppleToken)
-                    .NotNull()
-                    .NotEmpty()
-                    .WithMessage("Apple or Firebase Token are mandatory")
-                    .Length(1, 255);
-            });
-
-            When(x => string.IsNullOrEmpty(x.AppleToken), () =>
-            {
-                RuleFor(x => x.FirebaseToken)
-                    .NotNull()
-                    .NotEmpty()
-                    .WithMessage("Apple or Firebase Token are mandatory")
-                    .Length(1, 255);
-            });
-
-            RuleFor(x => x.AppleToken)
-                .Length(0, 255);
-
-            RuleFor(x => x.FirebaseToken)
-                .Length(0, 255);
         }
     }
 }

@@ -10,7 +10,6 @@ using Lykke.Service.OperationsHistory.Client;
 using Lykke.Service.OperationsHistory.Client.Models.Requests;
 using Lykke.Service.OperationsHistory.Client.Models.Responses;
 using MoreLinq;
-using Nito.AsyncEx;
 
 namespace MAVN.Service.CustomerAPI.Services
 {
@@ -124,9 +123,8 @@ namespace MAVN.Service.CustomerAPI.Services
                     : HistoryOperationType.SendTransfer,
                 Timestamp = src.Timestamp,
                 Amount = src.Amount,
-                OtherSideCustomerEmail = src.ReceiverCustomerId == customerId
-                                         ? src.SenderCustomerEmail
-                                         : src.ReceiverCustomerEmail,
+                OtherSideCustomerEmail = src.OtherSideEmail,
+                OtherSideCustomerName = src.OtherSideName,
             };
         }
 

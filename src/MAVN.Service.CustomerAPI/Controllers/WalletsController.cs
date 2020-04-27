@@ -13,8 +13,6 @@ using MAVN.Service.CustomerAPI.Core;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
-using MAVN.Service.CustomerAPI.Extensions;
-using MAVN.Service.CustomerAPI.Models;
 using MAVN.Service.CustomerAPI.Models.Extensions;
 using MAVN.Service.CustomerAPI.Models.Operations;
 using MAVN.Service.CustomerAPI.Models.Wallets;
@@ -28,6 +26,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
 {
     [Route("api/wallets")]
     [ApiController]
+    [LykkeAuthorize]
     public class WalletsController : Controller
     {
         private readonly IWalletOperationsService _walletOperationsService;
@@ -74,38 +73,45 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// - **CustomerWalletMissing**
         /// </remarks>
         [HttpGet("customer")]
-        [LykkeAuthorize]
         [SwaggerOperation("GetByCustomerAsync")]
         [ProducesResponseType(typeof(IList<WalletResponseModel>), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> GetByCustomerAsync()
         {
             var customerId = _requestContext.UserId;
-            
+
             var walletResult = await _walletOperationsService.GetCustomerWalletAsync(customerId);
-            
+
             switch (walletResult.Error)
             {
                 case WalletsErrorCodes.None:
-            
-                    var linkedWalletTask = _publicWalletLinkingService.GetLinkedWalletAddressAsync(customerId);
-                    
+
                     var tokensStatisticsTask = 
                         _operationsHistoryClient.StatisticsApi.GetTokensStatisticsForCustomerAsync(
                             new TokensStatisticsForCustomerRequest {CustomerId = customerId});
 
-                    await Task.WhenAll(linkedWalletTask, tokensStatisticsTask);
+                    var tasks = new List<Task> { tokensStatisticsTask };
+
+                    Task<PublicAddressResultModel> linkedWalletTask = null;
+                    if (!_settingsService.GetIsPublicBlockchainFeatureDisabled())
+                    {
+                        linkedWalletTask = _publicWalletLinkingService.GetLinkedWalletAddressAsync(customerId);
+                        tasks.Add(linkedWalletTask);
+                    }
+
+                    await Task.WhenAll(tasks);
 
                     Money18? linkedWalletBalance = null;
 
-                    if (linkedWalletTask.Result.Status == PublicAddressStatus.Linked)
+                    if (!_settingsService.GetIsPublicBlockchainFeatureDisabled()
+                        && linkedWalletTask.Result.Status == PublicAddressStatus.Linked)
                     {
                         var balance =
                             await _ethereumBridgeClient.Wallets.GetBalanceAsync(linkedWalletTask.Result.PublicAddress);
-                        
+
                         linkedWalletBalance = balance.Amount;
                     }
-                    
+
                     var response = new WalletResponseModel
                     {
                         Balance = walletResult.Balance.ToDisplayString(),
@@ -115,19 +121,19 @@ namespace MAVN.Service.CustomerAPI.Controllers
                         TotalSpent = tokensStatisticsTask.Result.BurnedAmount.ToDisplayString(),
                         IsWalletBlocked = walletResult.IsWalletBlocked,
                         PrivateWalletAddress = walletResult.Address,
-                        PublicWalletAddress = linkedWalletTask.Result.PublicAddress,
-                        PublicAddressLinkingStatus = linkedWalletTask.Result.Status.ToLinkingStatus(),
+                        PublicWalletAddress = linkedWalletTask?.Result.PublicAddress,
+                        PublicAddressLinkingStatus = linkedWalletTask?.Result.Status.ToLinkingStatus() ?? PublicAddressLinkingStatus.NotLinked,
                         StakedBalance = walletResult.StakedBalance.ToDisplayString(),
                         TransitAccountAddress = _settingsService.GetTransitAccountAddress(),
                     };
                     return Ok(new List<WalletResponseModel> {response});
-                
+
                 case WalletsErrorCodes.InvalidCustomerId:
                     throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.InvalidCustomerId);
-                
+
                 case WalletsErrorCodes.CustomerWalletMissing:
                     throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.CustomerWalletMissing);
-                
+
                 default:
                     throw new InvalidOperationException(
                         $"Unexpected error during Transfer for {_requestContext.UserId} - {walletResult.Error}");
@@ -149,7 +155,6 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// - **TransferTargetCustomerWalletBlocked**
         /// </remarks>
         [HttpPost("transfer")]
-        [LykkeAuthorize]
         [SwaggerOperation("TransferAsync")]
         [ProducesResponseType(typeof(TransferOperationResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -202,14 +207,17 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// - **LinkingRequestDoesNotExist**
         /// - **CustomerDoesNotExist**
         /// - **CustomerWalletBlocked**
+        /// - **PublicBlockchainIsDisabled**
         /// </remarks>
         [HttpPost("linkRequest")]
-        [LykkeAuthorize]
         [ProducesResponseType(typeof(LinkWalletResponse), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public async Task<LinkWalletResponse> SubmitExternalWalletLinkRequestAsync()
         {
+            if (_settingsService.GetIsPublicBlockchainFeatureDisabled())
+                throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.PublicBlockchainIsDisabled);
+
             var result = await _publicWalletLinkingService.CreateLinkRequestAsync(_requestContext.UserId);
 
             switch (result.Error)
@@ -257,12 +265,16 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// - **LinkingRequestDoesNotExist**
         /// - **CustomerDoesNotExist**
         /// - **CustomerWalletBlocked**
+        /// - **PublicBlockchainIsDisabled**
         /// </remarks>
         [HttpPut("linkRequest")]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         public async Task ApproveExternalWalletLinkRequestAsync([FromBody] ApproveExternalWalletLinkRequest request)
         {
+            if (_settingsService.GetIsPublicBlockchainFeatureDisabled())
+                throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.PublicBlockchainIsDisabled);
+
             var result =
                 await _publicWalletLinkingService.ApproveLinkRequestAsync(request.PrivateAddress, request.PublicAddress, request.Signature);
 
@@ -313,16 +325,19 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// - **LinkingRequestDoesNotExist**
         /// - **CustomerDoesNotExist**
         /// - **CustomerWalletBlocked**
+        /// - **PublicBlockchainIsDisabled**
         /// </remarks>
         [HttpDelete("linkRequest")]
-        [LykkeAuthorize]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public async Task DeleteExternalWalletLinkRequestAsync()
         {
+            if (_settingsService.GetIsPublicBlockchainFeatureDisabled())
+                throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.PublicBlockchainIsDisabled);
+
             var result = await _publicWalletLinkingService.UnlinkAsync(_requestContext.UserId);
-            
+
             switch (result.Error)
             {
                 case LinkingError.None:
@@ -368,16 +383,19 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// - **CustomerDoesNotExist**
         /// - **PublicWalletIsNotLinked**
         /// - **InvalidCustomerId**
+        /// - **PublicBlockchainIsDisabled**
         /// </remarks>
         [HttpPost("external-transfer")]
-        [LykkeAuthorize]
         [ProducesResponseType(typeof(void), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public async Task ExternalWalletTransferAsync([FromBody] TransferToExternalWalletRequest request)
         {
+            if (_settingsService.GetIsPublicBlockchainFeatureDisabled())
+                throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.PublicBlockchainIsDisabled);
+
             TransferToExternalResultModel result;
-            
+
             try
             {
                 result = await _publicWalletTransferService.TransferAsync(_requestContext.UserId, request.Amount);
@@ -416,12 +434,18 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// <summary>
         /// Get fee value for the next wallet linking approval
         /// </summary>
+        /// <remarks>
+        /// Error codes:
+        /// - **PublicBlockchainIsDisabled**
+        /// </remarks>
         [HttpGet("linkRequest/nextFee")]
-        [LykkeAuthorize]
         [ProducesResponseType(typeof(NextWalletLinkingFeeResponseModel), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
         public async Task<NextWalletLinkingFeeResponseModel> GetNextWalletLinkingFeeAsync()
         {
+            if (_settingsService.GetIsPublicBlockchainFeatureDisabled())
+                throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.PublicBlockchainIsDisabled);
+
             var fee = await _publicWalletLinkingService.GetNextFeeAsync(_requestContext.UserId);
 
             return new NextWalletLinkingFeeResponseModel {Fee = fee};
@@ -430,12 +454,18 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// <summary>
         /// Get fee value for transfer for the public network
         /// </summary>
+        /// <remarks>
+        /// Error codes:
+        /// - **PublicBlockchainIsDisabled**
+        /// </remarks>
         [HttpGet("transferToPublic/fee")]
-        [LykkeAuthorize]
         [ProducesResponseType(typeof(TransferToPublicFeeResponseModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         public async Task<TransferToPublicFeeResponseModel> GetTransferToPublicFeeAsync()
         {
+            if (_settingsService.GetIsPublicBlockchainFeatureDisabled())
+                throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.PublicBlockchainIsDisabled);
+
             var feeResponse = await _crossChainTransfersClient.FeesApi.GetTransferToPublicFeeAsync();
 
             return new TransferToPublicFeeResponseModel { Fee = feeResponse.Fee };

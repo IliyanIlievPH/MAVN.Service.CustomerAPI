@@ -19,7 +19,6 @@ using Lykke.Service.CustomerProfile.Client;
 using Lykke.Service.Dictionaries.Client;
 using Lykke.Service.EligibilityEngine.Client;
 using Lykke.Service.EthereumBridge.Client;
-using Lykke.Service.EmaarPropertyIntegration.Client;
 using Lykke.Service.MaintenanceMode.Client;
 using Lykke.Service.OperationsHistory.Client;
 using Lykke.Service.PartnerManagement.Client;
@@ -89,7 +88,6 @@ namespace MAVN.Service.CustomerAPI.Tests.DITests
                 CrossChainTransfersServiceClient = new CrossChainTransfersServiceClientSettings{ServiceUrl = MockUrl},
                 EthereumBridgeServiceClient = new EthereumBridgeServiceClientSettings{ServiceUrl = MockUrl},
                 PaymentTransfersServiceClient = new PaymentTransfersServiceClientSettings { ServiceUrl = MockUrl},
-                EmaarPropertyIntegrationServiceClient = new EmaarPropertyIntegrationServiceClientSettings() { ServiceUrl = MockUrl},
                 CredentialsServiceClient = new CredentialsServiceClientSettings() { ServiceUrl = MockUrl},
                 VouchersServiceClient = new VouchersServiceClientSettings { ServiceUrl = MockUrl},
                 SmartVouchersServiceClient = new SmartVouchersServiceClientSettings { ServiceUrl = MockUrl},

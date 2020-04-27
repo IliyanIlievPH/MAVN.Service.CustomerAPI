@@ -27,8 +27,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// <summary>
         /// Returns mobile application settings
         /// </summary>
-        [HttpGet]
-        [Route("settings")]
+        [HttpGet("settings")]
         [SwaggerOperation("GetMobileSettings")]
         [ProducesResponseType(typeof(JObject), (int) HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]

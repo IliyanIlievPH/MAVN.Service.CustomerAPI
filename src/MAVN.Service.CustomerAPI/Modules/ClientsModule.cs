@@ -12,7 +12,6 @@ using Lykke.Service.CustomerProfile.Client;
 using Lykke.Service.Dictionaries.Client;
 using Lykke.Service.EligibilityEngine.Client;
 using Lykke.Service.EthereumBridge.Client;
-using Lykke.Service.EmaarPropertyIntegration.Client;
 using Lykke.Service.MaintenanceMode.Client;
 using Lykke.Service.OperationsHistory.Client;
 using Lykke.Service.PartnerManagement.Client;
@@ -85,8 +84,6 @@ namespace MAVN.Service.CustomerAPI.Modules
             builder.RegisterCrossChainTransfersClient(_apiSettings.CrossChainTransfersServiceClient, null);
 
             builder.RegisterEthereumBridgeClient(_apiSettings.EthereumBridgeServiceClient);
-
-            builder.RegisterEmaarPropertyIntegrationClient(_apiSettings.EmaarPropertyIntegrationServiceClient, null);
 
             builder.RegisterPaymentTransfersClient(_apiSettings.PaymentTransfersServiceClient, null);
 

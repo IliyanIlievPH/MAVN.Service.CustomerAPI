@@ -6,7 +6,6 @@ using Falcon.Numerics;
 using MAVN.Service.CustomerAPI.Core;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Core.Services;
-using MAVN.Service.CustomerAPI.Extensions;
 using MAVN.Service.CustomerAPI.Models.ConversionRate;
 using Lykke.Service.EligibilityEngine.Client;
 using Lykke.Service.EligibilityEngine.Client.Enums;
@@ -40,8 +39,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// </summary>
         /// <param name="request">The request details</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("partner")]
+        [HttpGet("partner")]
         [SwaggerOperation("GetPartnerRate")]
         [ProducesResponseType(typeof(ConversionRateResponseModel), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
@@ -103,8 +101,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// </summary>
         /// <param name="request">The request details</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("earnRule")]
+        [HttpGet("earnRule")]
         [SwaggerOperation("GetEarnRuleRate")]
         [ProducesResponseType(typeof(ConversionRateResponseModel), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
@@ -166,8 +163,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// </summary>
         /// <param name="request">The request details</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("burnRule")]
+        [HttpGet("burnRule")]
         [SwaggerOperation("GetBurnRuleRate")]
         [ProducesResponseType(typeof(ConversionRateResponseModel), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]

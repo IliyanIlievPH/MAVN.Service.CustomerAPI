@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
-using JetBrains.Annotations;
 
-namespace MAVN.Service.CustomerAPI.Models.EarnRules
+namespace MAVN.Service.CustomerAPI.Models.SpendRules
 {
     /// <summary>
-    /// Represents Earn Rules
+    /// Represents Spend Rules
     /// </summary>
-    [PublicAPI]
-    public class EarnRulesListResponseModel
+    public class SpendRulesListResponseModel
     {
-        /// <summary>Earn Rules</summary>
-        public IEnumerable<EarnRuleModel> EarnRules { get; set; }
+        /// <summary>Spend Rules</summary>
+        public IEnumerable<SpendRuleListDetailsModel> SpendRules { get; set; }
 
         /// <summary>The current page number</summary>
         public int CurrentPage { get; set; }

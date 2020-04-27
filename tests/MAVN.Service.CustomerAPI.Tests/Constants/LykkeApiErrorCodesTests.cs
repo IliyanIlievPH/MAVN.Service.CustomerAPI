@@ -107,6 +107,7 @@ namespace MAVN.Service.CustomerAPI.Tests.Constants
             nameof(ApiErrorCodes.Service.InvalidPhoneNumber),
             nameof(ApiErrorCodes.Service.InvalidPriceInSpendRule),
             nameof(ApiErrorCodes.Service.NoVouchersInStock),
+            nameof(ApiErrorCodes.Service.PublicBlockchainIsDisabled),
             nameof(ApiErrorCodes.Service.SmartVoucherCampaignNotFound),
         };
 

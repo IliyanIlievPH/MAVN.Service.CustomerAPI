@@ -30,8 +30,8 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// <returns>
         /// 200 - The result of convert.
         /// </returns>
-        [HttpGet("emr/baseCurrency")]
-        public async Task<CurrencyConverterResponse> ConvertEmrToBaseCurrencyAsync(Money18 amount)
+        [HttpGet("tokens/baseCurrency")]
+        public async Task<CurrencyConverterResponse> ConvertTokensToBaseCurrencyAsync(Money18 amount)
         {
             var result = await _currencyConverterClient.Converter.ConvertTokensToBaseCurrencyAsync(amount);
 

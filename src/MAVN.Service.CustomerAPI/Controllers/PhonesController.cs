@@ -20,6 +20,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
 {
     [Route("api/phones")]
     [ApiController]
+    [LykkeAuthorize]
     [Produces("application/json")]
     public class PhonesController : Controller
     {
@@ -53,7 +54,6 @@ namespace MAVN.Service.CustomerAPI.Controllers
         [HttpPost("generate-verification")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(LykkeApiErrorResponse), (int)HttpStatusCode.BadRequest)]
-        [LykkeAuthorize]
         public async Task GeneratePhoneVerificationAsync()
         {
             var customerId = _requestContext.UserId;
@@ -93,7 +93,6 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// - **CustomerPhoneIsMissing**
         /// </remarks>
         [HttpPost("verify")]
-        [LykkeAuthorize]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(LykkeApiErrorResponse), (int)HttpStatusCode.BadRequest)]
         public async Task VerifyPhoneAsync([FromBody] VerifyPhoneRequest model)
@@ -139,7 +138,6 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// - **InvalidPhoneNumber**
         /// </remarks>
         [HttpPost]
-        [LykkeAuthorize]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType(typeof(LykkeApiErrorResponse), (int)HttpStatusCode.BadRequest)]
         public async Task SetCustomerPhoneAsync([FromBody] SetCustomerPhoneRequest model)

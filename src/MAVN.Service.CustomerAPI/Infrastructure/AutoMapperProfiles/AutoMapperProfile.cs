@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AutoMapper;
 using JetBrains.Annotations;
 using Lykke.Service.Campaign.Client.Models;
@@ -156,6 +157,8 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
                .ConvertUsing(c=> MapCommonReferralStatus(c));
 
             // Campaigns
+            CreateMap<BurnRulePaginatedResponseModel, SpendRulesListResponseModel>(MemberList.Destination)
+                .ForMember(x => x.SpendRules, opt => opt.MapFrom(src => src.BurnRules));
             CreateMap<BurnRuleLocalizedResponse, SpendRuleListDetailsModel>(MemberList.Destination)
                 .ForMember(x => x.BusinessVertical, opt => opt.MapFrom(src => src.Vertical))
                 .ForMember(x => x.StockCount, opt => opt.Ignore())
@@ -227,7 +230,7 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
                 .ForMember(x => x.CountryPhoneCode, opt => opt.Ignore())
                 .ForMember(x => x.CountryOfNationalityName, opt => opt.Ignore());
 
-            CreateMap<CommonInformationPropertiesModel, EmaarCommonInformationResponse>()
+            CreateMap<CommonInformationPropertiesModel, CommonInformationResponse>()
                 .ForSourceMember(src => src.UnsubscribeLink, opt => opt.DoNotValidate());
 
             CreateMap<Lykke.Service.Dictionaries.Client.Models.Salesforce.CountryPhoneCodeModel, CountryPhoneCodeModel>();
@@ -292,17 +295,13 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
         {
             switch (source)
             {
-                case PushTokenInsertionResult.AppleTokenAlreadyExists:
-                    return PushNotificationRegistrationResult.AppleTokenAlreadyExists;
-
-                case PushTokenInsertionResult.FirebaseTokenAlreadyExists:
-                    return PushNotificationRegistrationResult.FirebaseTokenAlreadyExists;
-
-                case PushTokenInsertionResult.InfobipTokenAlreadyExists:
-                    return PushNotificationRegistrationResult.InfobipPushRegistrationAlreadyExists;
+                case PushTokenInsertionResult.PushRegistrationTokenAlreadyExists:
+                    return PushNotificationRegistrationResult.PushRegistrationAlreadyExists;
+                case PushTokenInsertionResult.Ok:
+                    return PushNotificationRegistrationResult.Ok;
+                default:
+                    throw new NotSupportedException();
             }
-
-            return PushNotificationRegistrationResult.Ok;
         }
     }
 }

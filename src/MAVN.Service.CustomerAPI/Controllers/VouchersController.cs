@@ -63,14 +63,11 @@ namespace MAVN.Service.CustomerAPI.Controllers
         {
             var customerId = Guid.Parse(_requestContext.UserId);
 
-            var vouchers = await _vouchersClient.Vouchers.GetByCustomerIdAsync(customerId);
+            var response = await _vouchersClient.Vouchers.GetByCustomerIdAsync(
+                customerId,
+                new PaginationModel { CurrentPage = request.CurrentPage, PageSize = request.PageSize });
 
-            vouchers = vouchers
-                .Skip((request.CurrentPage - 1) * request.PageSize)
-                .Take(request.PageSize)
-                .ToList();
-
-            var spendRuleIdentifiers = vouchers
+            var spendRuleIdentifiers = response.Vouchers
                 .Select(o => o.SpendRuleId)
                 .Distinct()
                 .ToList();
@@ -104,7 +101,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
 
             var model = new List<VoucherListDetailsModel>();
 
-            foreach (var voucher in vouchers)
+            foreach (var voucher in response.Vouchers)
             {
                 var spendRule = localizedSpendRules.First(o => o.Id == voucher.SpendRuleId);
 
@@ -124,7 +121,11 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 });
             }
 
-            return new VoucherListModel {Vouchers = model, TotalCount = vouchers.Count};
+            return new VoucherListModel
+            {
+                Vouchers = model,
+                TotalCount = response.TotalCount,
+            };
         }
 
         /// <summary>
@@ -143,7 +144,6 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// - **NoVouchersInStock**
         /// </remarks>
         [HttpPost("buy")]
-        [LykkeAuthorize]
         [ProducesResponseType(typeof(VoucherPurchaseResponse), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]

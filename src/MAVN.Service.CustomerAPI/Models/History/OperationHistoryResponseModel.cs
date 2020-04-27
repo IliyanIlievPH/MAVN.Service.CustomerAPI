@@ -32,10 +32,11 @@ namespace MAVN.Service.CustomerAPI.Models.History
         /// </summary>
         public string ActionRule { get; set; }
 
-        /// <summary>
-        /// Email of the other customer
-        /// </summary>
+        /// <summary>Email of the other customer</summary>
         public string OtherSideCustomerEmail { get; set; }
+
+        /// <summary>Name of the other customer</summary>
+        public string OtherSideCustomerName { get; set; }
 
         /// <summary>
         /// Name of the partner

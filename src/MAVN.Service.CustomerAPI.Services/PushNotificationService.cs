@@ -19,24 +19,23 @@ namespace MAVN.Service.CustomerAPI.Services
             _mapper = mapper;
         }
 
-        public async Task<PushNotificationRegistrationResult> RegisterForPushNotificationsAsync(string customerId,
+        public async Task<PushNotificationRegistrationResult> RegisterForPushNotificationsAsync(
+            string customerId,
             PushNotificationRegistrationCreateModel model)
         {
             var result = await _pushNotificationsClient.PushRegistrationsApi.RegisterForPushNotificationsAsync(
                 new CreatePushRegistrationRequestModel
                 {
-                    AppleToken = model.AppleToken,
                     CustomerId = customerId,
-                    FirebaseToken = model.FirebaseToken,
-                    InfobipToken = model.InfobipPushRegistrationId
+                    PushRegistrationToken = model.PushRegistrationToken,
                 });
 
             return _mapper.Map<PushNotificationRegistrationResult>(result);
         }
 
-        public  Task CancelPushRegistrationNotificationsAsync(string infobipPushRegistrationId)
+        public Task CancelPushRegistrationNotificationsAsync(string pushRegistrationToken)
         {
-            return _pushNotificationsClient.PushRegistrationsApi.DeleteRegistrationByInfobipTokenAsync(infobipPushRegistrationId);
+            return _pushNotificationsClient.PushRegistrationsApi.DeleteRegistrationByTokenAsync(pushRegistrationToken);
         }
     }
 }

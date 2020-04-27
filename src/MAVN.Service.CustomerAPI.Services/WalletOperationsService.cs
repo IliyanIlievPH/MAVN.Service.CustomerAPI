@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Falcon.Numerics;
@@ -10,8 +9,6 @@ using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
 using Lykke.Service.CustomerProfile.Client;
 using Lykke.Service.CustomerProfile.Client.Models.Requests;
-using Lykke.Service.OperationsHistory.Client;
-using Lykke.Service.OperationsHistory.Client.Models.Requests;
 using Lykke.Service.PrivateBlockchainFacade.Client;
 using Lykke.Service.WalletManagement.Client;
 using Lykke.Service.WalletManagement.Client.Enums;
@@ -24,29 +21,26 @@ namespace MAVN.Service.CustomerAPI.Services
     {
         private readonly IWalletManagementClient _walletManagementClient;
         private readonly ICustomerProfileClient _customerProfileClient;
-        private readonly IOperationsHistoryClient _operationsHistoryClient;
         private readonly IPrivateBlockchainFacadeClient _pbfClient;
         private readonly IMapper _mapper;
-        private readonly string _emaarToken;
+        private readonly string _tokenSymbol;
         private readonly ILog _log;
 
         public WalletOperationsService(
             IWalletManagementClient walletManagementClient,
             ICustomerProfileClient customerProfileClient,
-            IOperationsHistoryClient operationsHistoryClient,
             IPrivateBlockchainFacadeClient pbfClient,
             IMapper mapper,
-            string emaarToken,
+            string tokenSymbol,
             ILogFactory logFactory)
         {
             _walletManagementClient = walletManagementClient;
             _customerProfileClient = customerProfileClient;
-            _operationsHistoryClient = operationsHistoryClient;
             _pbfClient = pbfClient;
             _log = logFactory.CreateLog(this);
 
             _mapper = mapper;
-            _emaarToken = emaarToken;
+            _tokenSymbol = tokenSymbol;
         }
         public async Task<TransferResultModel> TransferBalanceAsync(string senderCustomerId, string receiverAddress, Money18 amount)
         {
@@ -91,7 +85,7 @@ namespace MAVN.Service.CustomerAPI.Services
             return new WalletModel
             {
                 Balance = pbfWalletBalanceResponse.Total,
-                AssetSymbol = _emaarToken,
+                AssetSymbol = _tokenSymbol,
                 IsWalletBlocked = blockState.Status.HasValue && blockState.Status.Value == CustomerWalletActivityStatus.Blocked,
                 StakedBalance = pbfWalletBalanceResponse.Staked,
                 Address = pbfWalletAddressResponse.WalletAddress

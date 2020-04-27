@@ -9,6 +9,7 @@ using Falcon.Common.Middleware.Version;
 using Falcon.Numerics;
 using Lykke.Common.ApiLibrary.Exceptions;
 using Lykke.Service.Campaign.Client;
+using Lykke.Service.Campaign.Client.Models;
 using Lykke.Service.Campaign.Client.Models.Enums;
 using MAVN.Service.CustomerAPI.Core;
 using MAVN.Service.CustomerAPI.Core.Constants;
@@ -65,36 +66,36 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// Used to get available spend rules.
         /// </remarks>
         /// <returns>
-        /// 200 - a collection spend rules.
+        /// 200 - paginated collection of spend rules.
         /// </returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IReadOnlyList<SpendRuleListDetailsModel>), (int) HttpStatusCode.OK)]
-        public async Task<IReadOnlyList<SpendRuleListDetailsModel>> GetSpendRulesAsync()
+        [ProducesResponseType(typeof(SpendRulesListResponseModel), (int)HttpStatusCode.OK)]
+        public async Task<SpendRulesListResponseModel> GetSpendRulesAsync([FromQuery] PaginationRequestModel pagination)
         {
-            var spendRules = await _campaignClient.Mobile.GetSpendRulesAsync(Localization.En);
+            var spendRules = await _campaignClient.Mobile.GetSpendRulesAsync(Localization.En, _mapper.Map<BasePaginationRequestModel>(pagination));
 
-            var result = _mapper.Map<List<SpendRuleListDetailsModel>>(spendRules);
+            var result = _mapper.Map<SpendRulesListResponseModel>(spendRules);
 
-            foreach (var spendRule in result)
+            foreach (var spendRule in result.SpendRules)
             {
-                if (spendRule.BusinessVertical == BusinessVertical.Retail)
-                {
-                    var report = await _vouchersClient.Reports.GetSpendRuleVouchersAsync(spendRule.Id);
+                if (spendRule.BusinessVertical != BusinessVertical.Retail)
+                    continue;
 
-                    spendRule.StockCount = report.InStock;
-                    spendRule.SoldCount = report.Total - report.InStock;
-                    var rate = await _eligibilityEngineClient.ConversionRate.GetAmountBySpendRuleAsync(
-                        new ConvertAmountBySpendRuleRequest()
-                        {
-                            Amount = Money18.Create(Math.Abs(spendRule.Price ?? 0)),
-                            CustomerId = Guid.Parse(_requestContext.UserId),
-                            SpendRuleId = spendRule.Id,
-                            FromCurrency = _settingsService.GetBaseCurrencyCode(),
-                            ToCurrency = _settingsService.GetTokenName(),
-                        }
-                    );
-                    spendRule.PriceInToken = rate.Amount.ToDisplayString();
-                }
+                var report = await _vouchersClient.Reports.GetSpendRuleVouchersAsync(spendRule.Id);
+
+                spendRule.StockCount = report.InStock;
+                spendRule.SoldCount = report.Total - report.InStock;
+                var rate = await _eligibilityEngineClient.ConversionRate.GetAmountBySpendRuleAsync(
+                    new ConvertAmountBySpendRuleRequest()
+                    {
+                        Amount = Money18.Create(Math.Abs(spendRule.Price ?? 0)),
+                        CustomerId = Guid.Parse(_requestContext.UserId),
+                        SpendRuleId = spendRule.Id,
+                        FromCurrency = _settingsService.GetBaseCurrencyCode(),
+                        ToCurrency = _settingsService.GetTokenName(),
+                    }
+                );
+                spendRule.PriceInToken = rate.Amount.ToDisplayString();
             }
 
             return result;

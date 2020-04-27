@@ -9,5 +9,7 @@
         string GetBaseCurrencyCode();
 
         string GetTransitAccountAddress();
+
+        bool GetIsPublicBlockchainFeatureDisabled();
     }
 }

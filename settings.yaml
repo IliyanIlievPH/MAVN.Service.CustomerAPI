@@ -51,6 +51,10 @@ CustomerApiService:
             settings-key: CustomerApiService-FailedLoginAttemptsThrottling-AccountLockPeriod
     TransitAccountAddress:
         settings-key: CustomerApiService-TransitAccountAddress
+    IsPublicBlockchainFeatureDisabled:
+        settings-key: IsPublicBlockchainFeatureDisabled
+        types:
+            - Optional
 SessionsServiceClient:
     ServiceUrl:
         settings-key: SessionsServiceUrl

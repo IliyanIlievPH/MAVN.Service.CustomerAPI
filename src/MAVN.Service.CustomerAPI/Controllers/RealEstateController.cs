@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Common.Log;
 using Falcon.Common.Middleware.Authentication;
 using Lykke.Common.ApiLibrary.Exceptions;
-using Lykke.Common.Log;
+using Lykke.Service.PaymentTransfers.Client;
+using Lykke.Service.PaymentTransfers.Client.Models.Requests;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Models.RealEstate;
 using MAVN.Service.CustomerAPI.Services;
-using Lykke.Service.PaymentTransfers.Client;
-using Lykke.Service.PaymentTransfers.Client.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 using PaymentTransfersErrorCodes = Lykke.Service.PaymentTransfers.Client.Enums.PaymentTransfersErrorCodes;
 

@@ -34,8 +34,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// </summary>
         /// <param name="request">The request details</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("operations")]
+        [HttpGet("operations")]
         [SwaggerOperation("GetCustomerOperationsHistory")]
         [ProducesResponseType(typeof(PaginatedOperationsHistoryResponseModel), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]

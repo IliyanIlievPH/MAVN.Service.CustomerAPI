@@ -83,7 +83,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// Used to get available earn rules.
         /// </remarks>
         /// <returns>
-        /// 200 - a collection earn rules.
+        /// 200 - paginated collection of earn rules.
         /// </returns>
         [HttpGet]
         [ProducesResponseType(typeof(EarnRulesListResponseModel), (int)HttpStatusCode.OK)]
@@ -201,13 +201,14 @@ namespace MAVN.Service.CustomerAPI.Controllers
             //the earn rule's reward type is always fixed when has a stakeable condition 
             var totalReward = earnRule.Reward;
 
-            var stakes = await _stakingClient.ReferralStakesApi.GetReferralStakesAsync(new GetReferralStakesRequest()
-            {
-                CampaignId = earnRuleId.ToString(),
-                CustomerId = _requestContext.UserId
-            });
+            var stakes = await _stakingClient.ReferralStakesApi.GetReferralStakesAsync(
+                new GetReferralStakesRequest
+                {
+                    CampaignId = earnRuleId.ToString(),
+                    CustomerId = _requestContext.UserId
+                });
 
-            var model = new EarnRuleStakingListModel()
+            var model = new EarnRuleStakingListModel
             {
                 EarnRuleStakings = _mapper.Map<IEnumerable<EarnRuleStakingModel>>(stakes),
                 TotalCount = stakes.Count()

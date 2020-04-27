@@ -513,6 +513,12 @@ namespace MAVN.Service.CustomerAPI.Core.Constants
                 new LykkeApiErrorCode(nameof(NoVouchersInStock), "No vouchers in stock");
 
             /// <summary>
+            /// Error when there is no linking request for the customer
+            /// </summary>
+            public static readonly ILykkeApiErrorCode PublicBlockchainIsDisabled =
+                new LykkeApiErrorCode(nameof(PublicBlockchainIsDisabled), "Interaction with the public blockchain is disabled");
+
+            /// <summary>
             /// Error when non existing Spend Rule is request
             /// </summary>
             public static readonly ILykkeApiErrorCode SmartVoucherCampaignNotFound =

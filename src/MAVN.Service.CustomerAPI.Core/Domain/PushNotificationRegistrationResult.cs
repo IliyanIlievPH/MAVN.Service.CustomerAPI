@@ -3,8 +3,6 @@
     public enum PushNotificationRegistrationResult
     {
         Ok,
-        InfobipPushRegistrationAlreadyExists,
-        FirebaseTokenAlreadyExists,
-        AppleTokenAlreadyExists
+        PushRegistrationAlreadyExists,
     }
 }

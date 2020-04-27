@@ -32,7 +32,7 @@ namespace MAVN.Service.CustomerAPI.Models.Referral
         public string Email { get; set; }
 
         /// <summary>
-        /// The note to Emaar.
+        /// The note.
         /// </summary>
         public string Note { get; set; }
 

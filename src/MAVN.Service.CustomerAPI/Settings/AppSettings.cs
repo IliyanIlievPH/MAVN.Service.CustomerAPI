@@ -12,7 +12,6 @@ using Lykke.Service.CustomerProfile.Client;
 using Lykke.Service.Dictionaries.Client;
 using Lykke.Service.EligibilityEngine.Client;
 using Lykke.Service.EthereumBridge.Client;
-using Lykke.Service.EmaarPropertyIntegration.Client;
 using Lykke.Service.MaintenanceMode.Client;
 using Lykke.Service.OperationsHistory.Client;
 using Lykke.Service.PartnerManagement.Client;
@@ -26,6 +25,7 @@ using Lykke.Service.Sessions.Client;
 using Lykke.Service.Staking.Client;
 using Lykke.Service.Vouchers.Client;
 using Lykke.Service.WalletManagement.Client;
+using Lykke.SettingsReader.Attributes;
 using MAVN.Service.SmartVouchers.Client;
 
 namespace MAVN.Service.CustomerAPI.Settings
@@ -58,7 +58,6 @@ namespace MAVN.Service.CustomerAPI.Settings
         public CrossChainWalletLinkerServiceClientSettings CrossChainWalletLinkerServiceClient { get; set; }
         public CrossChainTransfersServiceClientSettings CrossChainTransfersServiceClient { get; set; }
         public EthereumBridgeServiceClientSettings EthereumBridgeServiceClient { get; set; }
-        public EmaarPropertyIntegrationServiceClientSettings EmaarPropertyIntegrationServiceClient { get; set; }
         public PaymentTransfersServiceClientSettings PaymentTransfersServiceClient { get; set; }
         public CredentialsServiceClientSettings CredentialsServiceClient { get; set; }
         public VouchersServiceClientSettings VouchersServiceClient { get; set; }
@@ -93,6 +92,8 @@ namespace MAVN.Service.CustomerAPI.Settings
         public string BaseCurrencyCode { get; set; }
         public FailedSigninAttemptsThrottlingSettings FailedLoginAttemptsThrottling { get; set; }
         public string TransitAccountAddress { get; set; }
+        [Optional]
+        public bool IsPublicBlockchainFeatureDisabled { get; set; }
     }
 
     public class DbSettings

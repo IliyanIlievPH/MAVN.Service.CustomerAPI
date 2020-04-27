@@ -12,6 +12,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
 {
     [Route("api/pushNotifications")]
     [ApiController]
+    [LykkeAuthorize]
     public class PushNotificationsController : ControllerBase
     {
         private readonly IPushNotificationService _pushNotificationService;
@@ -34,12 +35,9 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// 200
         /// Result Codes:
         /// - **Ok**
-        /// - **InfobipPushRegistrationAlreadyExists**
-        /// - **FirebaseTokenAlreadyExists**
-        /// - **AppleTokenAlreadyExists**
+        /// - **PushRegistrationAlreadyExists**
         /// </returns>
         [HttpPost("registrations")]
-        [LykkeAuthorize]
         [SwaggerOperation("Register for push notifications")]
         [ProducesResponseType(typeof(PushNotificationRegisterResponseModel), (int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.Unauthorized)]
@@ -53,13 +51,12 @@ namespace MAVN.Service.CustomerAPI.Controllers
         }
 
         [HttpDelete("registrations")]
-        [LykkeAuthorize]
         [SwaggerOperation("Cancel registration for push notifications")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
-        public async Task CancelPushRegistrationNotificationsAsync([FromQuery] string infobipPushRegistrationId)
+        public async Task CancelPushRegistrationNotificationsAsync([FromQuery] string pushRegistrationToken)
         {
-            await _pushNotificationService.CancelPushRegistrationNotificationsAsync(infobipPushRegistrationId);
+            await _pushNotificationService.CancelPushRegistrationNotificationsAsync(pushRegistrationToken);
         }
     }
 }

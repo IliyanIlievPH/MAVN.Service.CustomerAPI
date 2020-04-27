@@ -8,13 +8,20 @@ namespace MAVN.Service.CustomerAPI.Services
         private readonly string _usdAssetName;
         private readonly string _baseCurrencyCode;
         private readonly string _transitAccountAddress;
+        private readonly bool _isPublicBlockchainFeatureDisabled;
 
-        public SettingsService(string tokenName, string usdAssetName, string baseCurrencyCode, string transitAccountAddress)
+        public SettingsService(
+            string tokenName,
+            string usdAssetName,
+            string baseCurrencyCode,
+            string transitAccountAddress,
+            bool isPublicBlockchainFeatureDisabled)
         {
             _tokenName = tokenName;
             _usdAssetName = usdAssetName;
             _baseCurrencyCode = baseCurrencyCode;
             _transitAccountAddress = transitAccountAddress;
+            _isPublicBlockchainFeatureDisabled = isPublicBlockchainFeatureDisabled;
         }
 
         public string GetTokenName()
@@ -28,5 +35,7 @@ namespace MAVN.Service.CustomerAPI.Services
 
         public string GetTransitAccountAddress()
             => _transitAccountAddress;
+
+        public bool GetIsPublicBlockchainFeatureDisabled() => _isPublicBlockchainFeatureDisabled;
     }
 }
