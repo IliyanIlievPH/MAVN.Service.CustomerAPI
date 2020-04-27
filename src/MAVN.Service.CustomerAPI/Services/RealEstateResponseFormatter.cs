@@ -85,7 +85,7 @@ namespace MAVN.Service.CustomerAPI.Services
                             Amount = instalment.InvoiceAmountRemain,
                             FromCurrency = instalment.InvoiceCurrencyCode,
                             SpendRuleId = Guid.Parse(spendRuleId),
-                            ToCurrency = _settingsService.GetEmaarTokenName()
+                            ToCurrency = _settingsService.GetTokenName()
                         });
 
                     if (eligibilityEngineResponse.ErrorCode == EligibilityEngineErrors.ConversionRateNotFound)

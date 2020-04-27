@@ -26,9 +26,9 @@ CustomerApiService:
             settings-key: PasswordValidation-AllowedSpecialSymbols
         AllowWhiteSpaces:
             settings-key: PasswordValidation-AllowWhiteSpaces
-    FalconConstants:
-        EmaarToken:
-            settings-key: FalconConstant-EmaarToken
+    Constants:
+        TokenSymbol:
+            settings-key: Constant-TokenSymbol
     GoogleAuthSettings:
         GoogleApiUrl:
             settings-key: GoogleApiUrl
@@ -143,3 +143,6 @@ CredentialsServiceClient:
 VouchersServiceClient:
   ServiceUrl :
     settings-key: VouchersServiceUrl
+SmartVouchersServiceClient:
+  ServiceUrl :
+    settings-key: SmartVouchersServiceUrl

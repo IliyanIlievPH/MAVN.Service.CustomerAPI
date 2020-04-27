@@ -35,9 +35,12 @@ using MAVN.Service.CustomerAPI.Models.Operations;
 using MAVN.Service.CustomerAPI.Models.PartnersMessages;
 using MAVN.Service.CustomerAPI.Models.PushNotifications;
 using MAVN.Service.CustomerAPI.Models.Referral;
+using MAVN.Service.CustomerAPI.Models.SmartVouchers;
 using MAVN.Service.CustomerAPI.Models.SpendRules;
 using MAVN.Service.CustomerAPI.Models.Wallets;
+using MAVN.Service.SmartVouchers.Client.Models.Responses;
 using ConditionModel = MAVN.Service.CustomerAPI.Models.EarnRules.ConditionModel;
+using FileResponseModel = MAVN.Service.CustomerAPI.Models.SmartVouchers.FileResponseModel;
 using RatioAttributeModel = MAVN.Service.CustomerAPI.Models.EarnRules.RatioAttributeModel;
 using RatioCompletion = MAVN.Service.CustomerAPI.Models.EarnRules.RatioCompletion;
 using ReferralLeadModel = Lykke.Service.Referral.Client.Models.Responses.ReferralLeadModel;
@@ -248,7 +251,18 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
             CreateMap<NotificationMessageResponseModel, NotificationMessage>(
                     MemberList.Destination)
                 .ForMember(dest => dest.Payload, opt => opt.MapFrom(src => src.CustomPayload));
+
+            CreateMap<PaginatedVoucherCampaignsListResponseModel, SmartVoucherCampaignsListResponse>()
+                .ForMember(x => x.SmartVoucherCampaigns, opt => opt.MapFrom(x => x.Campaigns));
+
+            CreateMap<VoucherCampaignResponseModel, SmartVoucherCampaignModel>()
+                .ForMember(x => x.Vertical, opt => opt.Ignore());
+            CreateMap<VoucherCampaignDetailsResponseModel, SmartVoucherCampaignDetailsModel>()
+                .ForMember(x => x.Vertical, opt => opt.Ignore());
+            CreateMap<VoucherCampaignContentResponseModel, SmartVoucherCampaignContentResponseModel>();
+            CreateMap<SmartVouchers.Client.Models.Responses.FileResponseModel, FileResponseModel>();
         }
+
 
         private Core.Domain.CommonReferral.CommonReferralStatus MapCommonReferralStatus(CommonReferralStatus valueStatus)
         {

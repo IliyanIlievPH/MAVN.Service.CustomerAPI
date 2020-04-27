@@ -2,7 +2,7 @@
 {
     public interface ISettingsService
     {
-        string GetEmaarTokenName();
+        string GetTokenName();
 
         string GetUsdAssetName();
 

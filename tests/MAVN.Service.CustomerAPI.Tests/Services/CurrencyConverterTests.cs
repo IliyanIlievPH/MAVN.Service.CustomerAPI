@@ -137,7 +137,7 @@ namespace MAVN.Service.CustomerAPI.Tests.Services
             const decimal amount = 100;
 
             _settingsServiceMock
-                .Setup(x => x.GetEmaarTokenName())
+                .Setup(x => x.GetTokenName())
                 .Returns(token);
 
             _eligibilityEngineClientMock
@@ -168,7 +168,7 @@ namespace MAVN.Service.CustomerAPI.Tests.Services
                 .Verifiable();
 
             _settingsServiceMock
-                .Setup(x => x.GetEmaarTokenName())
+                .Setup(x => x.GetTokenName())
                 .Returns("any token");
 
             var sut = CreateSutInstance();

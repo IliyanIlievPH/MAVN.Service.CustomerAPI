@@ -542,13 +542,13 @@ namespace MAVN.Service.CustomerAPI.Services
                     ConditionId = conditionId,
                     Amount = rewardsAmount,
                     FromCurrency = _settingsService.GetBaseCurrencyCode(),
-                    ToCurrency = _settingsService.GetEmaarTokenName()
+                    ToCurrency = _settingsService.GetTokenName()
                 });
 
             if (response.ErrorCode != EligibilityEngineErrors.None)
             {
                 _log.Error(message: "An error occured while converting currency amount",
-                    context: $"from: {_settingsService.GetBaseCurrencyCode()}; to: {_settingsService.GetEmaarTokenName()}; error: {response.ErrorCode}");
+                    context: $"from: {_settingsService.GetBaseCurrencyCode()}; to: {_settingsService.GetTokenName()}; error: {response.ErrorCode}");
 
                 return 0;
             }

@@ -59,7 +59,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 new ConvertOptimalByPartnerRequest
                 {
                     CustomerId = customerIdAsGuid,
-                    FromCurrency = _settingsService.GetEmaarTokenName(),
+                    FromCurrency = _settingsService.GetTokenName(),
                     ToCurrency = _settingsService.GetBaseCurrencyCode(),
                     Amount = Money18.Parse(request.Amount),
                     PartnerId = partnerIdIdAsGuid
@@ -122,7 +122,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 new ConvertAmountByEarnRuleRequest
                 {
                     CustomerId = customerIdAsGuid,
-                    FromCurrency = _settingsService.GetEmaarTokenName(),
+                    FromCurrency = _settingsService.GetTokenName(),
                     ToCurrency = _settingsService.GetBaseCurrencyCode(),
                     Amount = Money18.Parse(request.Amount),
                     EarnRuleId = earnRuleIdIdAsGuid
@@ -185,7 +185,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 new ConvertAmountBySpendRuleRequest
                 {
                     CustomerId = customerIdAsGuid,
-                    FromCurrency = _settingsService.GetEmaarTokenName(),
+                    FromCurrency = _settingsService.GetTokenName(),
                     ToCurrency = _settingsService.GetBaseCurrencyCode(),
                     Amount = Money18.Parse(request.Amount),
                     SpendRuleId = burnRuleIdIdAsGuid

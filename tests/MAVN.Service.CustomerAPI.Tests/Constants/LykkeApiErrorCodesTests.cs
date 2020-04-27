@@ -106,7 +106,8 @@ namespace MAVN.Service.CustomerAPI.Tests.Constants
             nameof(ApiErrorCodes.Service.PinAlreadySet),
             nameof(ApiErrorCodes.Service.InvalidPhoneNumber),
             nameof(ApiErrorCodes.Service.InvalidPriceInSpendRule),
-            nameof(ApiErrorCodes.Service.NoVouchersInStock)
+            nameof(ApiErrorCodes.Service.NoVouchersInStock),
+            nameof(ApiErrorCodes.Service.SmartVoucherCampaignNotFound),
         };
 
         /// <summary>

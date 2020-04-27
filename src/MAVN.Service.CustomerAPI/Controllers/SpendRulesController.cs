@@ -90,7 +90,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                             CustomerId = Guid.Parse(_requestContext.UserId),
                             SpendRuleId = spendRule.Id,
                             FromCurrency = _settingsService.GetBaseCurrencyCode(),
-                            ToCurrency = _settingsService.GetEmaarTokenName(),
+                            ToCurrency = _settingsService.GetTokenName(),
                         }
                     );
                     spendRule.PriceInToken = rate.Amount.ToDisplayString();
@@ -145,7 +145,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 var rate = await _eligibilityEngineClient.ConversionRate.GetCurrencyRateBySpendRuleIdAsync(
                     new CurrencyRateBySpendRuleRequest
                     {
-                        FromCurrency = _settingsService.GetEmaarTokenName(),
+                        FromCurrency = _settingsService.GetTokenName(),
                         ToCurrency = _settingsService.GetBaseCurrencyCode(),
                         CustomerId = Guid.Parse(_requestContext.UserId),
                         SpendRuleId = spendRuleId
@@ -170,7 +170,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                         CustomerId = Guid.Parse(_requestContext.UserId),
                         SpendRuleId = spendRuleId,
                         FromCurrency = _settingsService.GetBaseCurrencyCode(),
-                        ToCurrency = _settingsService.GetEmaarTokenName(),
+                        ToCurrency = _settingsService.GetTokenName(),
                     }
                 );
                 model.PriceInToken = rate.Amount.ToDisplayString();

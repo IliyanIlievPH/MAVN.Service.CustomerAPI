@@ -82,7 +82,7 @@ namespace MAVN.Service.CustomerAPI.Services
             if (amount == 0)
                 return 0;
             
-            var toAsset = _settingsService.GetEmaarTokenName();
+            var toAsset = _settingsService.GetTokenName();
 
             if (fromAsset == toAsset)
             {

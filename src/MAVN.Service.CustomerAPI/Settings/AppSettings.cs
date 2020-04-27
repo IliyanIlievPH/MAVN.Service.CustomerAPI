@@ -26,6 +26,7 @@ using Lykke.Service.Sessions.Client;
 using Lykke.Service.Staking.Client;
 using Lykke.Service.Vouchers.Client;
 using Lykke.Service.WalletManagement.Client;
+using MAVN.Service.SmartVouchers.Client;
 
 namespace MAVN.Service.CustomerAPI.Settings
 {
@@ -61,6 +62,7 @@ namespace MAVN.Service.CustomerAPI.Settings
         public PaymentTransfersServiceClientSettings PaymentTransfersServiceClient { get; set; }
         public CredentialsServiceClientSettings CredentialsServiceClient { get; set; }
         public VouchersServiceClientSettings VouchersServiceClient { get; set; }
+        public SmartVouchersServiceClientSettings SmartVouchersServiceClient { get; set; }
     }
 
     public class MonitoringServiceClientSettings    
@@ -84,7 +86,7 @@ namespace MAVN.Service.CustomerAPI.Settings
         public DbSettings Db { get; set; }
         public CacheSettings CacheSettings { get; set; }
         public PasswordValidationSettings PasswordValidationSettings { get; set; }
-        public FalconConstants FalconConstants { get; set; }
+        public Constants Constants { get; set; }
         public GoogleAuthSettings GoogleAuthSettings { get; set; }
         public List<ThrottlingSettings> RequestLimitsByCustomer { get; set; }
         public int NumberDecimalPlaces { get; set; }
@@ -121,9 +123,9 @@ namespace MAVN.Service.CustomerAPI.Settings
         public bool AllowWhiteSpaces { get; set; }
     }
 
-    public class FalconConstants
+    public class Constants
     {
-        public string EmaarToken { get; set; }
+        public string TokenSymbol { get; set; }
 
         public string UsdAssetName => "USD";
     }

@@ -34,6 +34,7 @@ using Lykke.Service.Staking.Client;
 using Lykke.Service.Vouchers.Client;
 using Lykke.Service.WalletManagement.Client;
 using Lykke.SettingsReader.ReloadingManager;
+using MAVN.Service.SmartVouchers.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -56,7 +57,7 @@ namespace MAVN.Service.CustomerAPI.Tests.DITests
                         Db = new DbSettings(),
                         CacheSettings = new CacheSettings(),
                         PasswordValidationSettings = new PasswordValidationSettings(),
-                        FalconConstants = new FalconConstants {EmaarToken = "Emaar"},
+                        Constants = new Settings.Constants {TokenSymbol = "MVN"},
                         GoogleAuthSettings = new GoogleAuthSettings {GoogleApiUrl = MockUrl},
                         RequestLimitsByCustomer = new List<ThrottlingSettings>(),
                         FailedLoginAttemptsThrottling = new FailedSigninAttemptsThrottlingSettings()
@@ -90,7 +91,8 @@ namespace MAVN.Service.CustomerAPI.Tests.DITests
                 PaymentTransfersServiceClient = new PaymentTransfersServiceClientSettings { ServiceUrl = MockUrl},
                 EmaarPropertyIntegrationServiceClient = new EmaarPropertyIntegrationServiceClientSettings() { ServiceUrl = MockUrl},
                 CredentialsServiceClient = new CredentialsServiceClientSettings() { ServiceUrl = MockUrl},
-                VouchersServiceClient = new VouchersServiceClientSettings { ServiceUrl = MockUrl}
+                VouchersServiceClient = new VouchersServiceClientSettings { ServiceUrl = MockUrl},
+                SmartVouchersServiceClient = new SmartVouchersServiceClientSettings { ServiceUrl = MockUrl},
             };
 
             var containerBuilder = new ContainerBuilder();
