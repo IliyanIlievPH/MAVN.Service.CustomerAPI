@@ -39,7 +39,7 @@ CustomerApiService:
     NumberDecimalPlaces:
         settings-key: CustomerApiService-NumberDecimalPlaces
     BaseCurrencyCode:
-        settings-key: FalconConstant-BaseCurrencyCode
+        settings-key: Constant-BaseCurrencyCode
     FailedLoginAttemptsThrottling:
         WarningThreshold:
             settings-key: CustomerApiService-FailedLoginAttemptsThrottling-WarningThreshold
