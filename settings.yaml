@@ -135,9 +135,6 @@ CrossChainTransfersServiceClient:
 EthereumBridgeServiceClient:
   ServiceUrl:
     settings-key: EthereumBridgeServiceUrl
-EmaarPropertyIntegrationServiceClient:
-    ServiceUrl:
-        settings-key: EmaarPropertyIntegrationServiceUrl
 PaymentTransfersServiceClient:
     ServiceUrl :
         settings-key: PaymentTransfersServiceUrl
