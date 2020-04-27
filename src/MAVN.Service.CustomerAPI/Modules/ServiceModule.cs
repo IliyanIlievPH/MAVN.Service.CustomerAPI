@@ -44,7 +44,7 @@ namespace MAVN.Service.CustomerAPI.Modules
 
             builder.RegisterType<WalletOperationsService>()
                 .As<IWalletOperationsService>()
-                .WithParameter(TypedParameter.From(_settings.FalconConstants.EmaarToken))
+                .WithParameter(TypedParameter.From(_settings.Constants.TokenSymbol))
                 .SingleInstance();
 
             builder.RegisterType<RequestContext>().As<IRequestContext>().InstancePerLifetimeScope();
@@ -118,8 +118,8 @@ namespace MAVN.Service.CustomerAPI.Modules
                 .SingleInstance();
 
             builder.RegisterType<SettingsService>()
-                .WithParameter("emaarTokenName", _settings.FalconConstants.EmaarToken)
-                .WithParameter("usdAssetName", _settings.FalconConstants.UsdAssetName)
+                .WithParameter("tokenName", _settings.Constants.TokenSymbol)
+                .WithParameter("usdAssetName", _settings.Constants.UsdAssetName)
                 .WithParameter("baseCurrencyCode", _settings.BaseCurrencyCode)
                 .WithParameter("transitAccountAddress", _settings.TransitAccountAddress)
                 .As<ISettingsService>();

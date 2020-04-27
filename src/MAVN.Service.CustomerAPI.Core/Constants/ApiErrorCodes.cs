@@ -511,6 +511,12 @@ namespace MAVN.Service.CustomerAPI.Core.Constants
             /// </summary>
             public static readonly ILykkeApiErrorCode NoVouchersInStock  =
                 new LykkeApiErrorCode(nameof(NoVouchersInStock), "No vouchers in stock");
+
+            /// <summary>
+            /// Error when non existing Spend Rule is request
+            /// </summary>
+            public static readonly ILykkeApiErrorCode SmartVoucherCampaignNotFound =
+                new LykkeApiErrorCode(nameof(SmartVoucherCampaignNotFound), "Smart voucher campaign not found");
         }
 
         /// <summary>

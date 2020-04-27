@@ -27,6 +27,7 @@ using Lykke.Service.Staking.Client;
 using Lykke.Service.Vouchers.Client.Extensions;
 using Lykke.Service.WalletManagement.Client;
 using Lykke.SettingsReader;
+using MAVN.Service.SmartVouchers.Client;
 
 namespace MAVN.Service.CustomerAPI.Modules
 {
@@ -92,6 +93,8 @@ namespace MAVN.Service.CustomerAPI.Modules
             builder.RegisterCredentialsClient(_apiSettings.CredentialsServiceClient);
 
             builder.RegisterVouchersClient(_apiSettings.VouchersServiceClient);
+
+            builder.RegisterSmartVouchersClient(_apiSettings.SmartVouchersServiceClient, null);
         }
     }
 }

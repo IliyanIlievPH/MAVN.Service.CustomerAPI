@@ -155,7 +155,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 var rate = await _eligibilityEngineClient.ConversionRate.GetCurrencyRateByEarnRuleIdAsync(
                     new CurrencyRateByEarnRuleRequest
                     {
-                        FromCurrency = _settingsService.GetEmaarTokenName(),
+                        FromCurrency = _settingsService.GetTokenName(),
                         ToCurrency = _settingsService.GetBaseCurrencyCode(),
                         CustomerId = Guid.Parse(_requestContext.UserId),
                         EarnRuleId = earnRuleId
