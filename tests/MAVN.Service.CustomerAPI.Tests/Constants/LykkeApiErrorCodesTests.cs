@@ -111,6 +111,7 @@ namespace MAVN.Service.CustomerAPI.Tests.Constants
             nameof(ApiErrorCodes.Service.SmartVoucherCampaignNotFound),
             nameof(ApiErrorCodes.Service.SmartVoucherCampaignNotActive),
             nameof(ApiErrorCodes.Service.NoAvailableVouchers),
+            nameof(ApiErrorCodes.Service.SmartVoucherNotFound),
         };
 
         /// <summary>

@@ -191,7 +191,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         [HttpGet("{voucherShortCode}")]
         [ProducesResponseType(typeof(SmartVoucherDetailsResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<SmartVoucherDetailsResponse> GetSmartVouchersForCustomerAsync([FromRoute] string voucherShortCode)
+        public async Task<SmartVoucherDetailsResponse> GetSmartVoucherByShortCodeAsync([FromRoute] string voucherShortCode)
         {
             var voucherResponse = await _smartVouchersClient.VouchersApi.GetByShortCodeAsync(voucherShortCode);
 
