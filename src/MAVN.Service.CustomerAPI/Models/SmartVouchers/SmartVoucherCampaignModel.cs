@@ -49,6 +49,14 @@ namespace MAVN.Service.CustomerAPI.Models.SmartVouchers
         /// <summary>Voucher campaign state</summary>
         public SmartVoucherCampaignState State { get; set; }
 
+        /// <summary>
+        /// Business vertical of the partner
+        /// </summary>
         public BusinessVertical? Vertical { get; set; }
+
+        /// <summary>
+        /// Name of the partner
+        /// </summary>
+        public string PartnerName { get; set; }
     }
 }

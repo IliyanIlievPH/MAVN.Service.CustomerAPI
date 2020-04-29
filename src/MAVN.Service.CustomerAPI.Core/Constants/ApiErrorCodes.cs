@@ -519,10 +519,28 @@ namespace MAVN.Service.CustomerAPI.Core.Constants
                 new LykkeApiErrorCode(nameof(PublicBlockchainIsDisabled), "Interaction with the public blockchain is disabled");
 
             /// <summary>
-            /// Error when non existing Spend Rule is request
+            /// Error for non existing Smart voucher campaign
             /// </summary>
             public static readonly ILykkeApiErrorCode SmartVoucherCampaignNotFound =
                 new LykkeApiErrorCode(nameof(SmartVoucherCampaignNotFound), "Smart voucher campaign not found");
+
+            /// <summary>
+            /// Error for not active smart voucher campaign
+            /// </summary>
+            public static readonly ILykkeApiErrorCode SmartVoucherCampaignNotActive =
+                new LykkeApiErrorCode(nameof(SmartVoucherCampaignNotActive), "Smart voucher campaign not active");
+
+            /// <summary>
+            /// Error for no available vouchers for a smart voucher campaign
+            /// </summary>
+            public static readonly ILykkeApiErrorCode NoAvailableVouchers =
+                new LykkeApiErrorCode(nameof(NoAvailableVouchers), "Smart voucher campaign does not have any available voucher");
+
+            /// <summary>
+            /// Error for not existing smart voucher
+            /// </summary>
+            public static readonly ILykkeApiErrorCode SmartVoucherNotFound =
+                new LykkeApiErrorCode(nameof(SmartVoucherNotFound), "Smart voucher could not be found");
         }
 
         /// <summary>
