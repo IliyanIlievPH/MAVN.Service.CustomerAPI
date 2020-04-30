@@ -12,7 +12,7 @@ namespace MAVN.Service.CustomerAPI.Models.SmartVouchers
         /// <summary>
         /// List of campaigns
         /// </summary>
-        public IReadOnlyList<SmartVoucherCampaignModel> SmartVoucherCampaigns { get; set; }
+        public IReadOnlyList<SmartVoucherCampaignDetailsModel> SmartVoucherCampaigns { get; set; }
         /// <summary>
         /// Total count
         /// </summary>
