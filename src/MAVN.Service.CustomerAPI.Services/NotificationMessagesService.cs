@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
-using Lykke.Service.PushNotifications.Client;
-using Lykke.Service.PushNotifications.Client.Models.Requests;
+using MAVN.Service.PushNotifications.Client;
+using MAVN.Service.PushNotifications.Client.Models.Requests;
 
 namespace MAVN.Service.CustomerAPI.Services
 {

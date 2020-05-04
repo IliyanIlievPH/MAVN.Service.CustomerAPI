@@ -1,4 +1,4 @@
-using Lykke.Service.CustomerManagement.Client;
+﻿using MAVN.Service.CustomerManagement.Client;
 
 namespace MAVN.Service.CustomerAPI.Infrastructure.Extensions
 {

@@ -10,9 +10,6 @@ namespace MAVN.Service.CustomerAPI.Core.Services
     public interface IReferralService
     {
         Task<string> GetOrCreateReferralCodeAsync(string customerId);
-        Task<ILykkeApiErrorCode> AddReferralLeadAsync(string customerId, ReferralLeadCreateModel referralLeadCreateModel);
-        Task<ReferralLeadListResultModel> GetLeadReferralsAsync(string agentId);
-        Task<ILykkeApiErrorCode> ConfirmReferralAsync(string confirmationCode);
         Task<ILykkeApiErrorCode> AddHotelReferralAsync(string customerId, string email,
             Guid campaignId, string fullName, int phoneCountryCode, string phoneNumber);
         Task<IEnumerable<HotelReferralModel>> GetHotelReferralAsync(string customerId);

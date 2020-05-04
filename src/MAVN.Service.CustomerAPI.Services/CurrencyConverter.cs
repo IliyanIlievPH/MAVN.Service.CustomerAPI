@@ -1,14 +1,14 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Common.Log;
 using Falcon.Numerics;
 using Lykke.Common.Log;
-using Lykke.Service.CurrencyConvertor.Client;
-using Lykke.Service.CurrencyConvertor.Client.Models.Enums;
+using MAVN.Service.CurrencyConvertor.Client;
+using MAVN.Service.CurrencyConvertor.Client.Models.Enums;
 using MAVN.Service.CustomerAPI.Core.Services;
-using Lykke.Service.EligibilityEngine.Client;
-using Lykke.Service.EligibilityEngine.Client.Enums;
-using Lykke.Service.EligibilityEngine.Client.Models.ConversionRate.Requests;
+using MAVN.Service.EligibilityEngine.Client;
+using MAVN.Service.EligibilityEngine.Client.Enums;
+using MAVN.Service.EligibilityEngine.Client.Models.ConversionRate.Requests;
 
 namespace MAVN.Service.CustomerAPI.Services
 {

@@ -7,9 +7,9 @@ using MAVN.Service.CustomerAPI.Core;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Core.Services;
 using MAVN.Service.CustomerAPI.Models.ConversionRate;
-using Lykke.Service.EligibilityEngine.Client;
-using Lykke.Service.EligibilityEngine.Client.Enums;
-using Lykke.Service.EligibilityEngine.Client.Models.ConversionRate.Requests;
+using MAVN.Service.EligibilityEngine.Client;
+using MAVN.Service.EligibilityEngine.Client.Enums;
+using MAVN.Service.EligibilityEngine.Client.Models.ConversionRate.Requests;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 

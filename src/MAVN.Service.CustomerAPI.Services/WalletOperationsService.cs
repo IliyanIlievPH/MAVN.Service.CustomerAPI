@@ -7,12 +7,12 @@ using Lykke.Common.Log;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
-using Lykke.Service.CustomerProfile.Client;
-using Lykke.Service.CustomerProfile.Client.Models.Requests;
-using Lykke.Service.PrivateBlockchainFacade.Client;
-using Lykke.Service.WalletManagement.Client;
-using Lykke.Service.WalletManagement.Client.Enums;
-using Lykke.Service.WalletManagement.Client.Models.Requests;
+using MAVN.Service.CustomerProfile.Client;
+using MAVN.Service.CustomerProfile.Client.Models.Requests;
+using MAVN.Service.PrivateBlockchainFacade.Client;
+using MAVN.Service.WalletManagement.Client;
+using MAVN.Service.WalletManagement.Client.Enums;
+using MAVN.Service.WalletManagement.Client.Models.Requests;
 using TransferErrorCodes = MAVN.Service.CustomerAPI.Core.Constants.TransferErrorCodes;
 
 namespace MAVN.Service.CustomerAPI.Services

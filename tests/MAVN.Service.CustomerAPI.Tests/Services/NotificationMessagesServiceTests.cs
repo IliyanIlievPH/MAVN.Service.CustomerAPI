@@ -5,9 +5,9 @@ using AutoMapper;
 using MAVN.Service.CustomerAPI.Core.Services;
 using MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles;
 using MAVN.Service.CustomerAPI.Services;
-using Lykke.Service.PushNotifications.Client;
-using Lykke.Service.PushNotifications.Client.Models.Requests;
-using Lykke.Service.PushNotifications.Client.Models.Responses;
+using MAVN.Service.PushNotifications.Client;
+using MAVN.Service.PushNotifications.Client.Models.Requests;
+using MAVN.Service.PushNotifications.Client.Models.Responses;
 using Moq;
 using Xunit;
 

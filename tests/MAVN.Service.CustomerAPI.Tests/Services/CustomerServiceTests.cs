@@ -8,13 +8,13 @@ using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
 using MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles;
 using MAVN.Service.CustomerAPI.Services;
-using Lykke.Service.CustomerManagement.Client;
-using Lykke.Service.CustomerManagement.Client.Models.Requests;
-using Lykke.Service.CustomerManagement.Client.Models.Responses;
-using Lykke.Service.CustomerProfile.Client;
-using Lykke.Service.CustomerProfile.Client.Models.Responses;
-using Lykke.Service.Dictionaries.Client;
-using Lykke.Service.Dictionaries.Client.Models.Salesforce;
+using MAVN.Service.CustomerManagement.Client;
+using MAVN.Service.CustomerManagement.Client.Models.Requests;
+using MAVN.Service.CustomerManagement.Client.Models.Responses;
+using MAVN.Service.CustomerProfile.Client;
+using MAVN.Service.CustomerProfile.Client.Models.Responses;
+using MAVN.Service.Dictionaries.Client;
+using MAVN.Service.Dictionaries.Client.Models.Salesforce;
 using Moq;
 using Refit;
 using Xunit;
@@ -48,7 +48,7 @@ namespace MAVN.Service.CustomerAPI.Tests.Services
                 .ReturnsAsync(
                     new CustomerProfileResponse
                     {
-                        Profile = new CustomerProfile
+                        Profile = new CustomerProfile.Client.Models.Responses.CustomerProfile
                         {
                             Email = expectedEmail,
                         }

@@ -161,10 +161,6 @@ namespace MAVN.Service.CustomerAPI.Modules
                 .As<IPublicWalletTransferService>()
                 .SingleInstance();
 
-            builder.RegisterType<RealEstateResponseFormatter>()
-                .AsSelf()
-                .SingleInstance();
-
             builder.RegisterType<NotificationMessagesService>()
                 .As<INotificationMessagesService>()
                 .SingleInstance();

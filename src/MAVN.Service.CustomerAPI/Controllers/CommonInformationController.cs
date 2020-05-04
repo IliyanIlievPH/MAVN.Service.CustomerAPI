@@ -2,7 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
-using Lykke.Service.Dictionaries.Client;
+using MAVN.Service.Dictionaries.Client;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using Microsoft.AspNetCore.Mvc;
 

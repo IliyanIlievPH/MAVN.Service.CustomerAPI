@@ -8,29 +8,29 @@ using Common.Log;
 using Falcon.Numerics;
 using Lykke.Common.ApiLibrary.Contract;
 using Lykke.Common.Log;
-using Lykke.Service.BonusEngine.Client;
-using Lykke.Service.BonusEngine.Client.Models.Customers;
-using Lykke.Service.Campaign.Client;
-using Lykke.Service.Campaign.Client.Models.Campaign.Responses;
-using Lykke.Service.Campaign.Client.Models.Condition;
-using Lykke.Service.Campaign.Client.Models.Enums;
+using MAVN.Service.BonusEngine.Client;
+using MAVN.Service.BonusEngine.Client.Models.Customers;
+using MAVN.Service.Campaign.Client;
+using MAVN.Service.Campaign.Client.Models.Campaign.Responses;
+using MAVN.Service.Campaign.Client.Models.Condition;
+using MAVN.Service.Campaign.Client.Models.Enums;
 using MAVN.Service.CustomerAPI.Core;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Domain.CommonReferral;
 using MAVN.Service.CustomerAPI.Core.Exceptions;
 using MAVN.Service.CustomerAPI.Core.Services;
-using Lykke.Service.EligibilityEngine.Client;
-using Lykke.Service.EligibilityEngine.Client.Enums;
-using Lykke.Service.EligibilityEngine.Client.Models.ConversionRate.Requests;
-using Lykke.Service.OperationsHistory.Client;
+using MAVN.Service.EligibilityEngine.Client;
+using MAVN.Service.EligibilityEngine.Client.Enums;
+using MAVN.Service.EligibilityEngine.Client.Models.ConversionRate.Requests;
+using MAVN.Service.OperationsHistory.Client;
 using Lykke.Service.PartnerManagement.Client;
-using Lykke.Service.Referral.Client;
-using Lykke.Service.Referral.Client.Enums;
-using Lykke.Service.Referral.Client.Models.Requests;
-using Lykke.Service.Referral.Client.Models.Responses;
-using Lykke.Service.Staking.Client;
-using Lykke.Service.Staking.Client.Models;
+using MAVN.Service.Referral.Client;
+using MAVN.Service.Referral.Client.Enums;
+using MAVN.Service.Referral.Client.Models.Requests;
+using MAVN.Service.Referral.Client.Models.Responses;
+using MAVN.Service.Staking.Client;
+using MAVN.Service.Staking.Client.Models;
 using Newtonsoft.Json;
 using CommonReferralModel = MAVN.Service.CustomerAPI.Core.Domain.CommonReferral.CommonReferralModel;
 using CommonReferralStatus = MAVN.Service.CustomerAPI.Core.Domain.CommonReferral.CommonReferralStatus;
@@ -93,105 +93,6 @@ namespace MAVN.Service.CustomerAPI.Services
                 });
 
                 return referralCreate.ReferralCode;
-            }
-
-            return null;
-        }
-        public async Task<ILykkeApiErrorCode> AddReferralLeadAsync(string customerId, ReferralLeadCreateModel referralLeadCreateModel)
-        {
-            var result = await _referralClient.ReferralLeadApi.PostAsync(new ReferralLeadCreateRequest
-            {
-                FirstName = referralLeadCreateModel.FirstName,
-                LastName = referralLeadCreateModel.LastName,
-                Email = referralLeadCreateModel.Email,
-                PhoneCountryCodeId = referralLeadCreateModel.CountryPhoneCodeId,
-                PhoneNumber = referralLeadCreateModel.PhoneNumber,
-                Note = referralLeadCreateModel.Note,
-                CustomerId = customerId,
-                CampaignId = referralLeadCreateModel.CampaignId
-            });
-
-            switch (result.ErrorCode)
-            {
-                case ReferralErrorCodes.None:
-                    return null;
-                case ReferralErrorCodes.GuidCanNotBeParsed:
-                    return ApiErrorCodes.Service.ReferralLeadCustomerIdInvalid;
-                case ReferralErrorCodes.ReferralLeadAlreadyExist:
-                    return ApiErrorCodes.Service.ReferralLeadAlreadyExist;
-                case ReferralErrorCodes.CustomerNotApprovedAgent:
-                    return ApiErrorCodes.Service.CustomerNotApprovedAgent;
-                case ReferralErrorCodes.ReferralLeadProcessingFailed:
-                    return ApiErrorCodes.Service.ReferralLeadNotProcessed;
-                case ReferralErrorCodes.ReferYourself:
-                    return ApiErrorCodes.Service.CanNotReferYourself;
-                case ReferralErrorCodes.ReferralLeadAlreadyConfirmed:
-                    return ApiErrorCodes.Service.ReferralLeadAlreadyConfirmed;
-                case ReferralErrorCodes.CampaignNotFound:
-                    return ApiErrorCodes.Service.ReferralCampaignNotFound;
-                case ReferralErrorCodes.InvalidStake:
-                    return ApiErrorCodes.Service.ReferralInvalidStake;
-                case ReferralErrorCodes.CustomerDoesNotExist:
-                    return ApiErrorCodes.Service.CustomerDoesNotExist;
-                default:
-                    throw new UnhandledErrorCodeException(result.ErrorCode.ToString(), result.ErrorMessage);
-            }
-        }
-
-        public async Task<ReferralLeadListResultModel> GetLeadReferralsAsync(string agentId)
-        {
-            var result = await _referralClient.ReferralLeadApi.GetAsync(agentId);
-
-            if (result.ErrorCode != ReferralErrorCodes.None)
-            {
-                var errorCode = ApiErrorCodes.Service.ReferralLeadNotProcessed;
-
-                switch (result.ErrorCode)
-                {
-                    case ReferralErrorCodes.ReferralLeadAlreadyExist:
-                        errorCode = ApiErrorCodes.Service.ReferralLeadCustomerIdInvalid;
-                        break;
-                    case ReferralErrorCodes.GuidCanNotBeParsed:
-                        errorCode = ApiErrorCodes.Service.ReferralLeadAlreadyExist;
-                        break;
-                }
-
-                return new ReferralLeadListResultModel
-                {
-                    ErrorCode = errorCode
-                };
-            }
-
-            return new ReferralLeadListResultModel
-            {
-                ReferralLeads = result.ReferralLeads
-                    .Select(o => new Core.Domain.ReferralLeadModel
-                    {
-                        Name = $"{o.FirstName} {o.LastName}",
-                        Status = GetStatus(o.State),
-                        TimeStamp = o.CreationDateTime,
-                        OffersCount = o.OffersCount,
-                        PurchaseCount = o.PurchaseCount
-                    })
-                    .OrderByDescending(o => o.TimeStamp)
-                    .ToList()
-            };
-        }
-
-        public async Task<ILykkeApiErrorCode> ConfirmReferralAsync(string confirmationCode)
-        {
-            var result = await _referralClient.ReferralLeadApi.ConfirmAsync(new ReferralLeadConfirmRequest
-            {
-                ConfirmationToken = confirmationCode
-            });
-
-            if (result.ErrorCode != ReferralErrorCodes.None)
-            {
-                if (result.ErrorCode == ReferralErrorCodes.ReferralDoesNotExist)
-                    return ApiErrorCodes.Service.ReferralNotFound;
-
-                if (result.ErrorCode == ReferralErrorCodes.LeadAlreadyConfirmed)
-                    return ApiErrorCodes.Service.LeadAlreadyConfirmed;
             }
 
             return null;

@@ -5,10 +5,10 @@ using AutoMapper;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
-using Lykke.Service.CustomerManagement.Client;
-using Lykke.Service.CustomerManagement.Client.Models.Requests;
+using MAVN.Service.CustomerManagement.Client;
+using MAVN.Service.CustomerManagement.Client.Models.Requests;
 using Refit;
-using LoginProvider = Lykke.Service.CustomerManagement.Client.Enums.LoginProvider;
+using LoginProvider = MAVN.Service.CustomerManagement.Client.Enums.LoginProvider;
 
 namespace MAVN.Service.CustomerAPI.Services
 {

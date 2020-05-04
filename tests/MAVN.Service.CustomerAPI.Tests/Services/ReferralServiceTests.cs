@@ -2,21 +2,21 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Lykke.Logs;
-using Lykke.Service.BonusEngine.Client;
-using Lykke.Service.Campaign.Client;
+using MAVN.Service.BonusEngine.Client;
+using MAVN.Service.Campaign.Client;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
 using MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles;
 using MAVN.Service.CustomerAPI.Services;
-using Lykke.Service.EligibilityEngine.Client;
-using Lykke.Service.OperationsHistory.Client;
+using MAVN.Service.EligibilityEngine.Client;
+using MAVN.Service.OperationsHistory.Client;
 using Lykke.Service.PartnerManagement.Client;
-using Lykke.Service.Referral.Client;
-using Lykke.Service.Referral.Client.Enums;
-using Lykke.Service.Referral.Client.Models.Requests;
-using Lykke.Service.Referral.Client.Models.Responses;
-using Lykke.Service.Staking.Client;
+using MAVN.Service.Referral.Client;
+using MAVN.Service.Referral.Client.Enums;
+using MAVN.Service.Referral.Client.Models.Requests;
+using MAVN.Service.Referral.Client.Models.Responses;
+using MAVN.Service.Staking.Client;
 using Moq;
 using Xunit;
 
@@ -129,75 +129,6 @@ namespace MAVN.Service.CustomerAPI.Tests.Services
 
             // Assert
             Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task ShouldReturnNull_WhenReferralPropertyCreatePasses()
-        {
-            // Arrange
-            _referralClient.Setup(c => c.ReferralLeadApi.PostAsync(It.IsAny<ReferralLeadCreateRequest>()))
-                .ReturnsAsync(new ReferralLeadCreateResponse()
-                {
-                    ErrorCode = ReferralErrorCodes.None
-                });
-
-            // Act
-            var result = await _referralService.AddReferralLeadAsync(Guid.NewGuid().ToString(), new ReferralLeadCreateModel
-            {
-                FirstName = "fname",
-                LastName = "lname",
-                Note = "note",
-                PhoneNumber = "number"
-            });
-
-            // Assert
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task ShouldReturnPropertyReferralCustomerIdInvalid_WhenReferralRecievesInvalidId()
-        {
-            // Arrange
-            _referralClient.Setup(c => c.ReferralLeadApi.PostAsync(It.IsAny<ReferralLeadCreateRequest>()))
-                .ReturnsAsync(new ReferralLeadCreateResponse()
-                {
-                    ErrorCode = ReferralErrorCodes.GuidCanNotBeParsed
-                });
-
-            // Act
-            var result = await _referralService.AddReferralLeadAsync(Guid.NewGuid().ToString(), new ReferralLeadCreateModel
-            {
-                FirstName = "fname",
-                LastName = "lname",
-                Note = "note",
-                PhoneNumber = "number"
-            });
-
-            // Assert
-            Assert.Equal(ApiErrorCodes.Service.ReferralLeadCustomerIdInvalid, result);
-        }
-
-        [Fact]
-        public async Task ShouldReturnPropertyReferralNotProcessed_WhenReferralServiceCannotProcessTheRequest()
-        {
-            // Arrange
-            _referralClient.Setup(c => c.ReferralLeadApi.PostAsync(It.IsAny<ReferralLeadCreateRequest>()))
-                .ReturnsAsync(new ReferralLeadCreateResponse()
-                {
-                    ErrorCode = ReferralErrorCodes.ReferralLeadProcessingFailed
-                });
-
-            // Act
-            var result = await _referralService.AddReferralLeadAsync(Guid.NewGuid().ToString(), new ReferralLeadCreateModel
-            {
-                FirstName = "fname",
-                LastName = "lname",
-                Note = "note",
-                PhoneNumber = "number"
-            });
-
-            // Assert
-            Assert.Equal(ApiErrorCodes.Service.ReferralLeadNotProcessed, result);
         }
     }
 }
