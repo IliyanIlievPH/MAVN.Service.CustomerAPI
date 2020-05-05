@@ -1,13 +1,12 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
-using Falcon.Common.Middleware.Authentication;
-using Falcon.Common.Middleware.Version;
+using MAVN.Common.Middleware.Authentication;
+using MAVN.Common.Middleware.Version;
 using Lykke.Common.ApiLibrary.Exceptions;
-using Lykke.Service.PartnerManagement.Client;
+using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Models.Enums;
 using MAVN.Service.CustomerAPI.Models.SmartVouchers;

@@ -5,10 +5,10 @@ using AutoMapper;
 using MAVN.Service.CustomerAPI.Core.Services;
 using MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles;
 using MAVN.Service.CustomerAPI.Services;
-using Lykke.Service.PartnerManagement.Client;
-using Lykke.Service.PartnerManagement.Client.Models.Partner;
-using Lykke.Service.PartnersIntegration.Client;
-using Lykke.Service.PartnersIntegration.Client.Models;
+using MAVN.Service.PartnerManagement.Client;
+using MAVN.Service.PartnerManagement.Client.Models.Partner;
+using MAVN.Service.PartnersIntegration.Client;
+using MAVN.Service.PartnersIntegration.Client.Models;
 using Moq;
 using Xunit;
 

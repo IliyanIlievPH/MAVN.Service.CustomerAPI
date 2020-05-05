@@ -1,13 +1,13 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Lykke.Service.Campaign.Client;
+using MAVN.Service.Campaign.Client;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
 using MAVN.Service.CustomerAPI.Services;
-using Lykke.Service.OperationsHistory.Client;
-using Lykke.Service.OperationsHistory.Client.Models.Requests;
-using Lykke.Service.OperationsHistory.Client.Models.Responses;
+using MAVN.Service.OperationsHistory.Client;
+using MAVN.Service.OperationsHistory.Client.Models.Requests;
+using MAVN.Service.OperationsHistory.Client.Models.Responses;
 using Moq;
 using Xunit;
 

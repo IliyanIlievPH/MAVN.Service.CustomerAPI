@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using MAVN.Service.CustomerAPI.Models.PartnerPayments;
-using Lykke.Service.PartnersPayments.Client.Models;
+using MAVN.Service.PartnersPayments.Client.Models;
 
 namespace MAVN.Service.CustomerAPI.Services
 {

@@ -4,10 +4,10 @@ using Lykke.Logs;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
 using MAVN.Service.CustomerAPI.Services;
-using Lykke.Service.CustomerProfile.Client;
-using Lykke.Service.CustomerProfile.Client.Models.Enums;
-using Lykke.Service.CustomerProfile.Client.Models.Requests;
-using Lykke.Service.CustomerProfile.Client.Models.Responses;
+using MAVN.Service.CustomerProfile.Client;
+using MAVN.Service.CustomerProfile.Client.Models.Enums;
+using MAVN.Service.CustomerProfile.Client.Models.Requests;
+using MAVN.Service.CustomerProfile.Client.Models.Responses;
 using Moq;
 using Xunit;
 
@@ -55,7 +55,7 @@ namespace MAVN.Service.CustomerAPI.Tests.Services
                 .ReturnsAsync(new CustomerProfileResponse
                 {
                     ErrorCode = CustomerProfileErrorCodes.None,
-                    Profile = new CustomerProfile
+                    Profile = new CustomerProfile.Client.Models.Responses.CustomerProfile
                     {
                         CustomerId = FakeCustomerId
                     }
@@ -93,7 +93,7 @@ namespace MAVN.Service.CustomerAPI.Tests.Services
                 .ReturnsAsync(new CustomerProfileResponse
                 {
                     ErrorCode = CustomerProfileErrorCodes.None,
-                    Profile = new CustomerProfile
+                    Profile = new CustomerProfile.Client.Models.Responses.CustomerProfile
                     {
                         CustomerId = FakeCustomerId
                     }
@@ -139,7 +139,7 @@ namespace MAVN.Service.CustomerAPI.Tests.Services
                 .ReturnsAsync(new CustomerProfileResponse
                 {
                     ErrorCode = CustomerProfileErrorCodes.None,
-                    Profile = new CustomerProfile
+                    Profile = new CustomerProfile.Client.Models.Responses.CustomerProfile
                     {
                         CustomerId = FakeCustomerId
                     }
@@ -184,7 +184,7 @@ namespace MAVN.Service.CustomerAPI.Tests.Services
                 .ReturnsAsync(new CustomerProfileResponse
                 {
                     ErrorCode = CustomerProfileErrorCodes.None,
-                    Profile = new CustomerProfile
+                    Profile = new CustomerProfile.Client.Models.Responses.CustomerProfile
                     {
                         CustomerId = FakeCustomerId
                     }
@@ -233,7 +233,7 @@ namespace MAVN.Service.CustomerAPI.Tests.Services
                 .ReturnsAsync(new CustomerProfileResponse
                 {
                     ErrorCode = CustomerProfileErrorCodes.None,
-                    Profile = new CustomerProfile
+                    Profile = new CustomerProfile.Client.Models.Responses.CustomerProfile
                     {
                         CustomerId = FakeCustomerId
                     }

@@ -9,11 +9,11 @@ using MAVN.Service.CustomerAPI.Core.Services;
 using MAVN.Service.CustomerAPI.Extensions;
 using MAVN.Service.CustomerAPI.Models.Extensions;
 using MAVN.Service.CustomerAPI.Models.PartnerPayments;
-using Lykke.Service.EligibilityEngine.Client;
-using Lykke.Service.PartnerManagement.Client;
-using Lykke.Service.PartnersIntegration.Client;
-using Lykke.Service.PartnersPayments.Client.Models;
-using Lykke.Service.PrivateBlockchainFacade.Client;
+using MAVN.Service.EligibilityEngine.Client;
+using MAVN.Service.PartnerManagement.Client;
+using MAVN.Service.PartnersIntegration.Client;
+using MAVN.Service.PartnersPayments.Client.Models;
+using MAVN.Service.PrivateBlockchainFacade.Client;
 
 namespace MAVN.Service.CustomerAPI.Services
 {

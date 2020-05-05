@@ -2,18 +2,18 @@
 using System.Net;
 using System.Threading.Tasks;
 using Common.Log;
-using Falcon.Common.Middleware.Authentication;
+using MAVN.Common.Middleware.Authentication;
 using Lykke.Common.ApiLibrary.Contract;
 using Lykke.Common.ApiLibrary.Exceptions;
 using Lykke.Common.Log;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Models.Phones;
-using Lykke.Service.CustomerManagement.Client;
-using Lykke.Service.CustomerManagement.Client.Models;
-using Lykke.Service.CustomerManagement.Client.Models.Requests;
-using Lykke.Service.CustomerProfile.Client;
-using Lykke.Service.CustomerProfile.Client.Models.Enums;
-using Lykke.Service.CustomerProfile.Client.Models.Requests;
+using MAVN.Service.CustomerManagement.Client;
+using MAVN.Service.CustomerManagement.Client.Models;
+using MAVN.Service.CustomerManagement.Client.Models.Requests;
+using MAVN.Service.CustomerProfile.Client;
+using MAVN.Service.CustomerProfile.Client.Models.Enums;
+using MAVN.Service.CustomerProfile.Client.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MAVN.Service.CustomerAPI.Controllers

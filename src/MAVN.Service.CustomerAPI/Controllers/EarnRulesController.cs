@@ -4,29 +4,29 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
-using Falcon.Common.Middleware.Authentication;
-using Falcon.Common.Middleware.Version;
+using MAVN.Common.Middleware.Authentication;
+using MAVN.Common.Middleware.Version;
 using Falcon.Numerics;
 using Lykke.Common.ApiLibrary.Exceptions;
-using Lykke.Service.BonusEngine.Client;
-using Lykke.Service.BonusEngine.Client.Models.Customers;
-using Lykke.Service.Campaign.Client;
-using Lykke.Service.Campaign.Client.Models;
-using Lykke.Service.Campaign.Client.Models.Campaign.Responses;
-using Lykke.Service.Campaign.Client.Models.Enums;
+using MAVN.Service.BonusEngine.Client;
+using MAVN.Service.BonusEngine.Client.Models.Customers;
+using MAVN.Service.Campaign.Client;
+using MAVN.Service.Campaign.Client.Models;
+using MAVN.Service.Campaign.Client.Models.Campaign.Responses;
+using MAVN.Service.Campaign.Client.Models.Enums;
 using MAVN.Service.CustomerAPI.Core;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Core.Services;
 using MAVN.Service.CustomerAPI.Models;
 using MAVN.Service.CustomerAPI.Models.EarnRules;
-using Lykke.Service.EligibilityEngine.Client;
-using Lykke.Service.EligibilityEngine.Client.Models.ConversionRate.Requests;
-using Lykke.Service.OperationsHistory.Client;
-using Lykke.Service.PartnerManagement.Client;
-using Lykke.Service.Referral.Client;
-using Lykke.Service.Referral.Client.Models.Requests;
-using Lykke.Service.Staking.Client;
-using Lykke.Service.Staking.Client.Models;
+using MAVN.Service.EligibilityEngine.Client;
+using MAVN.Service.EligibilityEngine.Client.Models.ConversionRate.Requests;
+using MAVN.Service.OperationsHistory.Client;
+using MAVN.Service.PartnerManagement.Client;
+using MAVN.Service.Referral.Client;
+using MAVN.Service.Referral.Client.Models.Requests;
+using MAVN.Service.Staking.Client;
+using MAVN.Service.Staking.Client.Models;
 using Microsoft.AspNetCore.Mvc;
 using MoreLinq;
 
@@ -92,7 +92,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
             [FromQuery] PaginationRequestModel pagination)
         {
             var earnRules = await _campaignClient.Mobile.GetEarnRulesAsync(Localization.En,
-                _mapper.Map<Lykke.Service.Campaign.Client.Models.Enums.CampaignStatus[]>(statuses),
+                _mapper.Map<MAVN.Service.Campaign.Client.Models.Enums.CampaignStatus[]>(statuses),
                 _mapper.Map<BasePaginationRequestModel>(pagination));
 
             return _mapper.Map<EarnRulesListResponseModel>(earnRules);

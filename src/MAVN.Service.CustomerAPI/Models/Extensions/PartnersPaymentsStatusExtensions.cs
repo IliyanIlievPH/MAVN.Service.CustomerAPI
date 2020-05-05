@@ -1,6 +1,6 @@
 ﻿using System;
 using MAVN.Service.CustomerAPI.Models.PartnerPayments;
-using Lykke.Service.PartnersPayments.Client.Enums;
+using MAVN.Service.PartnersPayments.Client.Enums;
 
 namespace MAVN.Service.CustomerAPI.Models.Extensions
 {

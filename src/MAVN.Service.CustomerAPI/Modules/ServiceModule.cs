@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Autofac;
 using Common.Cache;
-using Falcon.Common.Middleware.Authentication;
+using MAVN.Common.Middleware.Authentication;
 using Lykke.Common;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
@@ -159,10 +159,6 @@ namespace MAVN.Service.CustomerAPI.Modules
 
             builder.RegisterType<PublicWalletTransferService>()
                 .As<IPublicWalletTransferService>()
-                .SingleInstance();
-
-            builder.RegisterType<RealEstateResponseFormatter>()
-                .AsSelf()
                 .SingleInstance();
 
             builder.RegisterType<NotificationMessagesService>()

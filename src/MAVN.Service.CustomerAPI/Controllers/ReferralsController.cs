@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using Falcon.Common.Middleware.Authentication;
-using Falcon.Common.Middleware.Version;
+using MAVN.Common.Middleware.Authentication;
+using MAVN.Common.Middleware.Version;
 using Lykke.Common.ApiLibrary.Exceptions;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
 using MAVN.Service.CustomerAPI.Models.Referral;
-using Lykke.Service.Referral.Client;
-using Lykke.Service.Referral.Client.Enums;
-using Lykke.Service.Referral.Client.Models.Requests;
+using MAVN.Service.Referral.Client;
+using MAVN.Service.Referral.Client.Enums;
+using MAVN.Service.Referral.Client.Models.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -73,76 +73,6 @@ namespace MAVN.Service.CustomerAPI.Controllers
             throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.ReferralNotFound);
         }
 
-        /// <summary>
-        /// Get list of lead referrals for a customer
-        /// </summary>
-        /// <returns>
-        /// 200 - function done
-        /// </returns>
-        [HttpGet("leads")]
-        [LykkeAuthorize]
-        [ProducesResponseType(typeof(LeadReferralsListResponseModel), (int)HttpStatusCode.OK)]
-        public async Task<LeadReferralsListResponseModel> GetLeadReferralsAsync()
-        {
-            var result = await _referralService.GetLeadReferralsAsync(_requestContext.UserId);
-
-            return new LeadReferralsListResponseModel
-            {
-                LeadReferrals = _mapper.Map<IReadOnlyCollection<LeadReferral>>(result.ReferralLeads)
-            };
-        }
-
-        /// <summary>
-        /// Add lead referral for a customer.
-        /// </summary>
-        /// <remarks>
-        /// Function. Return whenever the referral was added successfully or not.
-        /// Error codes:
-        /// - **ReferralLeadCustomerIdInvalid**
-        /// - **ReferralLeadAlreadyExist**
-        /// - **CustomerNotApprovedAgent**
-        /// - **ReferralLeadNotProcessed**
-        /// - **CanNotReferYourself**
-        /// - **ReferralLeadAlreadyConfirmed**
-        /// </remarks>
-        /// <returns>
-        /// 204 - function done
-        /// </returns>
-        [HttpPost("lead")]
-        [LykkeAuthorize]
-        [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task AddLeadReferralAsync(ReferralLeadRequestModel leadRequestModel)
-        {
-            var result = await _referralService.AddReferralLeadAsync(_requestContext.UserId,
-                _mapper.Map<ReferralLeadCreateModel>(leadRequestModel));
-
-            if (result != null)
-            {
-                throw LykkeApiErrorException.BadRequest(result);
-            }
-        }
-
-        /// <summary>
-        /// Confirm pending lead referral.
-        /// </summary>
-        /// <remarks>
-        /// Error codes:
-        /// - **ReferralNotFound**
-        /// </remarks>
-        [HttpPost("lead/confirm")]
-        [AllowAnonymous]
-        [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
-        [ProducesResponseType(typeof(LykkeApiErrorResponse), (int)HttpStatusCode.BadRequest)]
-        public async Task ConfirmReferralLeadAsync(ConfirmReferralLeadRequest model)
-        {
-            var result = await _referralService.ConfirmReferralAsync(model.ConfirmationCode);
-
-            if (result != null)
-            {
-                throw LykkeApiErrorException.BadRequest(result);
-            }
-        }
 
         /// <summary>
         /// Add hotel referral for a customer.
@@ -247,19 +177,19 @@ namespace MAVN.Service.CustomerAPI.Controllers
         [ProducesResponseType(typeof(ReferralsListResponseModel), (int)HttpStatusCode.OK)]
         public async Task<ReferralsListResponseModel> GetAllReferralsAsync([FromQuery]ReferralPaginationRequestModel model)
         {
-            var statuses = new List<Lykke.Service.Referral.Client.Enums.CommonReferralStatus>();
+            var statuses = new List<MAVN.Service.Referral.Client.Enums.CommonReferralStatus>();
 
             switch (model.Status)
             {
                 case CommonReferralStatus.Ongoing:
-                    statuses.Add(Lykke.Service.Referral.Client.Enums.CommonReferralStatus.Pending);
-                    statuses.Add(Lykke.Service.Referral.Client.Enums.CommonReferralStatus.Confirmed);
+                    statuses.Add(MAVN.Service.Referral.Client.Enums.CommonReferralStatus.Pending);
+                    statuses.Add(MAVN.Service.Referral.Client.Enums.CommonReferralStatus.Confirmed);
                     break;
                 case CommonReferralStatus.Accepted:
-                    statuses.Add(Lykke.Service.Referral.Client.Enums.CommonReferralStatus.Accepted);
+                    statuses.Add(MAVN.Service.Referral.Client.Enums.CommonReferralStatus.Accepted);
                     break;
                 case CommonReferralStatus.Expired:
-                    statuses.Add(Lykke.Service.Referral.Client.Enums.CommonReferralStatus.Expired);
+                    statuses.Add(MAVN.Service.Referral.Client.Enums.CommonReferralStatus.Expired);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

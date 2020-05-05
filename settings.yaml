@@ -76,9 +76,6 @@ WalletManagementServiceClient:
 OperationsHistoryServiceClient:
     ServiceUrl:
         settings-key: OperationsHistoryServiceUrl
-AgentManagementServiceClient:
-  ServiceUrl:
-    settings-key: AgentManagementServiceUrl
 DictionariesServiceClient:
   ServiceUrl:
     settings-key: DictionariesServiceUrl
@@ -135,9 +132,6 @@ CrossChainTransfersServiceClient:
 EthereumBridgeServiceClient:
   ServiceUrl:
     settings-key: EthereumBridgeServiceUrl
-PaymentTransfersServiceClient:
-    ServiceUrl :
-        settings-key: PaymentTransfersServiceUrl
 CredentialsServiceClient:
     ServiceUrl :
         settings-key: CredentialsServiceUrl

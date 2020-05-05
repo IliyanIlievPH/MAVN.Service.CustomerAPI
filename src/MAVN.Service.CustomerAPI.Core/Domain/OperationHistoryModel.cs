@@ -15,8 +15,6 @@ namespace MAVN.Service.CustomerAPI.Core.Domain
 
         public string OtherSideCustomerEmail { get; set; }
 
-        public string OtherSideCustomerName { get; set; }
-
         public string PartnerName { get; set; }
 
         public string InstalmentName { get; set; }

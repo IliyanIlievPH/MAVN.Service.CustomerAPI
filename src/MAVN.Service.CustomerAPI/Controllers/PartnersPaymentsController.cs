@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
-using Falcon.Common.Middleware.Authentication;
+using MAVN.Common.Middleware.Authentication;
 using Lykke.Common.ApiLibrary.Exceptions;
-using Lykke.Service.PartnersPayments.Client;
-using Lykke.Service.PartnersPayments.Client.Enums;
-using Lykke.Service.PartnersPayments.Client.Models;
+using MAVN.Service.PartnersPayments.Client;
+using MAVN.Service.PartnersPayments.Client.Enums;
+using MAVN.Service.PartnersPayments.Client.Models;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Models.PartnerPayments;
 using MAVN.Service.CustomerAPI.Services;

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Lykke.Service.Campaign.Client;
-using Lykke.Service.Campaign.Client.Models.Enums;
+using MAVN.Service.Campaign.Client;
+using MAVN.Service.Campaign.Client.Models.Enums;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
-using Lykke.Service.OperationsHistory.Client;
-using Lykke.Service.OperationsHistory.Client.Models.Requests;
-using Lykke.Service.OperationsHistory.Client.Models.Responses;
+using MAVN.Service.OperationsHistory.Client;
+using MAVN.Service.OperationsHistory.Client.Models.Requests;
+using MAVN.Service.OperationsHistory.Client.Models.Responses;
 using MoreLinq;
 
 namespace MAVN.Service.CustomerAPI.Services
@@ -123,8 +123,9 @@ namespace MAVN.Service.CustomerAPI.Services
                     : HistoryOperationType.SendTransfer,
                 Timestamp = src.Timestamp,
                 Amount = src.Amount,
-                OtherSideCustomerEmail = src.OtherSideEmail,
-                OtherSideCustomerName = src.OtherSideName,
+                OtherSideCustomerEmail = src.ReceiverCustomerId == customerId
+                    ? src.SenderCustomerEmail
+                    : src.ReceiverCustomerEmail,
             };
         }
 

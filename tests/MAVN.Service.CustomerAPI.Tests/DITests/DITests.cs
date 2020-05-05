@@ -5,33 +5,31 @@ using Autofac.Extensions.DependencyInjection;
 using Lykke.Common.Log;
 using Lykke.Logs;
 using Lykke.Logs.Loggers.LykkeConsole;
-using Lykke.Service.AgentManagement.Client;
-using Lykke.Service.BonusEngine.Client;
-using Lykke.Service.Campaign.Client;
-using Lykke.Service.Credentials.Client;
-using Lykke.Service.CurrencyConvertor.Client;
-using Lykke.Service.CrossChainTransfers.Client;
-using Lykke.Service.CrossChainWalletLinker.Client;
+using MAVN.Service.BonusEngine.Client;
+using MAVN.Service.Campaign.Client;
+using MAVN.Service.Credentials.Client;
+using MAVN.Service.CurrencyConvertor.Client;
+using MAVN.Service.CrossChainTransfers.Client;
+using MAVN.Service.CrossChainWalletLinker.Client;
 using MAVN.Service.CustomerAPI.Modules;
 using MAVN.Service.CustomerAPI.Settings;
-using Lykke.Service.CustomerManagement.Client;
-using Lykke.Service.CustomerProfile.Client;
-using Lykke.Service.Dictionaries.Client;
-using Lykke.Service.EligibilityEngine.Client;
-using Lykke.Service.EthereumBridge.Client;
-using Lykke.Service.MaintenanceMode.Client;
-using Lykke.Service.OperationsHistory.Client;
-using Lykke.Service.PartnerManagement.Client;
-using Lykke.Service.PartnersIntegration.Client;
-using Lykke.Service.PartnersPayments.Client;
-using Lykke.Service.PaymentTransfers.Client;
-using Lykke.Service.PrivateBlockchainFacade.Client;
-using Lykke.Service.PushNotifications.Client;
-using Lykke.Service.Referral.Client;
-using Lykke.Service.Sessions.Client;
-using Lykke.Service.Staking.Client;
-using Lykke.Service.Vouchers.Client;
-using Lykke.Service.WalletManagement.Client;
+using MAVN.Service.CustomerManagement.Client;
+using MAVN.Service.CustomerProfile.Client;
+using MAVN.Service.Dictionaries.Client;
+using MAVN.Service.EligibilityEngine.Client;
+using MAVN.Service.EthereumBridge.Client;
+using MAVN.Service.MaintenanceMode.Client;
+using MAVN.Service.OperationsHistory.Client;
+using MAVN.Service.PartnerManagement.Client;
+using MAVN.Service.PartnersIntegration.Client;
+using MAVN.Service.PartnersPayments.Client;
+using MAVN.Service.PrivateBlockchainFacade.Client;
+using MAVN.Service.PushNotifications.Client;
+using MAVN.Service.Referral.Client;
+using MAVN.Service.Sessions.Client;
+using MAVN.Service.Staking.Client;
+using MAVN.Service.Vouchers.Client;
+using MAVN.Service.WalletManagement.Client;
 using Lykke.SettingsReader.ReloadingManager;
 using MAVN.Service.SmartVouchers.Client;
 using Microsoft.AspNetCore.Mvc;
@@ -72,7 +70,6 @@ namespace MAVN.Service.CustomerAPI.Tests.DITests
                 ReferralServiceClient = new ReferralServiceClientSettings {ServiceUrl = MockUrl},
                 MobileAppSettings = new MobileAppSettings {SettingsUrl = MockUrl},
                 OperationsHistoryServiceClient = new OperationsHistoryServiceClientSettings {ServiceUrl = MockUrl},
-                AgentManagementServiceClient = new AgentManagementServiceClientSettings {ServiceUrl = MockUrl},
                 PushNotificationsServiceClient = new PushNotificationsServiceClientSettings {ServiceUrl = MockUrl},
                 DictionariesServiceClient = new DictionariesServiceClientSettings {ServiceUrl = MockUrl},
                 MaintenanceModeServiceClient = new MaintenanceModeServiceClientSettings {ServiceUrl = MockUrl},
@@ -87,7 +84,6 @@ namespace MAVN.Service.CustomerAPI.Tests.DITests
                 CrossChainWalletLinkerServiceClient = new CrossChainWalletLinkerServiceClientSettings {ServiceUrl = MockUrl},
                 CrossChainTransfersServiceClient = new CrossChainTransfersServiceClientSettings{ServiceUrl = MockUrl},
                 EthereumBridgeServiceClient = new EthereumBridgeServiceClientSettings{ServiceUrl = MockUrl},
-                PaymentTransfersServiceClient = new PaymentTransfersServiceClientSettings { ServiceUrl = MockUrl},
                 CredentialsServiceClient = new CredentialsServiceClientSettings() { ServiceUrl = MockUrl},
                 VouchersServiceClient = new VouchersServiceClientSettings { ServiceUrl = MockUrl},
                 SmartVouchersServiceClient = new SmartVouchersServiceClientSettings { ServiceUrl = MockUrl},

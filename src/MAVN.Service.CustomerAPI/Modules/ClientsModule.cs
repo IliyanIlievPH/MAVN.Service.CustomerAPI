@@ -1,30 +1,28 @@
 ﻿using Autofac;
-using Lykke.Service.AgentManagement.Client;
-using Lykke.Service.BonusEngine.Client;
-using Lykke.Service.Campaign.Client;
-using Lykke.Service.Credentials.Client;
-using Lykke.Service.CurrencyConvertor.Client;
-using Lykke.Service.CrossChainTransfers.Client;
-using Lykke.Service.CrossChainWalletLinker.Client;
+using MAVN.Service.BonusEngine.Client;
+using MAVN.Service.Campaign.Client;
+using MAVN.Service.Credentials.Client;
+using MAVN.Service.CurrencyConvertor.Client;
+using MAVN.Service.CrossChainTransfers.Client;
+using MAVN.Service.CrossChainWalletLinker.Client;
 using MAVN.Service.CustomerAPI.Settings;
-using Lykke.Service.CustomerManagement.Client;
-using Lykke.Service.CustomerProfile.Client;
-using Lykke.Service.Dictionaries.Client;
-using Lykke.Service.EligibilityEngine.Client;
-using Lykke.Service.EthereumBridge.Client;
-using Lykke.Service.MaintenanceMode.Client;
-using Lykke.Service.OperationsHistory.Client;
-using Lykke.Service.PartnerManagement.Client;
-using Lykke.Service.PartnersIntegration.Client;
-using Lykke.Service.PartnersPayments.Client;
-using Lykke.Service.PaymentTransfers.Client;
-using Lykke.Service.PrivateBlockchainFacade.Client;
-using Lykke.Service.PushNotifications.Client;
-using Lykke.Service.Sessions.Client;
-using Lykke.Service.Referral.Client;
-using Lykke.Service.Staking.Client;
-using Lykke.Service.Vouchers.Client.Extensions;
-using Lykke.Service.WalletManagement.Client;
+using MAVN.Service.CustomerManagement.Client;
+using MAVN.Service.CustomerProfile.Client;
+using MAVN.Service.Dictionaries.Client;
+using MAVN.Service.EligibilityEngine.Client;
+using MAVN.Service.EthereumBridge.Client;
+using MAVN.Service.MaintenanceMode.Client;
+using MAVN.Service.OperationsHistory.Client;
+using MAVN.Service.PartnerManagement.Client;
+using MAVN.Service.PartnersIntegration.Client;
+using MAVN.Service.PartnersPayments.Client;
+using MAVN.Service.PrivateBlockchainFacade.Client;
+using MAVN.Service.PushNotifications.Client;
+using MAVN.Service.Sessions.Client;
+using MAVN.Service.Referral.Client;
+using MAVN.Service.Staking.Client;
+using MAVN.Service.Vouchers.Client.Extensions;
+using MAVN.Service.WalletManagement.Client;
 using Lykke.SettingsReader;
 using MAVN.Service.SmartVouchers.Client;
 
@@ -55,8 +53,6 @@ namespace MAVN.Service.CustomerAPI.Modules
 
             builder.RegisterOperationsHistoryClient(_apiSettings.OperationsHistoryServiceClient, null);
 
-            builder.RegisterAgentManagementClient(_apiSettings.AgentManagementServiceClient);
-
             builder.RegisterPushNotificationsClient(_apiSettings.PushNotificationsServiceClient, null);
 
             builder.RegisterDictionariesClient(_apiSettings.DictionariesServiceClient);
@@ -84,8 +80,6 @@ namespace MAVN.Service.CustomerAPI.Modules
             builder.RegisterCrossChainTransfersClient(_apiSettings.CrossChainTransfersServiceClient, null);
 
             builder.RegisterEthereumBridgeClient(_apiSettings.EthereumBridgeServiceClient);
-
-            builder.RegisterPaymentTransfersClient(_apiSettings.PaymentTransfersServiceClient, null);
 
             builder.RegisterCredentialsClient(_apiSettings.CredentialsServiceClient);
 

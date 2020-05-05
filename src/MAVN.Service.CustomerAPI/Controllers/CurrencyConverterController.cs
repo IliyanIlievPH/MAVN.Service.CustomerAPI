@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Falcon.Common.Middleware.Authentication;
-using Falcon.Common.Middleware.Version;
+using MAVN.Common.Middleware.Authentication;
+using MAVN.Common.Middleware.Version;
 using Falcon.Numerics;
-using Lykke.Service.CurrencyConvertor.Client;
+using MAVN.Service.CurrencyConvertor.Client;
 using MAVN.Service.CustomerAPI.Core;
 using MAVN.Service.CustomerAPI.Models.CurrencyConverter;
 using Microsoft.AspNetCore.Mvc;

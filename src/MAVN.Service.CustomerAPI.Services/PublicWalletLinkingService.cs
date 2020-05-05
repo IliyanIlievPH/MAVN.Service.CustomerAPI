@@ -1,15 +1,15 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common.Log;
 using Falcon.Numerics;
 using Lykke.Common.Log;
-using Lykke.Service.CrossChainWalletLinker.Client;
-using Lykke.Service.CrossChainWalletLinker.Client.Models;
+using MAVN.Service.CrossChainWalletLinker.Client;
+using MAVN.Service.CrossChainWalletLinker.Client.Models;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
-using LinkingError = Lykke.Service.CrossChainWalletLinker.Client.Models.LinkingError;
-using PublicAddressError = Lykke.Service.CrossChainWalletLinker.Client.Models.PublicAddressError;
+using LinkingError = MAVN.Service.CrossChainWalletLinker.Client.Models.LinkingError;
+using PublicAddressError = MAVN.Service.CrossChainWalletLinker.Client.Models.PublicAddressError;
 
 namespace MAVN.Service.CustomerAPI.Services
 {

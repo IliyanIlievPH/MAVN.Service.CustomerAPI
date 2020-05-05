@@ -2,27 +2,27 @@
 using System.Linq;
 using AutoMapper;
 using JetBrains.Annotations;
-using Lykke.Service.Campaign.Client.Models;
-using Lykke.Service.Campaign.Client.Models.BurnRule.Responses;
-using Lykke.Service.Campaign.Client.Models.Campaign.Responses;
-using Lykke.Service.Campaign.Client.Models.Condition;
-using Lykke.Service.CrossChainTransfers.Client.Models.Responses;
-using Lykke.Service.CrossChainWalletLinker.Client.Models;
-using Lykke.Service.CustomerManagement.Client.Enums;
-using Lykke.Service.CustomerManagement.Client.Models;
-using Lykke.Service.CustomerManagement.Client.Models.Requests;
-using Lykke.Service.CustomerManagement.Client.Models.Responses;
-using Lykke.Service.CustomerProfile.Client.Models.Responses;
-using Lykke.Service.Dictionaries.Client.Models.Notifications;
-using Lykke.Service.PartnerManagement.Client.Models.Location;
-using Lykke.Service.PartnersIntegration.Client.Models;
-using Lykke.Service.PushNotifications.Client.Enums;
-using Lykke.Service.PushNotifications.Client.Models.Responses;
-using Lykke.Service.Referral.Client.Enums;
-using Lykke.Service.Referral.Client.Models.Responses;
-using Lykke.Service.Referral.Client.Models.Responses.CommonReferral;
-using Lykke.Service.Staking.Client.Models;
-using Lykke.Service.WalletManagement.Client.Models.Responses;
+using MAVN.Service.Campaign.Client.Models;
+using MAVN.Service.Campaign.Client.Models.BurnRule.Responses;
+using MAVN.Service.Campaign.Client.Models.Campaign.Responses;
+using MAVN.Service.Campaign.Client.Models.Condition;
+using MAVN.Service.CrossChainTransfers.Client.Models.Responses;
+using MAVN.Service.CrossChainWalletLinker.Client.Models;
+using MAVN.Service.CustomerManagement.Client.Enums;
+using MAVN.Service.CustomerManagement.Client.Models;
+using MAVN.Service.CustomerManagement.Client.Models.Requests;
+using MAVN.Service.CustomerManagement.Client.Models.Responses;
+using MAVN.Service.CustomerProfile.Client.Models.Responses;
+using MAVN.Service.Dictionaries.Client.Models.Notifications;
+using MAVN.Service.PartnerManagement.Client.Models.Location;
+using MAVN.Service.PartnersIntegration.Client.Models;
+using MAVN.Service.PushNotifications.Client.Enums;
+using MAVN.Service.PushNotifications.Client.Models.Responses;
+using MAVN.Service.Referral.Client.Enums;
+using MAVN.Service.Referral.Client.Models.Responses;
+using MAVN.Service.Referral.Client.Models.Responses.CommonReferral;
+using MAVN.Service.Staking.Client.Models;
+using MAVN.Service.WalletManagement.Client.Models.Responses;
 using MAVN.Service.CustomerAPI.Core;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Models;
@@ -44,11 +44,11 @@ using ConditionModel = MAVN.Service.CustomerAPI.Models.EarnRules.ConditionModel;
 using FileResponseModel = MAVN.Service.CustomerAPI.Models.SmartVouchers.FileResponseModel;
 using RatioAttributeModel = MAVN.Service.CustomerAPI.Models.EarnRules.RatioAttributeModel;
 using RatioCompletion = MAVN.Service.CustomerAPI.Models.EarnRules.RatioCompletion;
-using ReferralLeadModel = Lykke.Service.Referral.Client.Models.Responses.ReferralLeadModel;
+using ReferralLeadModel = MAVN.Service.Referral.Client.Models.Responses.ReferralLeadModel;
 using ReferralStakingModel = MAVN.Service.CustomerAPI.Models.Referral.ReferralStakingModel;
-using RegistrationRequestModel = Lykke.Service.CustomerManagement.Client.Models.Requests.RegistrationRequestModel;
-using RegistrationResponseModel = Lykke.Service.CustomerManagement.Client.Models.Responses.RegistrationResponseModel;
-using TransferResponse = Lykke.Service.OperationsHistory.Client.Models.Responses.TransferResponse;
+using RegistrationRequestModel = MAVN.Service.CustomerManagement.Client.Models.Requests.RegistrationRequestModel;
+using RegistrationResponseModel = MAVN.Service.CustomerManagement.Client.Models.Responses.RegistrationResponseModel;
+using TransferResponse = MAVN.Service.OperationsHistory.Client.Models.Responses.TransferResponse;
 
 namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
 {
@@ -81,9 +81,6 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
             CreateMap<ReferralResponseModel, ReferralResultResponse>()
                 .ForMember(c => c.ErrorCode, opt => opt.Ignore())
                 .ForMember(c => c.ErrorMessage, opt => opt.Ignore());
-
-            CreateMap<ReferralLeadRequestModel, ReferralLeadCreateModel>(MemberList.Destination);
-            CreateMap<ReferralLeadCreateModel, ReferralLeadRequestModel>(MemberList.Destination);
 
             CreateMap<ReferralLeadModel, Core.Domain.ReferralLeadModel>(MemberList.Destination)
                 .ForMember(c => c.Name, opt => opt.MapFrom(c => $"{c.FirstName} {c.LastName}"))
@@ -226,15 +223,15 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
             CreateMap<PartnerMessage, GetPartnerMessageResponseModel>(MemberList.Destination);
 
             CreateMap<GoogleRegistrationRequestModel, GoogleRegistrationRequestDto>();
-            CreateMap<CustomerProfile, CustomerInfoModel>()
+            CreateMap<CustomerProfile.Client.Models.Responses.CustomerProfile, CustomerInfoModel>()
                 .ForMember(x => x.CountryPhoneCode, opt => opt.Ignore())
                 .ForMember(x => x.CountryOfNationalityName, opt => opt.Ignore());
 
             CreateMap<CommonInformationPropertiesModel, CommonInformationResponse>()
                 .ForSourceMember(src => src.UnsubscribeLink, opt => opt.DoNotValidate());
 
-            CreateMap<Lykke.Service.Dictionaries.Client.Models.Salesforce.CountryPhoneCodeModel, CountryPhoneCodeModel>();
-            CreateMap<Lykke.Service.Dictionaries.Client.Models.Salesforce.CountryOfResidenceModel, CountryOfResidenceModel>();
+            CreateMap<MAVN.Service.Dictionaries.Client.Models.Salesforce.CountryPhoneCodeModel, CountryPhoneCodeModel>();
+            CreateMap<MAVN.Service.Dictionaries.Client.Models.Salesforce.CountryOfResidenceModel, CountryOfResidenceModel>();
 
             CreateMap<LinkingRequestResponseModel, LinkingRequestResultModel>();
             CreateMap<LinkingApprovalResponseModel, LinkingApprovalResultModel>();

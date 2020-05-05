@@ -1,14 +1,14 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common.Log;
 using Falcon.Numerics;
 using Lykke.Common.Log;
-using Lykke.Service.CrossChainTransfers.Client;
-using Lykke.Service.CrossChainTransfers.Client.Models.Requests;
+using MAVN.Service.CrossChainTransfers.Client;
+using MAVN.Service.CrossChainTransfers.Client.Models.Requests;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
-using TransferToExternalErrorCodes = Lykke.Service.CrossChainTransfers.Client.Models.Enums.TransferToExternalErrorCodes;
+using TransferToExternalErrorCodes = MAVN.Service.CrossChainTransfers.Client.Models.Enums.TransferToExternalErrorCodes;
 
 namespace MAVN.Service.CustomerAPI.Services
 {
