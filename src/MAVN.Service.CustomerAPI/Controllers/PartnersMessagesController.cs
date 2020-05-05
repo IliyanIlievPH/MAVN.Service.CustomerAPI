@@ -2,7 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
-using Falcon.Common.Middleware.Authentication;
+using MAVN.Common.Middleware.Authentication;
 using JetBrains.Annotations;
 using Lykke.Common.ApiLibrary.Exceptions;
 using MAVN.Service.CustomerAPI.Core.Constants;

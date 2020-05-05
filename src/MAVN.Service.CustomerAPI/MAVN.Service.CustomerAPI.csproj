@@ -21,7 +21,7 @@
     <PackageReference Include="Lykke.Common.Validation" Version="1.3.1" />
     <PackageReference Include="Lykke.Logs" Version="7.3.3" />
     <PackageReference Include="Lykke.MonitoringServiceApiCaller" Version="1.8.0" />
-    <PackageReference Include="MAVN.Common.Middleware" Version="1.0.0" />
+    <PackageReference Include="MAVN.Common.Middleware" Version="1.0.1" />
     <PackageReference Include="MAVN.Service.Credentials.Client" Version="1.0.1" />
     <PackageReference Include="MAVN.Service.CurrencyConverter.Client" Version="1.0.1" />
     <PackageReference Include="MAVN.Service.Dictionaries.Client" Version="1.0.1" />

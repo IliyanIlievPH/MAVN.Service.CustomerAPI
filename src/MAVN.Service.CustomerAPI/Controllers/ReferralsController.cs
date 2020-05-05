@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Falcon.Common.Middleware.Authentication;
-using Falcon.Common.Middleware.Version;
+using MAVN.Common.Middleware.Authentication;
+using MAVN.Common.Middleware.Version;
 using Lykke.Common.ApiLibrary.Exceptions;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Core.Domain;

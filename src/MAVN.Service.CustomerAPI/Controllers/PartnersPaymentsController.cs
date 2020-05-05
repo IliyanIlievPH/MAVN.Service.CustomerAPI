@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
-using Falcon.Common.Middleware.Authentication;
+using MAVN.Common.Middleware.Authentication;
 using Lykke.Common.ApiLibrary.Exceptions;
 using MAVN.Service.PartnersPayments.Client;
 using MAVN.Service.PartnersPayments.Client.Enums;

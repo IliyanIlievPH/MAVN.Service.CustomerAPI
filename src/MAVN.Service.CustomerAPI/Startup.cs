@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
-using Falcon.Common.Middleware.Filters;
+using MAVN.Common.Middleware.Filters;
 using FluentValidation.AspNetCore;
 using JetBrains.Annotations;
 using Lykke.Common;
