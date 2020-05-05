@@ -19,7 +19,7 @@ using MAVN.Service.CustomerAPI.Models.Enums;
 using MAVN.Service.CustomerAPI.Models.SpendRules;
 using MAVN.Service.EligibilityEngine.Client;
 using MAVN.Service.EligibilityEngine.Client.Models.ConversionRate.Requests;
-using Lykke.Service.PartnerManagement.Client;
+using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.Vouchers.Client;
 using Microsoft.AspNetCore.Mvc;
 using MoreLinq;

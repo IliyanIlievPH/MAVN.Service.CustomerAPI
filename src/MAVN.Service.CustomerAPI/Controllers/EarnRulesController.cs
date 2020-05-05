@@ -22,7 +22,7 @@ using MAVN.Service.CustomerAPI.Models.EarnRules;
 using MAVN.Service.EligibilityEngine.Client;
 using MAVN.Service.EligibilityEngine.Client.Models.ConversionRate.Requests;
 using MAVN.Service.OperationsHistory.Client;
-using Lykke.Service.PartnerManagement.Client;
+using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.Referral.Client;
 using MAVN.Service.Referral.Client.Models.Requests;
 using MAVN.Service.Staking.Client;

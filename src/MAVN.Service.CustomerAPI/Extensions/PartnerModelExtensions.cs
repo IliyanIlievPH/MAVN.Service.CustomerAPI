@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 using System.Linq;
-using Lykke.Service.PartnerManagement.Client.Models.Partner;
+using MAVN.Service.PartnerManagement.Client.Models.Partner;
 
 namespace MAVN.Service.CustomerAPI.Extensions
 {

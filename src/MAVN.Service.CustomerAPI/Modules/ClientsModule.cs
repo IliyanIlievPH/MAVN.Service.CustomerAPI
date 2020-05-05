@@ -13,7 +13,7 @@ using MAVN.Service.EligibilityEngine.Client;
 using MAVN.Service.EthereumBridge.Client;
 using Lykke.Service.MaintenanceMode.Client;
 using MAVN.Service.OperationsHistory.Client;
-using Lykke.Service.PartnerManagement.Client;
+using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.PartnersIntegration.Client;
 using MAVN.Service.PartnersPayments.Client;
 using MAVN.Service.PrivateBlockchainFacade.Client;

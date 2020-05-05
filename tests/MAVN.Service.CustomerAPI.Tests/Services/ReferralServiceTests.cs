@@ -11,7 +11,7 @@ using MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles;
 using MAVN.Service.CustomerAPI.Services;
 using MAVN.Service.EligibilityEngine.Client;
 using MAVN.Service.OperationsHistory.Client;
-using Lykke.Service.PartnerManagement.Client;
+using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.Referral.Client;
 using MAVN.Service.Referral.Client.Enums;
 using MAVN.Service.Referral.Client.Models.Requests;

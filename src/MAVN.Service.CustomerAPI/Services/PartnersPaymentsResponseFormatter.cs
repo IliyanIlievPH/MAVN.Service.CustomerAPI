@@ -10,7 +10,7 @@ using MAVN.Service.CustomerAPI.Extensions;
 using MAVN.Service.CustomerAPI.Models.Extensions;
 using MAVN.Service.CustomerAPI.Models.PartnerPayments;
 using MAVN.Service.EligibilityEngine.Client;
-using Lykke.Service.PartnerManagement.Client;
+using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.PartnersIntegration.Client;
 using MAVN.Service.PartnersPayments.Client.Models;
 using MAVN.Service.PrivateBlockchainFacade.Client;

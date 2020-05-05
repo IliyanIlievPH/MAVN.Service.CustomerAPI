@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MAVN.Service.CustomerAPI.Core.Domain;
 using MAVN.Service.CustomerAPI.Core.Services;
-using Lykke.Service.PartnerManagement.Client;
+using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.PartnersIntegration.Client;
 
 namespace MAVN.Service.CustomerAPI.Services

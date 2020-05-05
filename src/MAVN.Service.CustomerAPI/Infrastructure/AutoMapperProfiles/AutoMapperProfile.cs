@@ -14,7 +14,7 @@ using MAVN.Service.CustomerManagement.Client.Models.Requests;
 using MAVN.Service.CustomerManagement.Client.Models.Responses;
 using MAVN.Service.CustomerProfile.Client.Models.Responses;
 using MAVN.Service.Dictionaries.Client.Models.Notifications;
-using Lykke.Service.PartnerManagement.Client.Models.Location;
+using MAVN.Service.PartnerManagement.Client.Models.Location;
 using MAVN.Service.PartnersIntegration.Client.Models;
 using MAVN.Service.PushNotifications.Client.Enums;
 using MAVN.Service.PushNotifications.Client.Models.Responses;
