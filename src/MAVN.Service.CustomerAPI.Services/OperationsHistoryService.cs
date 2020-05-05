@@ -126,7 +126,6 @@ namespace MAVN.Service.CustomerAPI.Services
                 OtherSideCustomerEmail = src.ReceiverCustomerId == customerId
                     ? src.SenderCustomerEmail
                     : src.ReceiverCustomerEmail,
-                //TODO:OtherSideCustomerName = 
             };
         }
 
