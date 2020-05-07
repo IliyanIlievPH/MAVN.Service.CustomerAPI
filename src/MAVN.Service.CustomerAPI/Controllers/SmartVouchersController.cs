@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
+using Common.Log;
 using MAVN.Common.Middleware.Authentication;
 using MAVN.Common.Middleware.Version;
 using Lykke.Common.ApiLibrary.Exceptions;
+using Lykke.Common.Log;
 using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Models.Enums;
 using MAVN.Service.CustomerAPI.Models.SmartVouchers;
+using MAVN.Service.PartnerManagement.Client.Models;
 using MAVN.Service.SmartVouchers.Client;
 using MAVN.Service.SmartVouchers.Client.Models.Requests;
 using MAVN.Service.SmartVouchers.Client.Models.Responses.Enums;
@@ -28,17 +32,20 @@ namespace MAVN.Service.CustomerAPI.Controllers
         private readonly ISmartVouchersClient _smartVouchersClient;
         private readonly IPartnerManagementClient _partnerManagementClient;
         private readonly IMapper _mapper;
+        private readonly ILog _log;
 
         public SmartVouchersController(
             IRequestContext requestContext,
             ISmartVouchersClient smartVouchersClient,
             IPartnerManagementClient partnerManagementClient,
-            IMapper mapper)
+            IMapper mapper,
+            ILogFactory logFactory)
         {
             _requestContext = requestContext;
             _smartVouchersClient = smartVouchersClient;
             _partnerManagementClient = partnerManagementClient;
             _mapper = mapper;
+            _log = logFactory.CreateLog(this);
         }
 
         /// <summary>
@@ -72,14 +79,23 @@ namespace MAVN.Service.CustomerAPI.Controllers
             var partnersInfo = partners.ToDictionary(k => k.Id,
                 v => (v.BusinessVertical, v.Name,
                     v.Locations.Where(l => l.Latitude.HasValue && l.Longitude.HasValue).Select(x =>
-                        new GeolocationModel {Latitude = x.Latitude.Value, Longitude = x.Longitude.Value}).ToList()));
+                        new GeolocationModel { Latitude = x.Latitude.Value, Longitude = x.Longitude.Value }).ToList()));
 
             foreach (var campaign in result.SmartVoucherCampaigns)
             {
-                var (businessVertical, name, geolocations) = partnersInfo[Guid.Parse(campaign.PartnerId)];
-                campaign.Vertical = (BusinessVertical?)businessVertical;
-                campaign.PartnerName = name;
-                campaign.Geolocations = geolocations;
+                var partnerId = Guid.Parse(campaign.PartnerId);
+                (Vertical? BusinessVertical, string Name, List<GeolocationModel> Geolocations) partnerInfo;
+                var partnerExists = partnersInfo.TryGetValue(partnerId, out partnerInfo);
+
+                if (!partnerExists)
+                {
+                    _log.Warning("Smart voucher campaign partner does not exist", context: new { partnerId, campaignId = campaign.Id });
+                    continue;;
+                }
+
+                campaign.Vertical = (BusinessVertical?)partnerInfo.BusinessVertical;
+                campaign.PartnerName = partnerInfo.Name;
+                campaign.Geolocations = partnerInfo.Geolocations;
             }
 
             return result;
@@ -95,7 +111,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         [ProducesResponseType(typeof(SmartVoucherCampaignDetailsModel), (int)HttpStatusCode.OK)]
         public async Task<SmartVoucherCampaignDetailsModel> GetSmartVouchersCampaignByIdAsync([FromQuery] Guid id)
         {
-            if(id == default)
+            if (id == default)
                 throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
 
             var campaign = await _smartVouchersClient.CampaignsApi.GetByIdAsync(id);
@@ -107,8 +123,14 @@ namespace MAVN.Service.CustomerAPI.Controllers
 
             var partner = await _partnerManagementClient.Partners.GetByIdAsync(campaign.PartnerId);
 
+            if (partner == null)
+            {
+                _log.Warning("Smart voucher campaign partner does not exist", context: new { campaign.PartnerId, campaignId = campaign.Id });
+                return result;
+            }
+
             var geolocations = partner.Locations.Where(l => l.Longitude.HasValue && l.Latitude.HasValue)
-                .Select(l => new GeolocationModel {Latitude = l.Latitude.Value, Longitude = l.Longitude.Value})
+                .Select(l => new GeolocationModel { Latitude = l.Latitude.Value, Longitude = l.Longitude.Value })
                 .ToList();
 
             result.Vertical = (BusinessVertical?)partner.BusinessVertical;
@@ -167,7 +189,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 ShortCode = request.ShortCode
             });
 
-            if(result != ProcessingVoucherErrorCodes.None)
+            if (result != ProcessingVoucherErrorCodes.None)
                 throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherNotFound);
         }
 
@@ -185,7 +207,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
 
             var vouchersResponse =
                 await _smartVouchersClient.VouchersApi.GetCustomerVouchersAsync(customerId,
-                    new BasePaginationRequestModel {CurrentPage = request.CurrentPage, PageSize = request.PageSize});
+                    new BasePaginationRequestModel { CurrentPage = request.CurrentPage, PageSize = request.PageSize });
 
             var result = _mapper.Map<SmartVouchersListResponse>(vouchersResponse);
             return result;
@@ -204,7 +226,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         {
             var voucherResponse = await _smartVouchersClient.VouchersApi.GetByShortCodeAsync(voucherShortCode);
 
-            if(voucherResponse == null)
+            if (voucherResponse == null)
                 throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherNotFound);
 
             var result = _mapper.Map<SmartVoucherDetailsResponse>(voucherResponse);
