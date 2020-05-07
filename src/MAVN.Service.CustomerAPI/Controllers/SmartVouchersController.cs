@@ -66,15 +66,20 @@ namespace MAVN.Service.CustomerAPI.Controllers
 
             var partnersIds = result.SmartVoucherCampaigns.Select(x => Guid.Parse(x.PartnerId)).ToArray();
 
-            var partnersVerticalsDictionary =
-                (await _partnerManagementClient.Partners.GetByIdsAsync(partnersIds)).ToDictionary(k => k.Id,
-                    v => (v.BusinessVertical,v.Name));
+            var partners =
+                await _partnerManagementClient.Partners.GetByIdsAsync(partnersIds);
+
+            var partnersInfo = partners.ToDictionary(k => k.Id,
+                v => (v.BusinessVertical, v.Name,
+                    v.Locations.Where(l => l.Latitude.HasValue && l.Longitude.HasValue).Select(x =>
+                        new GeolocationModel {Latitude = x.Latitude.Value, Longitude = x.Longitude.Value}).ToList()));
 
             foreach (var campaign in result.SmartVoucherCampaigns)
             {
-                var (businessVertical, name) = partnersVerticalsDictionary[Guid.Parse(campaign.PartnerId)];
+                var (businessVertical, name, geolocations) = partnersInfo[Guid.Parse(campaign.PartnerId)];
                 campaign.Vertical = (BusinessVertical?)businessVertical;
                 campaign.PartnerName = name;
+                campaign.Geolocations = geolocations;
             }
 
             return result;
@@ -102,8 +107,13 @@ namespace MAVN.Service.CustomerAPI.Controllers
 
             var partner = await _partnerManagementClient.Partners.GetByIdAsync(campaign.PartnerId);
 
+            var geolocations = partner.Locations.Where(l => l.Longitude.HasValue && l.Latitude.HasValue)
+                .Select(l => new GeolocationModel {Latitude = l.Latitude.Value, Longitude = l.Longitude.Value})
+                .ToList();
+
             result.Vertical = (BusinessVertical?)partner.BusinessVertical;
             result.PartnerName = partner.Name;
+            result.Geolocations = geolocations;
 
             return result;
         }

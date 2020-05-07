@@ -260,6 +260,7 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
                 .ForMember(x => x.PartnerName, opt => opt.Ignore());
             CreateMap<VoucherCampaignDetailsResponseModel, SmartVoucherCampaignDetailsModel>()
                 .ForMember(x => x.Vertical, opt => opt.Ignore())
+                .ForMember(x => x.Geolocations, opt => opt.Ignore())
                 .ForMember(x => x.PartnerName, opt => opt.Ignore());
             CreateMap<VoucherCampaignContentResponseModel, SmartVoucherCampaignContentResponseModel>();
             CreateMap<SmartVouchers.Client.Models.Responses.FileResponseModel, FileResponseModel>();

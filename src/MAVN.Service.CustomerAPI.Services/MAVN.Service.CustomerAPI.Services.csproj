@@ -21,7 +21,7 @@
     <PackageReference Include="MAVN.Service.EligibilityEngine.Client" Version="1.0.1" />
     <PackageReference Include="MAVN.Service.MaintenanceMode.Client" Version="1.0.1" />
     <PackageReference Include="MAVN.Service.OperationsHistory.Client" Version="1.2.0" />
-    <PackageReference Include="MAVN.Service.PartnerManagement.Client" Version="1.0.4" />
+    <PackageReference Include="MAVN.Service.PartnerManagement.Client" Version="1.2.0" />
     <PackageReference Include="MAVN.Service.PartnersIntegration.Client" Version="1.0.1" />
     <PackageReference Include="MAVN.Service.PrivateBlockchainFacade.Client" Version="1.0.1" />
     <PackageReference Include="MAVN.Service.PushNotifications.Client" Version="1.0.1" />
