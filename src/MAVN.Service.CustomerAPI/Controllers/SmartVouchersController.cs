@@ -85,12 +85,11 @@ namespace MAVN.Service.CustomerAPI.Controllers
             {
                 var partnerId = Guid.Parse(campaign.PartnerId);
                 (Vertical? BusinessVertical, string Name, List<GeolocationModel> Geolocations) partnerInfo;
-                var partnerExists = partnersInfo.TryGetValue(partnerId, out partnerInfo);
 
-                if (!partnerExists)
+                if (!partnersInfo.TryGetValue(partnerId, out partnerInfo))
                 {
                     _log.Warning("Smart voucher campaign partner does not exist", context: new { partnerId, campaignId = campaign.Id });
-                    continue;;
+                    continue;
                 }
 
                 campaign.Vertical = (BusinessVertical?)partnerInfo.BusinessVertical;
@@ -109,6 +108,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// </returns>
         [HttpGet("campaigns/search")]
         [ProducesResponseType(typeof(SmartVoucherCampaignDetailsModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<SmartVoucherCampaignDetailsModel> GetSmartVouchersCampaignByIdAsync([FromQuery] Guid id)
         {
             if (id == default)
@@ -126,7 +126,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
             if (partner == null)
             {
                 _log.Warning("Smart voucher campaign partner does not exist", context: new { campaign.PartnerId, campaignId = campaign.Id });
-                return result;
+                throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
             }
 
             var geolocations = partner.Locations.Where(l => l.Longitude.HasValue && l.Latitude.HasValue)
