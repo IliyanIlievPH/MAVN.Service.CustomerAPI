@@ -167,8 +167,9 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 case ProcessingVoucherErrorCodes.VoucherCampaignNotActive:
                     throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherCampaignNotActive);
                 case ProcessingVoucherErrorCodes.NoAvailableVouchers:
-                case ProcessingVoucherErrorCodes.InvalidPartnerPaymentConfiguration:
                     throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.NoAvailableVouchers);
+                case ProcessingVoucherErrorCodes.InvalidPartnerPaymentConfiguration:
+                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.PaymentProviderError);
                 default:
                     throw new ArgumentOutOfRangeException();
             }

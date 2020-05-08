@@ -537,6 +537,12 @@ namespace MAVN.Service.CustomerAPI.Core.Constants
                 new LykkeApiErrorCode(nameof(NoAvailableVouchers), "Smart voucher campaign does not have any available voucher");
 
             /// <summary>
+            /// Error for problem with payment provider for a smart voucher campaign
+            /// </summary>
+            public static readonly ILykkeApiErrorCode PaymentProviderError =
+                new LykkeApiErrorCode(nameof(PaymentProviderError), "There is problem with payment provider.");
+
+            /// <summary>
             /// Error for not existing smart voucher
             /// </summary>
             public static readonly ILykkeApiErrorCode SmartVoucherNotFound =
