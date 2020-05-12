@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Common.Log;
-using Falcon.Numerics;
+using MAVN.Numerics;
 using Lykke.Common.Log;
 using MAVN.Service.CrossChainWalletLinker.Client;
 using MAVN.Service.CrossChainWalletLinker.Client.Models;

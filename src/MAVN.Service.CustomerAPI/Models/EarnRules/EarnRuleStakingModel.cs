@@ -1,4 +1,4 @@
-﻿using Falcon.Numerics;
+﻿using MAVN.Numerics;
 using System;
 
 namespace MAVN.Service.CustomerAPI.Models.EarnRules

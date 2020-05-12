@@ -44,7 +44,6 @@ using ConditionModel = MAVN.Service.CustomerAPI.Models.EarnRules.ConditionModel;
 using FileResponseModel = MAVN.Service.CustomerAPI.Models.SmartVouchers.FileResponseModel;
 using RatioAttributeModel = MAVN.Service.CustomerAPI.Models.EarnRules.RatioAttributeModel;
 using RatioCompletion = MAVN.Service.CustomerAPI.Models.EarnRules.RatioCompletion;
-using ReferralLeadModel = MAVN.Service.Referral.Client.Models.Responses.ReferralLeadModel;
 using ReferralStakingModel = MAVN.Service.CustomerAPI.Models.Referral.ReferralStakingModel;
 using RegistrationRequestModel = MAVN.Service.CustomerManagement.Client.Models.Requests.RegistrationRequestModel;
 using RegistrationResponseModel = MAVN.Service.CustomerManagement.Client.Models.Responses.RegistrationResponseModel;
@@ -81,30 +80,6 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
             CreateMap<ReferralResponseModel, ReferralResultResponse>()
                 .ForMember(c => c.ErrorCode, opt => opt.Ignore())
                 .ForMember(c => c.ErrorMessage, opt => opt.Ignore());
-
-            CreateMap<ReferralLeadModel, Core.Domain.ReferralLeadModel>(MemberList.Destination)
-                .ForMember(c => c.Name, opt => opt.MapFrom(c => $"{c.FirstName} {c.LastName}"))
-                .ForMember(c => c.Status, opt => opt.MapFrom(c => c.State))
-                .ForMember(c => c.TimeStamp, opt => opt.MapFrom(c => c.CreationDateTime));
-
-            CreateMap<Core.Domain.ReferralLeadModel, ReferralLeadModel>()
-                .ForMember(c => c.Id, opt => opt.Ignore())
-                .ForMember(c => c.FirstName, opt => opt.Ignore())
-                .ForMember(c => c.LastName, opt => opt.Ignore())
-                .ForMember(c => c.PhoneNumber, opt => opt.Ignore())
-                .ForMember(c => c.PhoneCountryCodeId, opt => opt.Ignore())
-                .ForMember(c => c.Note, opt => opt.Ignore())
-                .ForMember(c => c.AgentId, opt => opt.Ignore())
-                .ForMember(c => c.AgentSalesforceId, opt => opt.Ignore())
-                .ForMember(c => c.ConfirmationToken, opt => opt.Ignore())
-                .ForMember(c => c.SalesforceId, opt => opt.Ignore())
-                .ForMember(c => c.State, opt => opt.Ignore())
-                .ForMember(c => c.CreationDateTime, opt => opt.Ignore())
-                .ForMember(c => c.Email, opt => opt.Ignore())
-                .ForMember(c => c.CampaignId, opt => opt.Ignore());
-
-            CreateMap<LeadReferral, Core.Domain.ReferralLeadModel>();
-            CreateMap<Core.Domain.ReferralLeadModel, LeadReferral>();
 
             CreateMap<ReferralHotelModel, Core.Domain.HotelReferralModel>()
                 .ForMember(dest => dest.CountryPhoneCodeId, opt => opt.MapFrom(src => src.PhoneCountryCodeId))

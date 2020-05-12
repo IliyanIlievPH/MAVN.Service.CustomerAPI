@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MAVN.Common.Middleware.Authentication;
 using MAVN.Common.Middleware.Version;
-using Falcon.Numerics;
+using MAVN.Numerics;
 using Lykke.Common.ApiLibrary.Exceptions;
 using MAVN.Service.BonusEngine.Client;
 using MAVN.Service.BonusEngine.Client.Models.Customers;
