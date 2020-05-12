@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common.Log;
-using Falcon.Numerics;
+using MAVN.Numerics;
 using Lykke.Common.ApiLibrary.Contract;
 using Lykke.Common.Log;
 using MAVN.Service.BonusEngine.Client;
@@ -143,23 +143,6 @@ namespace MAVN.Service.CustomerAPI.Services
             var result = await _referralClient.ReferralHotelsApi.GetByReferrerIdAsync(customerId);
 
             return _mapper.Map<IEnumerable<HotelReferralModel>>(result.HotelReferrals);
-        }
-
-        private static ReferralLeadStatus GetStatus(ReferralLeadState state)
-        {
-            switch (state)
-            {
-                case ReferralLeadState.Pending:
-                    return ReferralLeadStatus.Sent;
-                case ReferralLeadState.Confirmed:
-                    return ReferralLeadStatus.Accepted;
-                case ReferralLeadState.Approved:
-                    return ReferralLeadStatus.Approved;
-                case ReferralLeadState.Rejected:
-                    return ReferralLeadStatus.Rejected;
-                default:
-                    throw new InvalidEnumArgumentException(nameof(state), (int)state, typeof(ReferralLeadState));
-            }
         }
 
         public async Task<IReadOnlyList<CustomerCommonReferralModel>> PrepareReferralCommonData(IEnumerable<CommonReferralModel> paged, string customerId, Guid? earnRuleId)

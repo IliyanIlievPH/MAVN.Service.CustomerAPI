@@ -51,8 +51,6 @@ namespace MAVN.Service.CustomerAPI.Services
 
             var allOperations = (response.Transfers?.Select(x => Convert(x, customerId)) ?? Array.Empty<OperationHistoryModel>())
                 .Concat(response.BonusCashIns?.Select(Convert) ?? Array.Empty<OperationHistoryModel>())
-                .Concat(response.PaymentTransfers?.Select(x => Convert(x, HistoryOperationType.PaymentTransfer)) ?? Array.Empty<OperationHistoryModel>())
-                .Concat(response.RefundedPaymentTransfers?.Select(x => Convert(x, HistoryOperationType.PaymentTransferRefund)) ?? Array.Empty<OperationHistoryModel>())
                 .Concat(response.PartnersPayments?.Select(x => Convert(x, HistoryOperationType.PartnerPayment)) ?? Array.Empty<OperationHistoryModel>())
                 .Concat(response.RefundedPartnersPayments?.Select(x => Convert(x, HistoryOperationType.PartnerPaymentRefund)) ?? Array.Empty<OperationHistoryModel>())
                 .Concat(response.LinkedWalletTransfers?.Select(Convert) ?? Array.Empty<OperationHistoryModel>())
@@ -126,17 +124,6 @@ namespace MAVN.Service.CustomerAPI.Services
                 OtherSideCustomerEmail = src.ReceiverCustomerId == customerId
                     ? src.SenderCustomerEmail
                     : src.ReceiverCustomerEmail,
-            };
-        }
-
-        private static OperationHistoryModel Convert(PaymentTransferResponse src, HistoryOperationType type)
-        {
-            return new OperationHistoryModel
-            {
-                Type = type,
-                Timestamp = src.Timestamp,
-                Amount = src.Amount,
-                InstalmentName = src.InstalmentName,
             };
         }
 

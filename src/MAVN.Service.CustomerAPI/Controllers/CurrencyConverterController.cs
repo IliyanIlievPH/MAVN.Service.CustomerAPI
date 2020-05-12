@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MAVN.Common.Middleware.Authentication;
 using MAVN.Common.Middleware.Version;
-using Falcon.Numerics;
+using MAVN.Numerics;
 using MAVN.Service.CurrencyConvertor.Client;
 using MAVN.Service.CustomerAPI.Core;
 using MAVN.Service.CustomerAPI.Models.CurrencyConverter;
