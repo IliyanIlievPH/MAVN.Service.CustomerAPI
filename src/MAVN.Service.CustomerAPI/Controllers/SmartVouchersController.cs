@@ -17,6 +17,7 @@ using MAVN.Service.PartnerManagement.Client.Models;
 using MAVN.Service.SmartVouchers.Client;
 using MAVN.Service.SmartVouchers.Client.Models.Enums;
 using MAVN.Service.SmartVouchers.Client.Models.Requests;
+using MAVN.Service.SmartVouchers.Client.Models.Responses;
 using MAVN.Service.SmartVouchers.Client.Models.Responses.Enums;
 using Microsoft.AspNetCore.Mvc;
 
@@ -213,7 +214,9 @@ namespace MAVN.Service.CustomerAPI.Controllers
 
             var campaignIds = vouchersResponse.Vouchers.Select(x => x.CampaignId).Distinct().ToArray();
             var campaigns = await _smartVouchersClient.CampaignsApi.GetCampaignsByIds(campaignIds);
-            var campaignsDict = campaigns.Campaigns.ToDictionary(k => k.Id, v => (v.Name, v.PartnerId, v.LocalizedContents));
+            var campaignsDict = campaigns.Campaigns.ToDictionary(k => k.Id,
+                v => (v.Name, v.PartnerId,
+                    v.LocalizedContents.FirstOrDefault(c => c.ContentType == VoucherCampaignContentType.ImageUrl)));
 
             var partnerIds = campaigns.Campaigns.Select(c => c.PartnerId).Distinct().ToArray();
             var partners = await _partnerManagementClient.Partners.GetByIdsAsync(partnerIds);
@@ -223,15 +226,16 @@ namespace MAVN.Service.CustomerAPI.Controllers
 
             foreach (var voucher in result.SmartVouchers)
             {
-                if (!campaignsDict.TryGetValue(voucher.CampaignId, out var campaignInfo))
+                (string Name, Guid PartnerId, VoucherCampaignContentResponseModel Image) campaignInfo;
+                if (!campaignsDict.TryGetValue(voucher.CampaignId, out campaignInfo))
                 {
                     _log.Warning("Smart voucher campaign is missing for existing voucher", context: new { VoucherShortCode = voucher.ShortCode, voucher.CampaignId });
                     continue;
                 }
 
                 voucher.CampaignName = campaignInfo.Name;
-                voucher.ImageUrl = campaignInfo.LocalizedContents
-                    .FirstOrDefault(c => c.ContentType == VoucherCampaignContentType.ImageUrl)?.Value;
+                voucher.ImageUrl = campaignInfo.Image?.Value;
+
                 if (!partnersDict.TryGetValue(campaignInfo.PartnerId, out var partnerName))
                 {
                     _log.Warning("Partner is missing for existing smart voucher campaign", context: new { campaignInfo.PartnerId, voucher.CampaignId });
