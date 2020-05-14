@@ -32,5 +32,14 @@ namespace MAVN.Service.CustomerAPI.Models.SmartVouchers
 
         /// <summary>Voucher redemption date</summary>
         public DateTime? RedemptionDate { get; set; }
+
+        /// <summary>Name of the partner</summary>
+        public string PartnerName { get; set; }
+
+        /// <summary>Name of the campaign</summary>
+        public string CampaignName { get; set; }
+
+        /// <summary>Url of the image for the campaign</summary>
+        public string ImageUrl { get; set; }
     }
 }
