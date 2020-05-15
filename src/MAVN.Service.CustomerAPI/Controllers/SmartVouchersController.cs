@@ -212,6 +212,11 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 await _smartVouchersClient.VouchersApi.GetCustomerVouchersAsync(customerId,
                     new BasePaginationRequestModel { CurrentPage = request.CurrentPage, PageSize = request.PageSize });
 
+            var result = _mapper.Map<SmartVouchersListResponse>(vouchersResponse);
+
+            if (!result.SmartVouchers.Any())
+                return result;
+
             var campaignIds = vouchersResponse.Vouchers.Select(x => x.CampaignId).Distinct().ToArray();
             var campaigns = await _smartVouchersClient.CampaignsApi.GetCampaignsByIds(campaignIds);
             var campaignsDict = campaigns.Campaigns.ToDictionary(k => k.Id,
@@ -221,8 +226,6 @@ namespace MAVN.Service.CustomerAPI.Controllers
             var partnerIds = campaigns.Campaigns.Select(c => c.PartnerId).Distinct().ToArray();
             var partners = await _partnerManagementClient.Partners.GetByIdsAsync(partnerIds);
             var partnersDict = partners.ToDictionary(k => k.Id, v => v.Name);
-
-            var result = _mapper.Map<SmartVouchersListResponse>(vouchersResponse);
 
             foreach (var voucher in result.SmartVouchers)
             {
