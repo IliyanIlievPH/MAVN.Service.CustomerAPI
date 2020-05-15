@@ -212,21 +212,25 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 await _smartVouchersClient.VouchersApi.GetCustomerVouchersAsync(customerId,
                     new BasePaginationRequestModel { CurrentPage = request.CurrentPage, PageSize = request.PageSize });
 
+            var result = _mapper.Map<SmartVouchersListResponse>(vouchersResponse);
+
+            if (!result.SmartVouchers.Any())
+                return result;
+
             var campaignIds = vouchersResponse.Vouchers.Select(x => x.CampaignId).Distinct().ToArray();
             var campaigns = await _smartVouchersClient.CampaignsApi.GetCampaignsByIds(campaignIds);
             var campaignsDict = campaigns.Campaigns.ToDictionary(k => k.Id,
-                v => (v.Name, v.PartnerId,
-                    v.LocalizedContents.FirstOrDefault(c => c.ContentType == VoucherCampaignContentType.ImageUrl)));
+                v => (v.Name, v.PartnerId, v.ToDate,
+                    v.LocalizedContents.FirstOrDefault(c =>
+                        c.ContentType == VoucherCampaignContentType.ImageUrl && c.Image != null && !string.IsNullOrEmpty(c.Value))));
 
             var partnerIds = campaigns.Campaigns.Select(c => c.PartnerId).Distinct().ToArray();
             var partners = await _partnerManagementClient.Partners.GetByIdsAsync(partnerIds);
             var partnersDict = partners.ToDictionary(k => k.Id, v => v.Name);
 
-            var result = _mapper.Map<SmartVouchersListResponse>(vouchersResponse);
-
             foreach (var voucher in result.SmartVouchers)
             {
-                (string Name, Guid PartnerId, VoucherCampaignContentResponseModel Image) campaignInfo;
+                (string Name, Guid PartnerId, DateTime? ToDate, VoucherCampaignContentResponseModel Image) campaignInfo;
                 if (!campaignsDict.TryGetValue(voucher.CampaignId, out campaignInfo))
                 {
                     _log.Warning("Smart voucher campaign is missing for existing voucher", context: new { VoucherShortCode = voucher.ShortCode, voucher.CampaignId });
@@ -235,13 +239,15 @@ namespace MAVN.Service.CustomerAPI.Controllers
 
                 voucher.CampaignName = campaignInfo.Name;
                 voucher.ImageUrl = campaignInfo.Image?.Value;
+                voucher.ExpirationDate = campaignInfo.ToDate;
+                voucher.PartnerId = campaignInfo.PartnerId;
 
                 if (!partnersDict.TryGetValue(campaignInfo.PartnerId, out var partnerName))
                 {
                     _log.Warning("Partner is missing for existing smart voucher campaign", context: new { campaignInfo.PartnerId, voucher.CampaignId });
                     continue;
                 }
-
+                
                 voucher.PartnerName = partnerName;
             }
 
@@ -276,9 +282,11 @@ namespace MAVN.Service.CustomerAPI.Controllers
 
             var partner = await _partnerManagementClient.Partners.GetByIdAsync(campaign.PartnerId);
             var imageUrl = campaign.LocalizedContents
-                .FirstOrDefault(c => c.ContentType == VoucherCampaignContentType.ImageUrl)?.Value;
+                .FirstOrDefault(c => c.ContentType == VoucherCampaignContentType.ImageUrl && c.Image != null && !string.IsNullOrEmpty(c.Value))?.Value;
 
-            result.CampaignName = campaign?.Name;
+            result.CampaignName = campaign.Name;
+            result.PartnerId = campaign.PartnerId;
+            result.ExpirationDate = campaign.ToDate;
             result.PartnerName = partner?.Name;
             result.ImageUrl = imageUrl;
 

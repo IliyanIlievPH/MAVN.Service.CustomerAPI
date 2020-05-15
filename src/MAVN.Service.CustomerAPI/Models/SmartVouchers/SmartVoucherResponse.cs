@@ -21,6 +21,9 @@ namespace MAVN.Service.CustomerAPI.Models.SmartVouchers
         /// <summary>Voucher campaign id</summary>
         public Guid CampaignId { get; set; }
 
+        /// <summary>PartnerId id</summary>
+        public Guid PartnerId { get; set; }
+
         /// <summary>Voucher status</summary>
         public SmartVoucherStatus Status { get; set; }
 
@@ -32,6 +35,9 @@ namespace MAVN.Service.CustomerAPI.Models.SmartVouchers
 
         /// <summary>Voucher redemption date</summary>
         public DateTime? RedemptionDate { get; set; }
+
+        /// <summary>Voucher expiration date</summary>
+        public DateTime? ExpirationDate { get; set; }
 
         /// <summary>Name of the partner</summary>
         public string PartnerName { get; set; }
