@@ -221,7 +221,9 @@ namespace MAVN.Service.CustomerAPI.Controllers
             var campaigns = await _smartVouchersClient.CampaignsApi.GetCampaignsByIds(campaignIds);
             var campaignsDict = campaigns.Campaigns.ToDictionary(k => k.Id,
                 v => (v.Name, v.PartnerId,
-                    v.LocalizedContents.FirstOrDefault(c => c.ContentType == VoucherCampaignContentType.ImageUrl)));
+                    v.LocalizedContents.FirstOrDefault(c =>
+                        c.ContentType == VoucherCampaignContentType.ImageUrl && c.Image != null &&
+                        !string.IsNullOrEmpty(c.Value))));
 
             var partnerIds = campaigns.Campaigns.Select(c => c.PartnerId).Distinct().ToArray();
             var partners = await _partnerManagementClient.Partners.GetByIdsAsync(partnerIds);
