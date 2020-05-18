@@ -14,6 +14,7 @@ using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Models.Enums;
 using MAVN.Service.CustomerAPI.Models.SmartVouchers;
 using MAVN.Service.PartnerManagement.Client.Models;
+using MAVN.Service.PartnerManagement.Client.Models.Partner;
 using MAVN.Service.SmartVouchers.Client;
 using MAVN.Service.SmartVouchers.Client.Models.Enums;
 using MAVN.Service.SmartVouchers.Client.Models.Requests;
@@ -63,13 +64,30 @@ namespace MAVN.Service.CustomerAPI.Controllers
         [ProducesResponseType(typeof(SmartVoucherCampaignsListResponse), (int)HttpStatusCode.OK)]
         public async Task<SmartVoucherCampaignsListResponse> GetSmartVouchersCampaignsAsync([FromQuery] GetSmartVoucherCampaignsRequest request)
         {
-            var paginatedCampaigns = await _smartVouchersClient.CampaignsApi.GetAsync(new VoucherCampaignsPaginationRequestModel
+            GetNearPartnersByCoordinatesResponse partnersNearCoordinates = null;
+            if (request.Longitude.HasValue && request.Latitude.HasValue && request.RadiusInKm.HasValue)
             {
-                CampaignName = request.CampaignName,
-                CurrentPage = request.CurrentPage,
-                PageSize = request.PageSize,
-                OnlyActive = true
-            });
+                partnersNearCoordinates = await _partnerManagementClient.Partners.GetNearPartnerByCoordinatesAsync(
+                    new GetNearPartnersByCoordinatesRequest
+                    {
+                        Longitude = request.Longitude.Value,
+                        Latitude = request.Latitude.Value,
+                        RadiusInKm = request.RadiusInKm.Value,
+                    });
+            }
+
+            var paginatedCampaigns = await _smartVouchersClient.CampaignsApi.GetAsync(
+                new VoucherCampaignsPaginationRequestModel
+                {
+                    CampaignName = request.CampaignName,
+                    CurrentPage = request.CurrentPage,
+                    PageSize = request.PageSize,
+                    OnlyActive = true,
+                    VoucherCampaignState = VoucherCampaignState.Published,
+                    PartnerIds = partnersNearCoordinates != null && partnersNearCoordinates.PartnersIds.Any()
+                        ? partnersNearCoordinates.PartnersIds
+                        : null,
+                });
 
             var result = _mapper.Map<SmartVoucherCampaignsListResponse>(paginatedCampaigns);
 
