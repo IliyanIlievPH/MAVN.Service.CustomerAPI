@@ -68,7 +68,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 CampaignName = request.CampaignName,
                 CurrentPage = request.CurrentPage,
                 PageSize = request.PageSize,
-                OnlyActive = request.OnlyActive
+                OnlyActive = true
             });
 
             var result = _mapper.Map<SmartVoucherCampaignsListResponse>(paginatedCampaigns);
@@ -247,7 +247,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                     _log.Warning("Partner is missing for existing smart voucher campaign", context: new { campaignInfo.PartnerId, voucher.CampaignId });
                     continue;
                 }
-                
+
                 voucher.PartnerName = partnerName;
             }
 
