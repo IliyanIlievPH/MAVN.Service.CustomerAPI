@@ -58,5 +58,7 @@ namespace MAVN.Service.CustomerAPI.Models.SmartVouchers
         /// Name of the partner
         /// </summary>
         public string PartnerName { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }

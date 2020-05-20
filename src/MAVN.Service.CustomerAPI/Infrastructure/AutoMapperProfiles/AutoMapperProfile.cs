@@ -25,6 +25,7 @@ using MAVN.Service.Staking.Client.Models;
 using MAVN.Service.WalletManagement.Client.Models.Responses;
 using MAVN.Service.CustomerAPI.Core;
 using MAVN.Service.CustomerAPI.Core.Domain;
+using MAVN.Service.CustomerAPI.Extensions;
 using MAVN.Service.CustomerAPI.Models;
 using MAVN.Service.CustomerAPI.Models.Auth;
 using MAVN.Service.CustomerAPI.Models.Customers;
@@ -39,9 +40,11 @@ using MAVN.Service.CustomerAPI.Models.Referral;
 using MAVN.Service.CustomerAPI.Models.SmartVouchers;
 using MAVN.Service.CustomerAPI.Models.SpendRules;
 using MAVN.Service.CustomerAPI.Models.Wallets;
+using MAVN.Service.SmartVouchers.Client.Models.Enums;
 using MAVN.Service.SmartVouchers.Client.Models.Responses;
 using ConditionModel = MAVN.Service.CustomerAPI.Models.EarnRules.ConditionModel;
 using FileResponseModel = MAVN.Service.CustomerAPI.Models.SmartVouchers.FileResponseModel;
+using Localization = MAVN.Service.SmartVouchers.Client.Models.Enums.Localization;
 using RatioAttributeModel = MAVN.Service.CustomerAPI.Models.EarnRules.RatioAttributeModel;
 using RatioCompletion = MAVN.Service.CustomerAPI.Models.EarnRules.RatioCompletion;
 using ReferralStakingModel = MAVN.Service.CustomerAPI.Models.Referral.ReferralStakingModel;
@@ -230,10 +233,13 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
             CreateMap<PaginatedVoucherCampaignsListResponseModel, SmartVoucherCampaignsListResponse>()
                 .ForMember(x => x.SmartVoucherCampaigns, opt => opt.MapFrom(x => x.Campaigns));
 
-            CreateMap<VoucherCampaignResponseModel, SmartVoucherCampaignModel>()
-                .ForMember(x => x.Vertical, opt => opt.Ignore())
-                .ForMember(x => x.PartnerName, opt => opt.Ignore());
+            //CreateMap<VoucherCampaignResponseModel, SmartVoucherCampaignModel>()
+            //    .ForMember(x => x.Vertical, opt => opt.Ignore())
+            //    .ForMember(x => x.PartnerName, opt => opt.Ignore());
             CreateMap<VoucherCampaignDetailsResponseModel, SmartVoucherCampaignDetailsModel>()
+                .ForMember(x => x.Name, opt => opt.MapFrom(x => x.GetContentValue(Localization.En,VoucherCampaignContentType.Name)))
+                .ForMember(x => x.Description, opt => opt.MapFrom(x => x.GetContentValue(Localization.En,VoucherCampaignContentType.Description)))
+                .ForMember(x => x.ImageUrl, opt => opt.MapFrom(x => x.GetContentValue(Localization.En,VoucherCampaignContentType.ImageUrl)))
                 .ForMember(x => x.Vertical, opt => opt.Ignore())
                 .ForMember(x => x.Geolocations, opt => opt.Ignore())
                 .ForMember(x => x.PartnerName, opt => opt.Ignore());
@@ -244,11 +250,15 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
                 .ForMember(x => x.PartnerName, opt => opt.Ignore())
                 .ForMember(x => x.PartnerId, opt => opt.Ignore())
                 .ForMember(x => x.ExpirationDate, opt => opt.Ignore())
+                .ForMember(x => x.Price, opt => opt.Ignore())
+                .ForMember(x => x.Description, opt => opt.Ignore())
                 .ForMember(x => x.ImageUrl, opt => opt.Ignore());
             CreateMap<VoucherDetailsResponseModel, SmartVoucherDetailsResponse>()
                 .ForMember(x => x.CampaignName, opt => opt.Ignore())
                 .ForMember(x => x.PartnerName, opt => opt.Ignore())
                 .ForMember(x => x.PartnerId, opt => opt.Ignore())
+                .ForMember(x => x.Price, opt => opt.Ignore())
+                .ForMember(x => x.Description, opt => opt.Ignore())
                 .ForMember(x => x.ExpirationDate, opt => opt.Ignore())
                 .ForMember(x => x.ImageUrl, opt => opt.Ignore());
             CreateMap<PaginatedVouchersListResponseModel, SmartVouchersListResponse>()

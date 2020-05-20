@@ -79,3 +79,4 @@ app/
 src/Lykke.Service.CustomerApi/appsettings.json
 /src/**/*.xml
 /src/Lykke.Service.CustomerApi/Lykke.Service.CustomerApi.xml
+/src/MAVN.Service.CustomerAPI/appsettings.json

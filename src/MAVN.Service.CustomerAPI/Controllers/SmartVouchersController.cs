@@ -11,6 +11,7 @@ using Lykke.Common.ApiLibrary.Exceptions;
 using Lykke.Common.Log;
 using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.CustomerAPI.Core.Constants;
+using MAVN.Service.CustomerAPI.Extensions;
 using MAVN.Service.CustomerAPI.Models.Enums;
 using MAVN.Service.CustomerAPI.Models.SmartVouchers;
 using MAVN.Service.PartnerManagement.Client.Models;
@@ -21,6 +22,7 @@ using MAVN.Service.SmartVouchers.Client.Models.Requests;
 using MAVN.Service.SmartVouchers.Client.Models.Responses;
 using MAVN.Service.SmartVouchers.Client.Models.Responses.Enums;
 using Microsoft.AspNetCore.Mvc;
+using Localization = MAVN.Service.SmartVouchers.Client.Models.Enums.Localization;
 
 namespace MAVN.Service.CustomerAPI.Controllers
 {
@@ -238,9 +240,15 @@ namespace MAVN.Service.CustomerAPI.Controllers
             var campaignIds = vouchersResponse.Vouchers.Select(x => x.CampaignId).Distinct().ToArray();
             var campaigns = await _smartVouchersClient.CampaignsApi.GetCampaignsByIds(campaignIds);
             var campaignsDict = campaigns.Campaigns.ToDictionary(k => k.Id,
-                v => (v.Name, v.PartnerId, v.ToDate,
-                    v.LocalizedContents.FirstOrDefault(c =>
-                        c.ContentType == VoucherCampaignContentType.ImageUrl && c.Image != null && !string.IsNullOrEmpty(c.Value))));
+                v => new SmartVoucherCampaignDto
+                {
+                    Name = v.GetContentValue(Localization.En,VoucherCampaignContentType.Name),
+                    ImageUrl = v.GetContentValue(Localization.En,VoucherCampaignContentType.ImageUrl),
+                    Description = v.GetContentValue(Localization.En,VoucherCampaignContentType.Description),
+                    VoucherPrice = v.VoucherPrice,
+                    PartnerId = v.PartnerId,
+                    ToDate = v.ToDate,
+                });
 
             var partnerIds = campaigns.Campaigns.Select(c => c.PartnerId).Distinct().ToArray();
             var partners = await _partnerManagementClient.Partners.GetByIdsAsync(partnerIds);
@@ -248,17 +256,18 @@ namespace MAVN.Service.CustomerAPI.Controllers
 
             foreach (var voucher in result.SmartVouchers)
             {
-                (string Name, Guid PartnerId, DateTime? ToDate, VoucherCampaignContentResponseModel Image) campaignInfo;
-                if (!campaignsDict.TryGetValue(voucher.CampaignId, out campaignInfo))
+                if (!campaignsDict.TryGetValue(voucher.CampaignId, out var campaignInfo))
                 {
                     _log.Warning("Smart voucher campaign is missing for existing voucher", context: new { VoucherShortCode = voucher.ShortCode, voucher.CampaignId });
                     continue;
                 }
 
                 voucher.CampaignName = campaignInfo.Name;
-                voucher.ImageUrl = campaignInfo.Image?.Value;
+                voucher.ImageUrl = campaignInfo.ImageUrl;
                 voucher.ExpirationDate = campaignInfo.ToDate;
                 voucher.PartnerId = campaignInfo.PartnerId;
+                voucher.Description = campaignInfo.Description;
+                voucher.Price = campaignInfo.VoucherPrice;
 
                 if (!partnersDict.TryGetValue(campaignInfo.PartnerId, out var partnerName))
                 {
@@ -299,14 +308,14 @@ namespace MAVN.Service.CustomerAPI.Controllers
             }
 
             var partner = await _partnerManagementClient.Partners.GetByIdAsync(campaign.PartnerId);
-            var imageUrl = campaign.LocalizedContents
-                .FirstOrDefault(c => c.ContentType == VoucherCampaignContentType.ImageUrl && c.Image != null && !string.IsNullOrEmpty(c.Value))?.Value;
 
-            result.CampaignName = campaign.Name;
+            result.CampaignName = campaign.GetContentValue(Localization.En, VoucherCampaignContentType.Name);
             result.PartnerId = campaign.PartnerId;
             result.ExpirationDate = campaign.ToDate;
             result.PartnerName = partner?.Name;
-            result.ImageUrl = imageUrl;
+            result.ImageUrl = campaign.GetContentValue(Localization.En, VoucherCampaignContentType.ImageUrl);
+            result.Description = campaign.GetContentValue(Localization.En, VoucherCampaignContentType.Description);
+            result.Price = campaign.VoucherPrice;
 
             return result;
         }
