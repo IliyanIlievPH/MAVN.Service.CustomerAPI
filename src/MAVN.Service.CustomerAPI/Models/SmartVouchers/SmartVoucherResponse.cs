@@ -53,5 +53,8 @@ namespace MAVN.Service.CustomerAPI.Models.SmartVouchers
 
         /// <summary>Description</summary>
         public string Description { get; set; }
+
+        /// <summary>Currency</summary>
+        public string Currency { get; set; }
     }
 }

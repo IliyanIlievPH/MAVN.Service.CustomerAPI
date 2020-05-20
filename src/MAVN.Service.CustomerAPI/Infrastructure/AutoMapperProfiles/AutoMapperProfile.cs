@@ -248,6 +248,7 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
                 .ForMember(x => x.ExpirationDate, opt => opt.Ignore())
                 .ForMember(x => x.Price, opt => opt.Ignore())
                 .ForMember(x => x.Description, opt => opt.Ignore())
+                .ForMember(x => x.Currency, opt => opt.Ignore())
                 .ForMember(x => x.ImageUrl, opt => opt.Ignore());
             CreateMap<VoucherDetailsResponseModel, SmartVoucherDetailsResponse>()
                 .ForMember(x => x.CampaignName, opt => opt.Ignore())
@@ -256,6 +257,7 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
                 .ForMember(x => x.Price, opt => opt.Ignore())
                 .ForMember(x => x.Description, opt => opt.Ignore())
                 .ForMember(x => x.ExpirationDate, opt => opt.Ignore())
+                .ForMember(x => x.Currency, opt => opt.Ignore())
                 .ForMember(x => x.ImageUrl, opt => opt.Ignore());
             CreateMap<PaginatedVouchersListResponseModel, SmartVouchersListResponse>()
                 .ForMember(x => x.SmartVouchers, opt => opt.MapFrom(x => x.Vouchers));
