@@ -19,8 +19,14 @@ namespace MAVN.Service.CustomerAPI.Extensions
             if (contentValue != null)
                 return contentValue;
 
-            return src.LocalizedContents
+            var englishContentValue = src.LocalizedContents
                 .FirstOrDefault(o => o.ContentType == contentType && o.Localization == Localization.En)?.Value;
+
+            if (englishContentValue != null)
+                return englishContentValue;
+
+            return src.LocalizedContents
+                .FirstOrDefault(o => o.ContentType == contentType)?.Value;
         }
     }
 }
