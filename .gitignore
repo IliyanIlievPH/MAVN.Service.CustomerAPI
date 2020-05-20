@@ -74,8 +74,8 @@ node_modules
 app/
 **/UseDevelopmentStorage=true
 /src/BackOffice/appsettings.Development.json
-/Lykke.Service.CustomerApi/appsettings.Development.json
+/MAVN.Service.CustomerApi/appsettings.Development.json
 /_NCrunch_LykkeApi2/*.cache
-src/Lykke.Service.CustomerApi/appsettings.json
+src/MAVN.Service.CustomerApi/appsettings.json
 /src/**/*.xml
-/src/Lykke.Service.CustomerApi/Lykke.Service.CustomerApi.xml
+/src/MAVN.Service.CustomerApi/Lykke.Service.CustomerApi.xml

@@ -47,5 +47,11 @@ namespace MAVN.Service.CustomerAPI.Models.SmartVouchers
 
         /// <summary>Url of the image for the campaign</summary>
         public string ImageUrl { get; set; }
+
+        /// <summary>Price of the voucher</summary>
+        public decimal Price { get; set; }
+
+        /// <summary>Description</summary>
+        public string Description { get; set; }
     }
 }
