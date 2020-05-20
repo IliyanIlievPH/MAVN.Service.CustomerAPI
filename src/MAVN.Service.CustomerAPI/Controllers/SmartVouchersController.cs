@@ -248,6 +248,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                     VoucherPrice = v.VoucherPrice,
                     PartnerId = v.PartnerId,
                     ToDate = v.ToDate,
+                    Currency = v.Currency,
                 });
 
             var partnerIds = campaigns.Campaigns.Select(c => c.PartnerId).Distinct().ToArray();
@@ -268,6 +269,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 voucher.PartnerId = campaignInfo.PartnerId;
                 voucher.Description = campaignInfo.Description;
                 voucher.Price = campaignInfo.VoucherPrice;
+                voucher.Currency = campaignInfo.Currency;
 
                 if (!partnersDict.TryGetValue(campaignInfo.PartnerId, out var partnerName))
                 {
@@ -316,6 +318,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
             result.ImageUrl = campaign.GetContentValue(Localization.En, VoucherCampaignContentType.ImageUrl);
             result.Description = campaign.GetContentValue(Localization.En, VoucherCampaignContentType.Description);
             result.Price = campaign.VoucherPrice;
+            result.Currency = campaign.Currency;
 
             return result;
         }

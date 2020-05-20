@@ -10,5 +10,6 @@ namespace MAVN.Service.CustomerAPI.Models.SmartVouchers
         public decimal VoucherPrice { get; set; }
         public Guid PartnerId { get; set; }
         public DateTime? ToDate { get; set; }
+        public string Currency { get; set; }
     }
 }
