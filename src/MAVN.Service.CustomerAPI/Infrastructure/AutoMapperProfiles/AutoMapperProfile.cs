@@ -232,10 +232,6 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
 
             CreateMap<PaginatedVoucherCampaignsListResponseModel, SmartVoucherCampaignsListResponse>()
                 .ForMember(x => x.SmartVoucherCampaigns, opt => opt.MapFrom(x => x.Campaigns));
-
-            //CreateMap<VoucherCampaignResponseModel, SmartVoucherCampaignModel>()
-            //    .ForMember(x => x.Vertical, opt => opt.Ignore())
-            //    .ForMember(x => x.PartnerName, opt => opt.Ignore());
             CreateMap<VoucherCampaignDetailsResponseModel, SmartVoucherCampaignDetailsModel>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.GetContentValue(Localization.En,VoucherCampaignContentType.Name)))
                 .ForMember(x => x.Description, opt => opt.MapFrom(x => x.GetContentValue(Localization.En,VoucherCampaignContentType.Description)))
