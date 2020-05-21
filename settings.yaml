@@ -143,5 +143,4 @@ SmartVouchersServiceClient:
     settings-key: SmartVouchersServiceUrl
 PaymentManagementServiceClient:
   ServiceUrl :
-    settings-key: PaymentManagementServiceClient
-    
+    settings-key: PaymentManagementServiceUrl
