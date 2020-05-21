@@ -31,6 +31,7 @@ using MAVN.Service.Staking.Client;
 using MAVN.Service.Vouchers.Client;
 using MAVN.Service.WalletManagement.Client;
 using Lykke.SettingsReader.ReloadingManager;
+using MAVN.Service.PaymentManagement.Client;
 using MAVN.Service.SmartVouchers.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -87,6 +88,7 @@ namespace MAVN.Service.CustomerAPI.Tests.DITests
                 CredentialsServiceClient = new CredentialsServiceClientSettings() { ServiceUrl = MockUrl},
                 VouchersServiceClient = new VouchersServiceClientSettings { ServiceUrl = MockUrl},
                 SmartVouchersServiceClient = new SmartVouchersServiceClientSettings { ServiceUrl = MockUrl},
+                PaymentManagementServiceClient = new PaymentManagementServiceClientSettings { ServiceUrl = MockUrl},
             };
 
             var containerBuilder = new ContainerBuilder();

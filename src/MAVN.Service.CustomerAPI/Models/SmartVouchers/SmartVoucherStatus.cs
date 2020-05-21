@@ -13,5 +13,7 @@
         Reserved,
         /// <summary>Indicates that the voucher bought by a customer.</summary>
         Sold,
+        /// <summary>Indicates that the voucher has expired.</summary>
+        Expired,
     }
 }
