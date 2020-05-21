@@ -547,6 +547,12 @@ namespace MAVN.Service.CustomerAPI.Core.Constants
             /// </summary>
             public static readonly ILykkeApiErrorCode SmartVoucherNotFound =
                 new LykkeApiErrorCode(nameof(SmartVoucherNotFound), "Smart voucher could not be found");
+
+            /// <summary>
+            /// Payment info is missing
+            /// </summary>
+            public static readonly ILykkeApiErrorCode PaymentInfoNotFound =
+                new LykkeApiErrorCode(nameof(PaymentInfoNotFound), "Payment info for smart voucher could not be found");
         }
 
         /// <summary>

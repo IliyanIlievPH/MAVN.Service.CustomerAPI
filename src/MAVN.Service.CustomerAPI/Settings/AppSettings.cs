@@ -24,6 +24,7 @@ using MAVN.Service.Staking.Client;
 using MAVN.Service.Vouchers.Client;
 using MAVN.Service.WalletManagement.Client;
 using Lykke.SettingsReader.Attributes;
+using MAVN.Service.PaymentManagement.Client;
 using MAVN.Service.SmartVouchers.Client;
 
 namespace MAVN.Service.CustomerAPI.Settings
@@ -58,6 +59,7 @@ namespace MAVN.Service.CustomerAPI.Settings
         public CredentialsServiceClientSettings CredentialsServiceClient { get; set; }
         public VouchersServiceClientSettings VouchersServiceClient { get; set; }
         public SmartVouchersServiceClientSettings SmartVouchersServiceClient { get; set; }
+        public PaymentManagementServiceClientSettings PaymentManagementServiceClient { get; set; }
     }
 
     public class MonitoringServiceClientSettings    

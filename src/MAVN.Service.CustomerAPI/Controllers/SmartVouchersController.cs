@@ -16,6 +16,8 @@ using MAVN.Service.CustomerAPI.Models.Enums;
 using MAVN.Service.CustomerAPI.Models.SmartVouchers;
 using MAVN.Service.PartnerManagement.Client.Models;
 using MAVN.Service.PartnerManagement.Client.Models.Partner;
+using MAVN.Service.PaymentManagement.Client;
+using MAVN.Service.PaymentManagement.Client.Models.Requests;
 using MAVN.Service.SmartVouchers.Client;
 using MAVN.Service.SmartVouchers.Client.Models.Enums;
 using MAVN.Service.SmartVouchers.Client.Models.Requests;
@@ -36,6 +38,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         private readonly IRequestContext _requestContext;
         private readonly ISmartVouchersClient _smartVouchersClient;
         private readonly IPartnerManagementClient _partnerManagementClient;
+        private readonly IPaymentManagementClient _paymentManagementClient;
         private readonly IMapper _mapper;
         private readonly ILog _log;
 
@@ -43,12 +46,14 @@ namespace MAVN.Service.CustomerAPI.Controllers
             IRequestContext requestContext,
             ISmartVouchersClient smartVouchersClient,
             IPartnerManagementClient partnerManagementClient,
+            IPaymentManagementClient paymentManagementClient,
             IMapper mapper,
             ILogFactory logFactory)
         {
             _requestContext = requestContext;
             _smartVouchersClient = smartVouchersClient;
             _partnerManagementClient = partnerManagementClient;
+            _paymentManagementClient = paymentManagementClient;
             _mapper = mapper;
             _log = logFactory.CreateLog(this);
         }
@@ -242,9 +247,9 @@ namespace MAVN.Service.CustomerAPI.Controllers
             var campaignsDict = campaigns.Campaigns.ToDictionary(k => k.Id,
                 v => new SmartVoucherCampaignDto
                 {
-                    Name = v.GetContentValue(Localization.En,VoucherCampaignContentType.Name),
-                    ImageUrl = v.GetContentValue(Localization.En,VoucherCampaignContentType.ImageUrl),
-                    Description = v.GetContentValue(Localization.En,VoucherCampaignContentType.Description),
+                    Name = v.GetContentValue(Localization.En, VoucherCampaignContentType.Name),
+                    ImageUrl = v.GetContentValue(Localization.En, VoucherCampaignContentType.ImageUrl),
+                    Description = v.GetContentValue(Localization.En, VoucherCampaignContentType.Description),
                     VoucherPrice = v.VoucherPrice,
                     PartnerId = v.PartnerId,
                     ToDate = v.ToDate,
@@ -321,6 +326,30 @@ namespace MAVN.Service.CustomerAPI.Controllers
             result.Currency = campaign.Currency;
 
             return result;
+        }
+
+        /// <summary>
+        /// Returns payment info for a smart voucher
+        /// </summary>
+        /// <returns>
+        /// 200 - smart voucher payment info
+        /// 404 - not found
+        /// </returns>
+        [HttpGet("paymentUrl")]
+        [ProducesResponseType(typeof(SmartVoucherPaymentInfoResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<SmartVoucherPaymentInfoResponse> GetPaymentInfoAsync([FromQuery] GetSmartVoucherPaymentInfoRequest request)
+        {
+            var result = await _paymentManagementClient.Api.GetPaymentInfoAsync(new GetPaymentInfoRequest
+            {
+                ExternalPaymentEntityId = request.ShortCode,
+            });
+
+            if (result.PaymentUrl == null)
+                throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.PaymentInfoNotFound);
+
+            return new SmartVoucherPaymentInfoResponse { PaymentUrl = result.PaymentUrl };
         }
     }
 }

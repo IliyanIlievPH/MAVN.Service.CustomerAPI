@@ -24,6 +24,7 @@ using MAVN.Service.Staking.Client;
 using MAVN.Service.Vouchers.Client.Extensions;
 using MAVN.Service.WalletManagement.Client;
 using Lykke.SettingsReader;
+using MAVN.Service.PaymentManagement.Client;
 using MAVN.Service.SmartVouchers.Client;
 
 namespace MAVN.Service.CustomerAPI.Modules
@@ -86,6 +87,8 @@ namespace MAVN.Service.CustomerAPI.Modules
             builder.RegisterVouchersClient(_apiSettings.VouchersServiceClient);
 
             builder.RegisterSmartVouchersClient(_apiSettings.SmartVouchersServiceClient, null);
+
+            builder.RegisterPaymentManagementClient(_apiSettings.PaymentManagementServiceClient, null);
         }
     }
 }

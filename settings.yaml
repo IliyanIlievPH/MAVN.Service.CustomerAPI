@@ -141,3 +141,7 @@ VouchersServiceClient:
 SmartVouchersServiceClient:
   ServiceUrl :
     settings-key: SmartVouchersServiceUrl
+PaymentManagementServiceClient:
+  ServiceUrl :
+    settings-key: PaymentManagementServiceClient
+    
