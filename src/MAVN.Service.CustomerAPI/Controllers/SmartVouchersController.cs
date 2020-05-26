@@ -72,14 +72,15 @@ namespace MAVN.Service.CustomerAPI.Controllers
         public async Task<SmartVoucherCampaignsListResponse> GetSmartVouchersCampaignsAsync([FromQuery] GetSmartVoucherCampaignsRequest request)
         {
             GetNearPartnersByCoordinatesResponse partnersNearCoordinates = null;
-            if (request.Longitude.HasValue && request.Latitude.HasValue && request.RadiusInKm.HasValue)
+            if ((request.Longitude.HasValue && request.Latitude.HasValue && request.RadiusInKm.HasValue) || !string.IsNullOrEmpty(request.CountryIso3Code))
             {
                 partnersNearCoordinates = await _partnerManagementClient.Partners.GetNearPartnerByCoordinatesAsync(
                     new GetNearPartnersByCoordinatesRequest
                     {
-                        Longitude = request.Longitude.Value,
-                        Latitude = request.Latitude.Value,
-                        RadiusInKm = request.RadiusInKm.Value,
+                        Longitude = request.Longitude,
+                        Latitude = request.Latitude,
+                        RadiusInKm = request.RadiusInKm,
+                        CountryIso3Code = request.CountryIso3Code,
                     });
             }
 

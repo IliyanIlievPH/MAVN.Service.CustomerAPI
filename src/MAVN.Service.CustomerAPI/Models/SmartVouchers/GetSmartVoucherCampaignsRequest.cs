@@ -21,5 +21,10 @@
         /// Represents search field by Location which is in some radius
         /// </summary>
         public double? RadiusInKm { get; set; }
+
+        /// <summary>
+        /// Represents search field by Iso3 code of the country
+        /// </summary>
+        public string CountryIso3Code { get; set; }
     }
 }
