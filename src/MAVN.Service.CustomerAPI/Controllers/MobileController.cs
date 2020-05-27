@@ -36,7 +36,6 @@ namespace MAVN.Service.CustomerAPI.Controllers
             try
             {
                 var result = await _settingsReader.ReadJsonAsync();
-                _log.Info("Mobile settings endpoint called", context: result);
                 return Ok(result);
             }
             catch (JsonReaderException e)
