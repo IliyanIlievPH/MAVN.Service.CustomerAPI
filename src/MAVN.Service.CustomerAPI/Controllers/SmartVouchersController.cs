@@ -14,6 +14,7 @@ using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Extensions;
 using MAVN.Service.CustomerAPI.Models.Enums;
 using MAVN.Service.CustomerAPI.Models.SmartVouchers;
+using MAVN.Service.CustomerAPI.Models.Vouchers;
 using MAVN.Service.PartnerManagement.Client.Models;
 using MAVN.Service.PartnerManagement.Client.Models.Partner;
 using MAVN.Service.PaymentManagement.Client;
@@ -21,10 +22,10 @@ using MAVN.Service.PaymentManagement.Client.Models.Requests;
 using MAVN.Service.SmartVouchers.Client;
 using MAVN.Service.SmartVouchers.Client.Models.Enums;
 using MAVN.Service.SmartVouchers.Client.Models.Requests;
-using MAVN.Service.SmartVouchers.Client.Models.Responses;
 using MAVN.Service.SmartVouchers.Client.Models.Responses.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Localization = MAVN.Service.SmartVouchers.Client.Models.Enums.Localization;
+using RedeemVoucherErrorCodes = MAVN.Service.CustomerAPI.Models.Vouchers.Enums.RedeemVoucherErrorCodes;
 
 namespace MAVN.Service.CustomerAPI.Controllers
 {
@@ -351,6 +352,20 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.PaymentInfoNotFound);
 
             return new SmartVoucherPaymentInfoResponse { PaymentUrl = result.PaymentUrl };
+        }
+
+        /// <summary>
+        /// Redeem a voucher.
+        /// </summary>
+        /// <param name="request">The request that describes voucher redemption request.</param>
+        [HttpPost("usage")]
+        [ProducesResponseType(typeof(RedeemVoucherErrorCodes), (int)HttpStatusCode.OK)]
+        public async Task<RedeemVoucherErrorCodes> RedeemVoucherAsync([FromBody] VoucherRedemptionRequest request)
+        {
+            var requestModel = _mapper.Map<VoucherRedeptionModel>(request);
+            var result = await _smartVouchersClient.VouchersApi.RedeemVoucherAsync(requestModel);
+
+            return _mapper.Map<RedeemVoucherErrorCodes>(result);
         }
     }
 }

@@ -2,7 +2,6 @@
 using System.Linq;
 using AutoMapper;
 using JetBrains.Annotations;
-using MAVN.Service.Campaign.Client.Models;
 using MAVN.Service.Campaign.Client.Models.BurnRule.Responses;
 using MAVN.Service.Campaign.Client.Models.Campaign.Responses;
 using MAVN.Service.Campaign.Client.Models.Condition;
@@ -39,9 +38,13 @@ using MAVN.Service.CustomerAPI.Models.PushNotifications;
 using MAVN.Service.CustomerAPI.Models.Referral;
 using MAVN.Service.CustomerAPI.Models.SmartVouchers;
 using MAVN.Service.CustomerAPI.Models.SpendRules;
+using MAVN.Service.CustomerAPI.Models.Vouchers;
+using MAVN.Service.CustomerAPI.Models.Vouchers.Enums;
 using MAVN.Service.CustomerAPI.Models.Wallets;
 using MAVN.Service.SmartVouchers.Client.Models.Enums;
+using MAVN.Service.SmartVouchers.Client.Models.Requests;
 using MAVN.Service.SmartVouchers.Client.Models.Responses;
+using BasePaginationRequestModel = MAVN.Service.Campaign.Client.Models.BasePaginationRequestModel;
 using ConditionModel = MAVN.Service.CustomerAPI.Models.EarnRules.ConditionModel;
 using FileResponseModel = MAVN.Service.CustomerAPI.Models.SmartVouchers.FileResponseModel;
 using Localization = MAVN.Service.SmartVouchers.Client.Models.Enums.Localization;
@@ -51,6 +54,7 @@ using ReferralStakingModel = MAVN.Service.CustomerAPI.Models.Referral.ReferralSt
 using RegistrationRequestModel = MAVN.Service.CustomerManagement.Client.Models.Requests.RegistrationRequestModel;
 using RegistrationResponseModel = MAVN.Service.CustomerManagement.Client.Models.Responses.RegistrationResponseModel;
 using TransferResponse = MAVN.Service.OperationsHistory.Client.Models.Responses.TransferResponse;
+using RedeemVoucherErrorCodesResponse = MAVN.Service.SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes;
 
 namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
 {
@@ -261,6 +265,9 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
                 .ForMember(x => x.ImageUrl, opt => opt.Ignore());
             CreateMap<PaginatedVouchersListResponseModel, SmartVouchersListResponse>()
                 .ForMember(x => x.SmartVouchers, opt => opt.MapFrom(x => x.Vouchers));
+
+            CreateMap<VoucherRedemptionRequest, VoucherRedeptionModel>();
+            CreateMap<RedeemVoucherErrorCodesResponse, RedeemVoucherErrorCodes>();
         }
 
 
