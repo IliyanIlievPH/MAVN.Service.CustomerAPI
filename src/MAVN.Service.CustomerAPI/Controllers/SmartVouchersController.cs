@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -360,7 +361,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// <param name="request">The request that describes voucher redemption request.</param>
         [HttpPost("usage")]
         [ProducesResponseType(typeof(RedeemVoucherErrorCodes), (int)HttpStatusCode.OK)]
-        public async Task<RedeemVoucherErrorCodes> RedeemVoucherAsync([FromBody] VoucherRedemptionRequest request)
+        public async Task<RedeemVoucherErrorCodes> RedeemVoucherAsync([FromBody][Required] VoucherRedemptionRequest request)
         {
             var requestModel = _mapper.Map<VoucherRedeptionModel>(request);
             var result = await _smartVouchersClient.VouchersApi.RedeemVoucherAsync(requestModel);
