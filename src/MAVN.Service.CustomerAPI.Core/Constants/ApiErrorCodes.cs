@@ -553,8 +553,26 @@ namespace MAVN.Service.CustomerAPI.Core.Constants
             /// </summary>
             public static readonly ILykkeApiErrorCode PaymentInfoNotFound =
                 new LykkeApiErrorCode(nameof(PaymentInfoNotFound), "Payment info for smart voucher could not be found");
-        }
 
+            /// <summary>
+            /// The customer is already linked to a partner
+            /// </summary>
+            public static readonly ILykkeApiErrorCode CustomerAlreadyLinkedToAPartner =
+                new LykkeApiErrorCode(nameof(CustomerAlreadyLinkedToAPartner), "The customer is already linked to a partner");
+
+            /// <summary>
+            /// Partner linking info is missing
+            /// </summary>
+            public static readonly ILykkeApiErrorCode PartnerLinkingInfoDoesNotExist =
+                new LykkeApiErrorCode(nameof(PartnerLinkingInfoDoesNotExist), "Partner linking info is missing");
+
+            /// <summary>
+            /// Partner linking info does not match
+            /// </summary>
+            public static readonly ILykkeApiErrorCode PartnerLinkingInfoDoesNotMatch =
+                new LykkeApiErrorCode(nameof(PartnerLinkingInfoDoesNotMatch), "Partner linking info does not match");
+        }
+        
         /// <summary>
         ///     Group for all model validation error codes.
         /// </summary>

@@ -114,6 +114,9 @@ namespace MAVN.Service.CustomerAPI.Tests.Constants
             nameof(ApiErrorCodes.Service.SmartVoucherNotFound),
             nameof(ApiErrorCodes.Service.PaymentProviderError),
             nameof(ApiErrorCodes.Service.PaymentInfoNotFound),
+            nameof(ApiErrorCodes.Service.CustomerAlreadyLinkedToAPartner),
+            nameof(ApiErrorCodes.Service.PartnerLinkingInfoDoesNotExist),
+            nameof(ApiErrorCodes.Service.PartnerLinkingInfoDoesNotMatch),
         };
 
         /// <summary>
