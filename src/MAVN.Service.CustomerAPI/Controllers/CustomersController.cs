@@ -21,6 +21,7 @@ using MAVN.Service.CustomerManagement.Client.Enums;
 using MAVN.Service.CustomerManagement.Client.Models.Requests;
 using MAVN.Service.CustomerProfile.Client;
 using MAVN.Service.CustomerProfile.Client.Models.Enums;
+using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.Sessions.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +47,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         private readonly ISessionsServiceClient _sessionsServiceClient;
         private readonly ICustomerProfileClient _customerProfileClient;
         private readonly ICredentialsClient _credentialsClient;
+        private readonly IPartnerManagementClient _partnerManagementClient;
 
         public CustomersController(
             ICustomerService customerService,
@@ -56,7 +58,8 @@ namespace MAVN.Service.CustomerAPI.Controllers
             ILogFactory logFactory,
             ISessionsServiceClient sessionsServiceClient,
             ICustomerProfileClient customerProfileClient,
-            ICredentialsClient credentialsClient)
+            ICredentialsClient credentialsClient,
+            IPartnerManagementClient partnerManagementClient)
         {
             _customerService = customerService;
             _customerManagementServiceClient = customerManagementServiceClient;
@@ -66,6 +69,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
             _sessionsServiceClient = sessionsServiceClient;
             _customerProfileClient = customerProfileClient;
             _credentialsClient = credentialsClient;
+            _partnerManagementClient = partnerManagementClient;
             _log = logFactory.CreateLog(this);
         }
 
@@ -86,7 +90,8 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 true);
             var blockStatusTask = _customerManagementServiceClient.CustomersApi.GetCustomerBlockStateAsync(customerId);
             var hasPinTask = _credentialsClient.Api.HasPinAsync(customerId);
-            await Task.WhenAll(customerProfileTask, blockStatusTask, hasPinTask);
+            var linkedPartnerTask = _partnerManagementClient.Linking.GetLinkedPartnerAsync(Guid.Parse(customerId));
+            await Task.WhenAll(customerProfileTask, blockStatusTask, hasPinTask, linkedPartnerTask);
 
             var customerProfile = customerProfileTask.Result;
             var blockStatus = blockStatusTask.Result;
@@ -103,7 +108,8 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 CountryPhoneCodeId = customerProfile.CountryPhoneCodeId,
                 CountryOfNationalityId = customerProfile.CountryOfNationalityId,
                 CountryOfNationalityName = customerProfile.CountryOfNationalityName,
-                HasPin = hasPinTask.Result.HasPin
+                HasPin = hasPinTask.Result.HasPin,
+                LinkedPartnerId = linkedPartnerTask.Result,
             };
 
             return result;

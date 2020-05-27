@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 
 namespace MAVN.Service.CustomerAPI.Models.Customers
 {
@@ -17,5 +18,6 @@ namespace MAVN.Service.CustomerAPI.Models.Customers
         public int CountryOfNationalityId { get; set; }
         public string CountryOfNationalityName { get; set; }
         public bool HasPin { get; set; }
+        public Guid? LinkedPartnerId { get; set; }
     }
 }
