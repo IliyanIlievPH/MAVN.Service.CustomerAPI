@@ -29,13 +29,14 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// </summary>
         [HttpGet("settings")]
         [SwaggerOperation("GetMobileSettings")]
-        [ProducesResponseType(typeof(JObject), (int) HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(ErrorResponse), (int) HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(JObject), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetSettings()
         {
             try
             {
-                var result =  await _settingsReader.ReadJsonAsync();
+                var result = await _settingsReader.ReadJsonAsync();
+                _log.Info("Mobile settings endpoint called", context: result);
                 return Ok(result);
             }
             catch (JsonReaderException e)
