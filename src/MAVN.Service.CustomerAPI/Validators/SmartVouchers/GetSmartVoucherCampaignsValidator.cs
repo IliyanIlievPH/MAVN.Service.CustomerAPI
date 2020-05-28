@@ -23,11 +23,8 @@ namespace MAVN.Service.CustomerAPI.Validators.SmartVouchers
 
             RuleFor(x => x.RadiusInKm)
                 .GreaterThan(0)
-                .LessThanOrEqualTo(100)
-                .WithMessage("RadiusInKm value must be between 1 and 100.")
-                .NotEmpty()
-                .NotNull()
-                .When(x => x.Longitude != null || x.Latitude != null);
+                .LessThanOrEqualTo(128)
+                .WithMessage("RadiusInKm value must be between 1 and 128.");
         }
     }
 }
