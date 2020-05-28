@@ -74,7 +74,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         public async Task<SmartVoucherCampaignsListResponse> GetSmartVouchersCampaignsAsync([FromQuery] GetSmartVoucherCampaignsRequest request)
         {
             GetNearPartnersByCoordinatesResponse partnersNearCoordinates = null;
-            if ((request.Longitude.HasValue && request.Latitude.HasValue && request.RadiusInKm.HasValue) || !string.IsNullOrEmpty(request.CountryIso3Code))
+            if (request.Longitude.HasValue && request.Latitude.HasValue || !string.IsNullOrEmpty(request.CountryIso3Code))
             {
                 partnersNearCoordinates = await _partnerManagementClient.Partners.GetNearPartnerByCoordinatesAsync(
                     new GetNearPartnersByCoordinatesRequest
