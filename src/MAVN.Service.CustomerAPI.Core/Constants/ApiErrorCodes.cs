@@ -571,6 +571,24 @@ namespace MAVN.Service.CustomerAPI.Core.Constants
             /// </summary>
             public static readonly ILykkeApiErrorCode PartnerLinkingInfoDoesNotMatch =
                 new LykkeApiErrorCode(nameof(PartnerLinkingInfoDoesNotMatch), "Partner linking info does not match");
+
+            /// <summary>
+            /// Wrong smart voucher validation code
+            /// </summary>
+            public static readonly ILykkeApiErrorCode WrongSmartVoucherValidationCode =
+                new LykkeApiErrorCode(nameof(WrongSmartVoucherValidationCode), "Wrong smart voucher validation code");
+
+            /// <summary>
+            /// There is no linked partner to the seller customer
+            /// </summary>
+            public static readonly ILykkeApiErrorCode SellerCustomerIsNotALinkedPartner =
+                new LykkeApiErrorCode(nameof(SellerCustomerIsNotALinkedPartner), "There is no linked partner to the seller customer");
+
+            /// <summary>
+            /// The linked partner to the seller customer is not the issuer of the voucher
+            /// </summary>
+            public static readonly ILykkeApiErrorCode SellerCustomerIsNotTheVoucherIssuer =
+                new LykkeApiErrorCode(nameof(SellerCustomerIsNotTheVoucherIssuer), "The linked partner to the seller customer is not the issuer of the voucher");
         }
         
         /// <summary>
