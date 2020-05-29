@@ -26,7 +26,6 @@ using MAVN.Service.SmartVouchers.Client.Models.Requests;
 using MAVN.Service.SmartVouchers.Client.Models.Responses.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Localization = MAVN.Service.SmartVouchers.Client.Models.Enums.Localization;
-using RedeemVoucherErrorCodes = MAVN.Service.CustomerAPI.Models.Vouchers.Enums.RedeemVoucherErrorCodes;
 
 namespace MAVN.Service.CustomerAPI.Controllers
 {
@@ -360,13 +359,30 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// </summary>
         /// <param name="request">The request that describes voucher redemption request.</param>
         [HttpPost("usage")]
-        [ProducesResponseType(typeof(RedeemVoucherErrorCodes), (int)HttpStatusCode.OK)]
-        public async Task<RedeemVoucherErrorCodes> RedeemVoucherAsync([FromBody][Required] VoucherRedemptionRequest request)
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task RedeemVoucherAsync([FromBody][Required] VoucherRedemptionRequest request)
         {
             var requestModel = _mapper.Map<VoucherRedeptionModel>(request);
-            var result = await _smartVouchersClient.VouchersApi.RedeemVoucherAsync(requestModel);
+            var error = await _smartVouchersClient.VouchersApi.RedeemVoucherAsync(requestModel);
 
-            return _mapper.Map<RedeemVoucherErrorCodes>(result);
+            switch (error)
+            {
+                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.None:
+                    return;
+                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.VoucherNotFound:
+                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherNotFound);
+                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.WrongValidationCode:
+                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.WrongSmartVoucherValidationCode);
+                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.VoucherCampaignNotFound:
+                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
+                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.VoucherCampaignNotActive:
+                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherCampaignNotActive);
+                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.SellerCustomerIsNotALinkedPartner:
+                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SellerCustomerIsNotALinkedPartner);
+                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.SellerCustomerIsNotTheVoucherIssuer:
+                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SellerCustomerIsNotTheVoucherIssuer);
+            }
         }
     }
 }

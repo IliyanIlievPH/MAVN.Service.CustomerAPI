@@ -39,7 +39,6 @@ using MAVN.Service.CustomerAPI.Models.Referral;
 using MAVN.Service.CustomerAPI.Models.SmartVouchers;
 using MAVN.Service.CustomerAPI.Models.SpendRules;
 using MAVN.Service.CustomerAPI.Models.Vouchers;
-using MAVN.Service.CustomerAPI.Models.Vouchers.Enums;
 using MAVN.Service.CustomerAPI.Models.Wallets;
 using MAVN.Service.SmartVouchers.Client.Models.Enums;
 using MAVN.Service.SmartVouchers.Client.Models.Requests;
@@ -267,7 +266,6 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
                 .ForMember(x => x.SmartVouchers, opt => opt.MapFrom(x => x.Vouchers));
 
             CreateMap<VoucherRedemptionRequest, VoucherRedeptionModel>();
-            CreateMap<RedeemVoucherErrorCodesResponse, RedeemVoucherErrorCodes>();
         }
 
 

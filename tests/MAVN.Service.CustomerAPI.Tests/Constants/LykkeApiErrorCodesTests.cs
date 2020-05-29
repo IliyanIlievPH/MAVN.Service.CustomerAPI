@@ -117,6 +117,9 @@ namespace MAVN.Service.CustomerAPI.Tests.Constants
             nameof(ApiErrorCodes.Service.CustomerAlreadyLinkedToAPartner),
             nameof(ApiErrorCodes.Service.PartnerLinkingInfoDoesNotExist),
             nameof(ApiErrorCodes.Service.PartnerLinkingInfoDoesNotMatch),
+            nameof(ApiErrorCodes.Service.WrongSmartVoucherValidationCode),
+            nameof(ApiErrorCodes.Service.SellerCustomerIsNotALinkedPartner),
+            nameof(ApiErrorCodes.Service.SellerCustomerIsNotTheVoucherIssuer),
         };
 
         /// <summary>
@@ -127,7 +130,7 @@ namespace MAVN.Service.CustomerAPI.Tests.Constants
         ///     please fix unit test cases too. This is needed to make sure you have changed error code knowingly.
         /// </summary>
         [Fact]
-        public void ErrorCodes_WasNotModifiedAccidently()
+        public void ErrorCodes_WasNotModifiedAccidentally()
         {
             var currentErrorCodes = GetAllCurrentApiErrorCodes(typeof(ApiErrorCodes));
 
