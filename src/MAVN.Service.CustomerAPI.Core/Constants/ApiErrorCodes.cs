@@ -589,6 +589,18 @@ namespace MAVN.Service.CustomerAPI.Core.Constants
             /// </summary>
             public static readonly ILykkeApiErrorCode SellerCustomerIsNotTheVoucherIssuer =
                 new LykkeApiErrorCode(nameof(SellerCustomerIsNotTheVoucherIssuer), "The linked partner to the seller customer is not the issuer of the voucher");
+
+            /// <summary>
+            /// The customer have another voucher in reserved state so he can't reserve another one
+            /// </summary>
+            public static readonly ILykkeApiErrorCode CustomerHaveAnotherReservedVoucher =
+                new LykkeApiErrorCode(nameof(CustomerHaveAnotherReservedVoucher), "The customer have another voucher in reserved state so he can't reserve another one");
+
+            /// <summary>
+            /// The voucher is not in the correct status so it cannot be redeemed
+            /// </summary>
+            public static readonly ILykkeApiErrorCode VoucherIsNotInCorrectStatusToBeRedeemed =
+                new LykkeApiErrorCode(nameof(VoucherIsNotInCorrectStatusToBeRedeemed), "The voucher is not in the correct status so it cannot be redeemed");
         }
         
         /// <summary>
