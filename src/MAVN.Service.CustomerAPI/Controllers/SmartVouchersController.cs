@@ -75,12 +75,13 @@ namespace MAVN.Service.CustomerAPI.Controllers
             GetNearPartnersByCoordinatesResponse partnersNearCoordinates = null;
             if (request.Longitude.HasValue && request.Latitude.HasValue || !string.IsNullOrEmpty(request.CountryIso3Code))
             {
+                var radiusInKm = request.RadiusInKm ?? 20;
                 partnersNearCoordinates = await _partnerManagementClient.Partners.GetNearPartnerByCoordinatesAsync(
                     new GetNearPartnersByCoordinatesRequest
                     {
                         Longitude = request.Longitude,
                         Latitude = request.Latitude,
-                        RadiusInKm = request.RadiusInKm,
+                        RadiusInKm = radiusInKm,
                         CountryIso3Code = request.CountryIso3Code,
                     });
             }
