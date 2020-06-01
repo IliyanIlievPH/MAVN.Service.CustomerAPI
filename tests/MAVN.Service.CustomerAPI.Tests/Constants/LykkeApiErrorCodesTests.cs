@@ -120,6 +120,8 @@ namespace MAVN.Service.CustomerAPI.Tests.Constants
             nameof(ApiErrorCodes.Service.WrongSmartVoucherValidationCode),
             nameof(ApiErrorCodes.Service.SellerCustomerIsNotALinkedPartner),
             nameof(ApiErrorCodes.Service.SellerCustomerIsNotTheVoucherIssuer),
+            nameof(ApiErrorCodes.Service.CustomerHaveAnotherReservedVoucher),
+            nameof(ApiErrorCodes.Service.VoucherIsNotInCorrectStatusToBeRedeemed),
         };
 
         /// <summary>

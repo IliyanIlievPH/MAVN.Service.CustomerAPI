@@ -6,16 +6,16 @@ using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common.Log;
-using MAVN.Common.Middleware.Authentication;
-using MAVN.Common.Middleware.Version;
 using Lykke.Common.ApiLibrary.Exceptions;
 using Lykke.Common.Log;
-using MAVN.Service.PartnerManagement.Client;
+using MAVN.Common.Middleware.Authentication;
+using MAVN.Common.Middleware.Version;
 using MAVN.Service.CustomerAPI.Core.Constants;
 using MAVN.Service.CustomerAPI.Extensions;
 using MAVN.Service.CustomerAPI.Models.Enums;
 using MAVN.Service.CustomerAPI.Models.SmartVouchers;
 using MAVN.Service.CustomerAPI.Models.Vouchers;
+using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.PartnerManagement.Client.Models;
 using MAVN.Service.PartnerManagement.Client.Models.Partner;
 using MAVN.Service.PaymentManagement.Client;
@@ -82,7 +82,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                         Longitude = request.Longitude,
                         Latitude = request.Latitude,
                         RadiusInKm = radiusInKm,
-                        CountryIso3Code = request.CountryIso3Code,
+                        CountryIso3Code = request.CountryIso3Code
                     });
             }
 
@@ -96,7 +96,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                     VoucherCampaignState = VoucherCampaignState.Published,
                     PartnerIds = partnersNearCoordinates != null && partnersNearCoordinates.PartnersIds.Any()
                         ? partnersNearCoordinates.PartnersIds
-                        : null,
+                        : null
                 });
 
             var result = _mapper.Map<SmartVoucherCampaignsListResponse>(paginatedCampaigns);
@@ -200,6 +200,10 @@ namespace MAVN.Service.CustomerAPI.Controllers
                     throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.NoAvailableVouchers);
                 case ProcessingVoucherErrorCodes.InvalidPartnerPaymentConfiguration:
                     throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.PaymentProviderError);
+                case ProcessingVoucherErrorCodes.VoucherNotFound:
+                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherNotFound);
+                case ProcessingVoucherErrorCodes.CustomerHaveAnotherReservedVoucher:
+                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.CustomerHaveAnotherReservedVoucher);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -256,7 +260,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                     VoucherPrice = v.VoucherPrice,
                     PartnerId = v.PartnerId,
                     ToDate = v.ToDate,
-                    Currency = v.Currency,
+                    Currency = v.Currency
                 });
 
             var partnerIds = campaigns.Campaigns.Select(c => c.PartnerId).Distinct().ToArray();
@@ -346,7 +350,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         {
             var result = await _paymentManagementClient.Api.GetPaymentInfoAsync(new GetPaymentInfoRequest
             {
-                ExternalPaymentEntityId = request.ShortCode,
+                ExternalPaymentEntityId = request.ShortCode
             });
 
             if (result.PaymentUrl == null)
@@ -369,20 +373,22 @@ namespace MAVN.Service.CustomerAPI.Controllers
 
             switch (error)
             {
-                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.None:
+                case RedeemVoucherErrorCodes.None:
                     return;
-                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.VoucherNotFound:
+                case RedeemVoucherErrorCodes.VoucherNotFound:
                     throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherNotFound);
-                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.WrongValidationCode:
+                case RedeemVoucherErrorCodes.WrongValidationCode:
                     throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.WrongSmartVoucherValidationCode);
-                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.VoucherCampaignNotFound:
+                case RedeemVoucherErrorCodes.VoucherCampaignNotFound:
                     throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
-                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.VoucherCampaignNotActive:
+                case RedeemVoucherErrorCodes.VoucherCampaignNotActive:
                     throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherCampaignNotActive);
-                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.SellerCustomerIsNotALinkedPartner:
+                case RedeemVoucherErrorCodes.SellerCustomerIsNotALinkedPartner:
                     throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SellerCustomerIsNotALinkedPartner);
-                case SmartVouchers.Client.Models.Responses.Enums.RedeemVoucherErrorCodes.SellerCustomerIsNotTheVoucherIssuer:
+                case RedeemVoucherErrorCodes.SellerCustomerIsNotTheVoucherIssuer:
                     throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SellerCustomerIsNotTheVoucherIssuer);
+                case RedeemVoucherErrorCodes.VoucherIsNotInCorrectStatusToBeRedeemed:
+                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.VoucherIsNotInCorrectStatusToBeRedeemed);
             }
         }
     }
