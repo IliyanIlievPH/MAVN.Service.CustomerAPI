@@ -46,9 +46,6 @@ namespace MAVN.Service.CustomerAPI.Models.SmartVouchers
         /// <summary>Voucher campaign's author</summary>
         public string CreatedBy { get; set; }
 
-        /// <summary>Voucher campaign state</summary>
-        public SmartVoucherCampaignState State { get; set; }
-
         /// <summary>
         /// Business vertical of the partner
         /// </summary>
