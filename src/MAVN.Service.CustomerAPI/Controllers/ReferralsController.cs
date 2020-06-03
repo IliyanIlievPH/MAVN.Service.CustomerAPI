@@ -172,6 +172,11 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// <returns>
         /// 200 - function done
         /// </returns>
+        /// <remarks>
+        /// Error codes:
+        /// - **ReferralNotFound**
+        /// - **InvalidCustomerId**
+        /// </remarks>
         [HttpGet("all")]
         [LykkeAuthorize]
         [ProducesResponseType(typeof(ReferralsListResponseModel), (int)HttpStatusCode.OK)]

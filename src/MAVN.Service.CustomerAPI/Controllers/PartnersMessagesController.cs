@@ -34,6 +34,10 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// </summary>
         /// <param name="partnerMessageId">Partner message id</param>
         /// <returns><see cref="GetPartnerMessageResponseModel"/></returns>
+        /// <remarks>
+        /// Error codes:
+        /// - **MessageRequestsIsForAnotherCustomer**
+        /// </remarks>
         [LykkeAuthorize]
         [HttpGet("messages")]
         [SwaggerOperation("Get partner message by id")]

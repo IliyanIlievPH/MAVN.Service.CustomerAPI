@@ -15,6 +15,8 @@ using MAVN.Service.CustomerAPI.Extensions;
 using MAVN.Service.CustomerAPI.Models.Enums;
 using MAVN.Service.CustomerAPI.Models.SmartVouchers;
 using MAVN.Service.CustomerAPI.Models.Vouchers;
+using MAVN.Service.CustomerProfile.Client;
+using MAVN.Service.CustomerProfile.Client.Models.Requests;
 using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.PartnerManagement.Client.Models;
 using MAVN.Service.PartnerManagement.Client.Models.Partner;
@@ -40,6 +42,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         private readonly ISmartVouchersClient _smartVouchersClient;
         private readonly IPartnerManagementClient _partnerManagementClient;
         private readonly IPaymentManagementClient _paymentManagementClient;
+        private readonly ICustomerProfileClient _customerProfileClient;
         private readonly IMapper _mapper;
         private readonly ILog _log;
 
@@ -48,6 +51,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
             ISmartVouchersClient smartVouchersClient,
             IPartnerManagementClient partnerManagementClient,
             IPaymentManagementClient paymentManagementClient,
+            ICustomerProfileClient customerProfileClient,
             IMapper mapper,
             ILogFactory logFactory)
         {
@@ -55,6 +59,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
             _smartVouchersClient = smartVouchersClient;
             _partnerManagementClient = partnerManagementClient;
             _paymentManagementClient = paymentManagementClient;
+            _customerProfileClient = customerProfileClient;
             _mapper = mapper;
             _log = logFactory.CreateLog(this);
         }
@@ -399,7 +404,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         [HttpPost("usage")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task RedeemVoucherAsync([FromBody][Required] VoucherRedemptionRequest request)
+        public async Task RedeemVoucherAsync([FromBody] VoucherRedemptionRequest request)
         {
             var requestModel = _mapper.Map<VoucherRedeptionModel>(request);
             var error = await _smartVouchersClient.VouchersApi.RedeemVoucherAsync(requestModel);
@@ -422,6 +427,52 @@ namespace MAVN.Service.CustomerAPI.Controllers
                     throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SellerCustomerIsNotTheVoucherIssuer);
                 case RedeemVoucherErrorCodes.VoucherIsNotInCorrectStatusToBeRedeemed:
                     throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.VoucherIsNotInCorrectStatusToBeRedeemed);
+            }
+        }
+
+        /// <summary>
+        /// Redeem a voucher.
+        /// </summary>
+        /// <param name="request">The request that describes voucher redemption request.</param>
+        /// <remarks>
+        /// Error codes:
+        /// - **CustomerDoesNotExist**
+        /// - **SmartVoucherNotFound**
+        /// - **LoggedCustomerIsNotOwnerOfTheSmartVoucher**
+        /// - **VoucherIsNotInTheCorrectStateToTransfer**
+        /// - **SmartVoucherCampaignNotFound**
+        /// </remarks>
+        [HttpPost("transfer")]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task TransferVoucherAsync([FromBody] SmartVoucherTransferRequest request)
+        {
+            var receiverCustomer =
+                await _customerProfileClient.CustomerProfiles.GetByEmailAsync(
+                    new GetByEmailRequestModel {Email = request.ReceiverEmail});
+
+            if (receiverCustomer.Profile == null)
+                throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.CustomerDoesNotExist);
+
+            var error = await _smartVouchersClient.VouchersApi.TransferVoucherAsync(new VoucherTransferModel
+            {
+                NewOwnerId = Guid.Parse(receiverCustomer.Profile.CustomerId),
+                OldOwnerId = Guid.Parse(_requestContext.UserId),
+                VoucherShortCode = request.VoucherShortCode,
+            });
+
+            switch (error)
+            {
+                case TransferVoucherErrorCodes.None:
+                    return;
+                case TransferVoucherErrorCodes.VoucherNotFound:
+                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherNotFound);
+                case TransferVoucherErrorCodes.NotAnOwner:
+                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.LoggedCustomerIsNotOwnerOfTheSmartVoucher);
+                case TransferVoucherErrorCodes.VoucherIsNotInTheCorrectStateToTransfer:
+                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.VoucherIsNotInTheCorrectStateToTransfer);
+                case TransferVoucherErrorCodes.VoucherCampaignNotFound:
+                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
             }
         }
     }
