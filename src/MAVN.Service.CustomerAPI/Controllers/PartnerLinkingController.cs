@@ -27,6 +27,13 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// <summary>
         /// Links the logged customer to a partner
         /// </summary>
+        /// <remarks>
+        /// Error codes:
+        /// - **CustomerDoesNotExist**
+        /// - **CustomerAlreadyLinkedToAPartner**
+        /// - **PartnerLinkingInfoDoesNotExist**
+        /// - **PartnerLinkingInfoDoesNotMatch**
+        /// </remarks>
         [HttpPost]
         [LykkeAuthorize]
         [ProducesResponseType((int) HttpStatusCode.NoContent)]
