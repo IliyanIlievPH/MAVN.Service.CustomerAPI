@@ -136,9 +136,13 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// <returns>
         /// 200 - smart voucher campaign.
         /// </returns>
+        /// <remarks>
+        /// Error codes:
+        /// - **SmartVoucherCampaignNotFound**
+        /// </remarks>
         [HttpGet("campaigns/search")]
         [ProducesResponseType(typeof(SmartVoucherCampaignDetailsModel), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<SmartVoucherCampaignDetailsModel> GetSmartVouchersCampaignByIdAsync([FromQuery] Guid id)
         {
             if (id == default)
@@ -147,7 +151,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
             var campaign = await _smartVouchersClient.CampaignsApi.GetByIdAsync(id);
 
             if (campaign == null)
-                throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
+                throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
 
             var result = _mapper.Map<SmartVoucherCampaignDetailsModel>(campaign);
 
@@ -156,7 +160,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
             if (partner == null)
             {
                 _log.Warning("Smart voucher campaign partner does not exist", context: new { campaign.PartnerId, campaignId = campaign.Id });
-                throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
+                throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
             }
 
             var geolocations = partner.Locations.Where(l => l.Longitude.HasValue && l.Latitude.HasValue)
@@ -176,6 +180,15 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// <returns>
         /// 200 - payment url
         /// </returns>
+        /// <remarks>
+        /// Error codes:
+        /// - **SmartVoucherCampaignNotFound**
+        /// - **SmartVoucherCampaignNotActive**
+        /// - **NoAvailableVouchers**
+        /// - **PaymentProviderError**
+        /// - **SmartVoucherNotFound**
+        /// - **CustomerHaveAnotherReservedVoucher**
+        /// </remarks>
         [HttpPost("reserve")]
         [ProducesResponseType(typeof(ReserveSmartVoucherResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -212,8 +225,10 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// <summary>
         /// Cancels smart voucher reservation
         /// </summary>
-        /// <returns>
-        /// </returns>
+        /// <remarks>
+        /// Error codes:
+        /// - **SmartVoucherNotFound**
+        /// </remarks>
         [HttpPost("cancelReservation")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -301,15 +316,19 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// <returns>
         /// 200 - smart voucher details
         /// </returns>
+        /// <remarks>
+        /// Error codes:
+        /// - **SmartVoucherNotFound**
+        /// </remarks>
         [HttpGet("voucherShortCode")]
         [ProducesResponseType(typeof(SmartVoucherDetailsResponse), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<SmartVoucherDetailsResponse> GetSmartVoucherByShortCodeAsync([FromQuery] string voucherShortCode)
         {
             var voucherResponse = await _smartVouchersClient.VouchersApi.GetByShortCodeAsync(voucherShortCode);
 
             if (voucherResponse == null)
-                throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherNotFound);
+                throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherNotFound);
 
             var result = _mapper.Map<SmartVoucherDetailsResponse>(voucherResponse);
 
@@ -342,6 +361,10 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// 200 - smart voucher payment info
         /// 404 - not found
         /// </returns>
+        /// <remarks>
+        /// Error codes:
+        /// - **PaymentInfoNotFound**
+        /// </remarks>
         [HttpGet("paymentUrl")]
         [ProducesResponseType(typeof(SmartVoucherPaymentInfoResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -363,6 +386,16 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// Redeem a voucher.
         /// </summary>
         /// <param name="request">The request that describes voucher redemption request.</param>
+        /// <remarks>
+        /// Error codes:
+        /// - **SmartVoucherNotFound**
+        /// - **SmartVoucherCampaignNotFound**
+        /// - **SmartVoucherCampaignNotActive**
+        /// - **WrongSmartVoucherValidationCode**
+        /// - **SellerCustomerIsNotALinkedPartner**
+        /// - **SellerCustomerIsNotTheVoucherIssuer**
+        /// - **VoucherIsNotInCorrectStatusToBeRedeemed**
+        /// </remarks>
         [HttpPost("usage")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
