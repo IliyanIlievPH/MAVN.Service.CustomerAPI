@@ -125,6 +125,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// - **InvalidPasswordFormat**
         /// - **AlreadyRegisteredWithGoogle**
         /// - **InvalidCountryOfNationalityId**
+        /// - **EmailIsNotAllowed**
         /// </remarks>
         [HttpPost("register")]
         [AllowAnonymous]
@@ -202,6 +203,13 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// <returns></returns>
         /// <exception cref="LykkeApiErrorException"></exception>
         /// <exception cref="InvalidOperationException"></exception>
+        /// <remarks>
+        /// Error codes:
+        /// - **NoCustomerWithSuchEmail**
+        /// - **ThereIsNoIdentifierForThisCustomer**
+        /// - **ReachedMaximumRequestForPeriod**
+        /// - **CustomerIsNotVerified**
+        /// </remarks>
         [HttpPost("generateresetpasswordlink")]
         [SwaggerOperation("GenerateResetPasswordLink")]
         [ProducesResponseType((int)HttpStatusCode.OK)]

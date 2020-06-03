@@ -136,6 +136,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// - **CustomerProfileDoesNotExist**
         /// - **CountryPhoneCodeDoesNotExist**
         /// - **InvalidPhoneNumber**
+        /// - **PhoneAlreadyExists**
         /// </remarks>
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]

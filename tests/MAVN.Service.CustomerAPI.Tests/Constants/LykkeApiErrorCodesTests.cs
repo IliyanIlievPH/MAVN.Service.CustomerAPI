@@ -122,6 +122,8 @@ namespace MAVN.Service.CustomerAPI.Tests.Constants
             nameof(ApiErrorCodes.Service.SellerCustomerIsNotTheVoucherIssuer),
             nameof(ApiErrorCodes.Service.CustomerHaveAnotherReservedVoucher),
             nameof(ApiErrorCodes.Service.VoucherIsNotInCorrectStatusToBeRedeemed),
+            nameof(ApiErrorCodes.Service.LoggedCustomerIsNotOwnerOfTheSmartVoucher),
+            nameof(ApiErrorCodes.Service.VoucherIsNotInTheCorrectStateToTransfer),
         };
 
         /// <summary>

@@ -601,6 +601,18 @@ namespace MAVN.Service.CustomerAPI.Core.Constants
             /// </summary>
             public static readonly ILykkeApiErrorCode VoucherIsNotInCorrectStatusToBeRedeemed =
                 new LykkeApiErrorCode(nameof(VoucherIsNotInCorrectStatusToBeRedeemed), "The voucher is not in the correct status so it cannot be redeemed");
+
+            /// <summary>
+            /// The logged customer is not owner of the smart voucher
+            /// </summary>
+            public static readonly ILykkeApiErrorCode LoggedCustomerIsNotOwnerOfTheSmartVoucher =
+                new LykkeApiErrorCode(nameof(LoggedCustomerIsNotOwnerOfTheSmartVoucher), "The logged customer is not owner of the smart voucher");
+
+            /// <summary>
+            /// The voucher is not in the correct status so it cannot be transferred
+            /// </summary>
+            public static readonly ILykkeApiErrorCode VoucherIsNotInTheCorrectStateToTransfer =
+                new LykkeApiErrorCode(nameof(VoucherIsNotInTheCorrectStateToTransfer), "The voucher is not in the correct status so it cannot be transferred");
         }
         
         /// <summary>
