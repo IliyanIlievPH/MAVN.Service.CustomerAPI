@@ -279,7 +279,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                     Description = v.GetContentValue(Localization.En, VoucherCampaignContentType.Description),
                     VoucherPrice = v.VoucherPrice,
                     PartnerId = v.PartnerId,
-                    ToDate = v.ToDate,
+                    ExpirationDate = v.ExpirationDate,
                     Currency = v.Currency
                 });
 
@@ -297,7 +297,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
 
                 voucher.CampaignName = campaignInfo.Name;
                 voucher.ImageUrl = campaignInfo.ImageUrl;
-                voucher.ExpirationDate = campaignInfo.ToDate;
+                voucher.ExpirationDate = campaignInfo.ExpirationDate;
                 voucher.PartnerId = campaignInfo.PartnerId;
                 voucher.Description = campaignInfo.Description;
                 voucher.Price = campaignInfo.VoucherPrice;
@@ -349,7 +349,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
 
             result.CampaignName = campaign.GetContentValue(Localization.En, VoucherCampaignContentType.Name);
             result.PartnerId = campaign.PartnerId;
-            result.ExpirationDate = campaign.ToDate;
+            result.ExpirationDate = campaign.ExpirationDate;
             result.PartnerName = partner?.Name;
             result.ImageUrl = campaign.GetContentValue(Localization.En, VoucherCampaignContentType.ImageUrl);
             result.Description = campaign.GetContentValue(Localization.En, VoucherCampaignContentType.Description);
