@@ -19,10 +19,5 @@ namespace MAVN.Service.CustomerAPI.Models.Vouchers
         /// </summary>
         [Required]
         public string VoucherValidationCode { get; set; }
-
-        /// <summary>
-        /// Id of the seller
-        /// </summary>
-        public Guid? SellerCustomerId { get; set; }
     }
 }

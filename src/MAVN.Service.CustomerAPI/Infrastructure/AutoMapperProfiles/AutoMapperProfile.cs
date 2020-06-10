@@ -265,7 +265,9 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
             CreateMap<PaginatedVouchersListResponseModel, SmartVouchersListResponse>()
                 .ForMember(x => x.SmartVouchers, opt => opt.MapFrom(x => x.Vouchers));
 
-            CreateMap<VoucherRedemptionRequest, VoucherRedeptionModel>();
+            CreateMap<VoucherRedemptionRequest, VoucherRedeptionModel>()
+                .ForMember(x => x.SellerCustomerId, opt => opt.Ignore());
+
         }
 
 
