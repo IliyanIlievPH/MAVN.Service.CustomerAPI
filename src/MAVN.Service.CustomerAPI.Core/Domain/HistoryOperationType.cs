@@ -5,8 +5,6 @@
         SendTransfer,
         ReceiveTransfer,
         BonusReward,
-        PaymentTransfer,
-        PaymentTransferRefund,
         PartnerPayment,
         PartnerPaymentRefund,
         LinkedWalletSendTransfer,
@@ -15,6 +13,10 @@
         ReleasedReferralStake,
         WalletLinkingFee,
         TransferToPublicFee,
-        VoucherPurchasePayment
+        VoucherPurchasePayment,
+        SmartVoucherPayment,
+        SmartVoucherUse,
+        SmartVoucherTransferSend,
+        SmartVoucherTransferReceive,
     }
 }

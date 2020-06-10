@@ -57,6 +57,9 @@ namespace MAVN.Service.CustomerAPI.Services
                 .Concat(response.ReferralStakes?.Select(x => Convert(x, HistoryOperationType.ReferralStake)) ?? Array.Empty<OperationHistoryModel>())
                 .Concat(response.ReleasedReferralStakes?.Select(x => Convert(x, HistoryOperationType.ReleasedReferralStake)) ?? Array.Empty<OperationHistoryModel>())
                 .Concat(response.FeeCollectedOperations?.Select(Convert) ?? Array.Empty<OperationHistoryModel>())
+                .Concat(response.SmartVoucherPayments?.Select(Convert) ?? Array.Empty<OperationHistoryModel>())
+                .Concat(response.SmartVoucherUses?.Select(Convert) ?? Array.Empty<OperationHistoryModel>())
+                .Concat(response.SmartVoucherTransfers?.Select(x => Convert(x, customerId)) ?? Array.Empty<OperationHistoryModel>())
                 .Concat(voucherPurchasePaymentOperations)
                 .OrderByDescending(x => x.Timestamp);
 
@@ -94,7 +97,7 @@ namespace MAVN.Service.CustomerAPI.Services
                     Type = HistoryOperationType.VoucherPurchasePayment,
                     Timestamp = o.Timestamp,
                     Amount = o.Amount,
-                    ActionRule = spendRuleTitleMap.ContainsKey(o.SpendRuleId)
+                    CampaignName = spendRuleTitleMap.ContainsKey(o.SpendRuleId)
                         ? spendRuleTitleMap[o.SpendRuleId]
                         : null
                 })
@@ -108,7 +111,7 @@ namespace MAVN.Service.CustomerAPI.Services
                 Type = HistoryOperationType.BonusReward,
                 Timestamp = src.Timestamp,
                 Amount = src.Amount,
-                ActionRule = src.ConditionName ?? src.CampaignName,
+                CampaignName = src.ConditionName ?? src.CampaignName,
             };
         }
 
@@ -157,7 +160,7 @@ namespace MAVN.Service.CustomerAPI.Services
                 Type = type,
                 Timestamp = src.Timestamp,
                 Amount = src.Amount,
-                ActionRule = src.CampaignName,
+                CampaignName = src.CampaignName,
             };
         }
 
@@ -180,6 +183,50 @@ namespace MAVN.Service.CustomerAPI.Services
                 Type = type,
                 Timestamp = src.Timestamp,
                 Amount = src.Fee,
+            };
+        }
+
+        private static OperationHistoryModel Convert(SmartVoucherUseResponse src)
+        {
+            return new OperationHistoryModel
+            {
+                Type = HistoryOperationType.SmartVoucherUse,
+                Timestamp = src.Timestamp,
+                Amount = src.Amount,
+                CampaignName = src.CampaignName,
+                Vertical = src.Vertical,
+                Currency = src.AssetSymbol,
+                PartnerName = src.PartnerName,
+            };
+        }
+
+        private static OperationHistoryModel Convert(SmartVoucherPaymentResponse src)
+        {
+            return new OperationHistoryModel
+            {
+                Type = HistoryOperationType.SmartVoucherPayment,
+                Timestamp = src.Timestamp,
+                Amount = src.Amount,
+                CampaignName = src.CampaignName,
+                Vertical = src.Vertical,
+                Currency = src.AssetSymbol,
+                PartnerName = src.PartnerName,
+            };
+        }
+
+        private static OperationHistoryModel Convert(SmartVoucherTransferResponse src, string customerId)
+        {
+            var customerIdGuid = Guid.Parse(customerId);
+            return new OperationHistoryModel
+            {
+                Type = src.OldCustomerId == customerIdGuid ? HistoryOperationType.SmartVoucherTransferSend : HistoryOperationType.SmartVoucherTransferReceive,
+                Timestamp = src.Timestamp,
+                Amount = src.Amount,
+                CampaignName = src.CampaignName,
+                Vertical = src.Vertical,
+                Currency = src.AssetSymbol,
+                PartnerName = src.PartnerName,
+                OtherSideCustomerEmail = src.OldCustomerId == customerIdGuid ? src.NewCustomerEmail : src.OldCustomerEmail,
             };
         }
     }

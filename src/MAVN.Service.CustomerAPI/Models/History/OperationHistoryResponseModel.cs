@@ -28,13 +28,12 @@ namespace MAVN.Service.CustomerAPI.Models.History
         public string Amount { get; set; }
 
         /// <summary>
-        /// The name of the campaign or condition for bonus reward
+        /// The name of the campaign or condition
         /// </summary>
-        public string ActionRule { get; set; }
+        public string CampaignName { get; set; }
 
         /// <summary>Email of the other customer</summary>
         public string OtherSideCustomerEmail { get; set; }
-
 
         /// <summary>
         /// Name of the partner
@@ -45,5 +44,15 @@ namespace MAVN.Service.CustomerAPI.Models.History
         /// Name of the instalment
         /// </summary>
         public string InstalmentName { get; set; }
+
+        /// <summary>
+        /// Currency
+        /// </summary>
+        public string Currency { get; set; }
+
+        /// <summary>
+        /// Vertical
+        /// </summary>
+        public string Vertical { get; set; }
     }
 }
