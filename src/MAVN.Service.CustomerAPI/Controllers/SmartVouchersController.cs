@@ -419,7 +419,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 case RedeemVoucherErrorCodes.WrongValidationCode:
                     throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.WrongSmartVoucherValidationCode);
                 case RedeemVoucherErrorCodes.VoucherCampaignNotFound:
-                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
+                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
                 case RedeemVoucherErrorCodes.VoucherCampaignNotActive:
                     throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherCampaignNotActive);
                 case RedeemVoucherErrorCodes.SellerCustomerIsNotALinkedPartner:
