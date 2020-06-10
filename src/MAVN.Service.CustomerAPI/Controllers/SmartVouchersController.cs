@@ -407,6 +407,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         public async Task RedeemVoucherAsync([FromBody] VoucherRedemptionRequest request)
         {
             var requestModel = _mapper.Map<VoucherRedeptionModel>(request);
+            requestModel.SellerCustomerId = Guid.Parse(_requestContext.UserId);
             var error = await _smartVouchersClient.VouchersApi.RedeemVoucherAsync(requestModel);
 
             switch (error)
@@ -416,17 +417,17 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 case RedeemVoucherErrorCodes.VoucherNotFound:
                     throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherNotFound);
                 case RedeemVoucherErrorCodes.WrongValidationCode:
-                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.WrongSmartVoucherValidationCode);
+                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.WrongSmartVoucherValidationCode);
                 case RedeemVoucherErrorCodes.VoucherCampaignNotFound:
-                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
+                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
                 case RedeemVoucherErrorCodes.VoucherCampaignNotActive:
-                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherCampaignNotActive);
+                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherCampaignNotActive);
                 case RedeemVoucherErrorCodes.SellerCustomerIsNotALinkedPartner:
-                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SellerCustomerIsNotALinkedPartner);
+                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SellerCustomerIsNotALinkedPartner);
                 case RedeemVoucherErrorCodes.SellerCustomerIsNotTheVoucherIssuer:
-                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SellerCustomerIsNotTheVoucherIssuer);
+                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SellerCustomerIsNotTheVoucherIssuer);
                 case RedeemVoucherErrorCodes.VoucherIsNotInCorrectStatusToBeRedeemed:
-                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.VoucherIsNotInCorrectStatusToBeRedeemed);
+                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.VoucherIsNotInCorrectStatusToBeRedeemed);
             }
         }
 
@@ -466,7 +467,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 case TransferVoucherErrorCodes.None:
                     return;
                 case TransferVoucherErrorCodes.VoucherNotFound:
-                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherNotFound);
+                    throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherNotFound);
                 case TransferVoucherErrorCodes.NotAnOwner:
                     throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.LoggedCustomerIsNotOwnerOfTheSmartVoucher);
                 case TransferVoucherErrorCodes.VoucherIsNotInTheCorrectStateToTransfer:
