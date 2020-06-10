@@ -441,6 +441,11 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// - **SmartVoucherNotFound**
         /// - **LoggedCustomerIsNotOwnerOfTheSmartVoucher**
         /// - **VoucherIsNotInTheCorrectStateToTransfer**
+        /// - **VoucherIsNotInTheCorrectStateToTransfer**
+        /// - **VoucherIsNotInTheCorrectStateToTransfer**
+        /// - **VoucherIsNotInTheCorrectState
+        /// 
+        /// 
         /// - **SmartVoucherCampaignNotFound**
         /// </remarks>
         [HttpPost("transfer")]

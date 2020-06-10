@@ -17,12 +17,6 @@ namespace MAVN.Service.CustomerAPI.Models.History
         /// <summary>The bonus reward operation</summary>
         BonusReward,
 
-        /// <summary>Payment transfer operation</summary>
-        PaymentTransfer,
-
-        /// <summary>Payment transfer refund operation</summary>
-        PaymentTransferRefund,
-
         /// <summary>Partners payment operation</summary>
         PartnerPayment,
 
@@ -56,6 +50,26 @@ namespace MAVN.Service.CustomerAPI.Models.History
         /// <summary>
         /// Voucher purchase payment operation
         /// </summary>
-        VoucherPurchasePayment
+        VoucherPurchasePayment,
+
+        /// <summary>
+        /// Smart voucher payment operation
+        /// </summary>
+        SmartVoucherPayment,
+
+        /// <summary>
+        /// Smart voucher use operation
+        /// </summary>
+        SmartVoucherUse,
+
+        /// <summary>
+        /// Smart voucher transfer operation for sender
+        /// </summary>
+        SmartVoucherTransferSend,
+
+        /// <summary>
+        /// Smart voucher transfer operation for receiver
+        /// </summary>
+        SmartVoucherTransferReceive,
     }
 }
