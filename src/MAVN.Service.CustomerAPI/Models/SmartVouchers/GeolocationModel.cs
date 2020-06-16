@@ -12,9 +12,15 @@ namespace MAVN.Service.CustomerAPI.Models.SmartVouchers
         /// Latitude
         /// </summary>
         public double Latitude { get; set; }
+
         /// <summary>
         /// Longitude
         /// </summary>
         public double Longitude { get; set; }
+
+        /// <summary>
+        /// Address
+        /// </summary>
+        public string Address { get; set; }
     }
 }
