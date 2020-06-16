@@ -114,7 +114,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
             var partnersInfo = partners.ToDictionary(k => k.Id,
                 v => (v.BusinessVertical, v.Name,
                     v.Locations.Where(l => l.Latitude.HasValue && l.Longitude.HasValue).Select(x =>
-                        new GeolocationModel { Latitude = x.Latitude.Value, Longitude = x.Longitude.Value }).ToList()));
+                        new GeolocationModel { Latitude = x.Latitude.Value, Longitude = x.Longitude.Value, Address = x.Address}).ToList()));
 
             foreach (var campaign in result.SmartVoucherCampaigns)
             {
@@ -169,7 +169,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
             }
 
             var geolocations = partner.Locations.Where(l => l.Longitude.HasValue && l.Latitude.HasValue)
-                .Select(l => new GeolocationModel { Latitude = l.Latitude.Value, Longitude = l.Longitude.Value })
+                .Select(l => new GeolocationModel { Latitude = l.Latitude.Value, Longitude = l.Longitude.Value, Address = l.Address})
                 .ToList();
 
             result.Vertical = (BusinessVertical?)partner.BusinessVertical;
