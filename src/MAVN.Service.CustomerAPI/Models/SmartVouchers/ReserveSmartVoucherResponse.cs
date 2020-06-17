@@ -12,5 +12,15 @@ namespace MAVN.Service.CustomerAPI.Models.SmartVouchers
         /// The payment url for the voucher
         /// </summary>
         public string PaymentUrl { get; set; }
+
+        /// <summary>
+        /// Error Code
+        /// </summary>
+        public ReserveSmartVoucherErrorCodes ErrorCode { get; set; }
+
+        /// <summary>
+        /// Short code of the already reserved voucher
+        /// </summary>
+        public string AlreadyReservedVoucherShortCode { get; set; }
     }
 }
