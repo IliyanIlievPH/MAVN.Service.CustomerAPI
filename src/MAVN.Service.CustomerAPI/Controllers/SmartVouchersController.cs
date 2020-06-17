@@ -192,7 +192,6 @@ namespace MAVN.Service.CustomerAPI.Controllers
         /// - **NoAvailableVouchers**
         /// - **PaymentProviderError**
         /// - **SmartVoucherNotFound**
-        /// - **CustomerHaveAnotherReservedVoucher**
         /// </remarks>
         [HttpPost("reserve")]
         [ProducesResponseType(typeof(ReserveSmartVoucherResponse), (int)HttpStatusCode.OK)]
@@ -223,7 +222,6 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 case ProcessingVoucherErrorCodes.CustomerHaveAnotherReservedVoucher:
                     return new ReserveSmartVoucherResponse
                     {
-                        PaymentUrl = null,
                         ErrorCode = ReserveSmartVoucherErrorCodes.CustomerHaveAnotherReservedVoucher,
                         AlreadyReservedVoucherShortCode = result.AlreadyReservedVoucherShortCode
                     };
