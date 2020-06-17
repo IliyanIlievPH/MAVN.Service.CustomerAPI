@@ -114,7 +114,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
             var partnersInfo = partners.ToDictionary(k => k.Id,
                 v => (v.BusinessVertical, v.Name,
                     v.Locations.Where(l => l.Latitude.HasValue && l.Longitude.HasValue).Select(x =>
-                        new GeolocationModel { Latitude = x.Latitude.Value, Longitude = x.Longitude.Value, Address = x.Address}).ToList()));
+                        new GeolocationModel { Latitude = x.Latitude.Value, Longitude = x.Longitude.Value, Address = x.Address }).ToList()));
 
             foreach (var campaign in result.SmartVoucherCampaigns)
             {
@@ -169,7 +169,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
             }
 
             var geolocations = partner.Locations.Where(l => l.Longitude.HasValue && l.Latitude.HasValue)
-                .Select(l => new GeolocationModel { Latitude = l.Latitude.Value, Longitude = l.Longitude.Value, Address = l.Address})
+                .Select(l => new GeolocationModel { Latitude = l.Latitude.Value, Longitude = l.Longitude.Value, Address = l.Address })
                 .ToList();
 
             result.Vertical = (BusinessVertical?)partner.BusinessVertical;
@@ -209,7 +209,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
             switch (result.ErrorCode)
             {
                 case ProcessingVoucherErrorCodes.None:
-                    return new ReserveSmartVoucherResponse { PaymentUrl = result.PaymentUrl };
+                    return new ReserveSmartVoucherResponse { PaymentUrl = result.PaymentUrl, ErrorCode = ReserveSmartVoucherErrorCodes.None };
                 case ProcessingVoucherErrorCodes.VoucherCampaignNotFound:
                     throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
                 case ProcessingVoucherErrorCodes.VoucherCampaignNotActive:
@@ -221,7 +221,12 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 case ProcessingVoucherErrorCodes.VoucherNotFound:
                     throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherNotFound);
                 case ProcessingVoucherErrorCodes.CustomerHaveAnotherReservedVoucher:
-                    throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.CustomerHaveAnotherReservedVoucher);
+                    return new ReserveSmartVoucherResponse
+                    {
+                        PaymentUrl = null,
+                        ErrorCode = ReserveSmartVoucherErrorCodes.CustomerHaveAnotherReservedVoucher,
+                        AlreadyReservedVoucherShortCode = result.AlreadyReservedVoucherShortCode
+                    };
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -450,7 +455,7 @@ namespace MAVN.Service.CustomerAPI.Controllers
         {
             var receiverCustomer =
                 await _customerProfileClient.CustomerProfiles.GetByEmailAsync(
-                    new GetByEmailRequestModel {Email = request.ReceiverEmail});
+                    new GetByEmailRequestModel { Email = request.ReceiverEmail });
 
             if (receiverCustomer.Profile == null)
                 throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.CustomerDoesNotExist);
