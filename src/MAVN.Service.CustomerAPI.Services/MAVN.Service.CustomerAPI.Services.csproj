@@ -21,14 +21,14 @@
     <PackageReference Include="MAVN.Service.EligibilityEngine.Client" Version="1.1.1" />
     <PackageReference Include="MAVN.Service.MaintenanceMode.Client" Version="1.0.2" />
     <PackageReference Include="MAVN.Service.OperationsHistory.Client" Version="2.0.1" />
-    <PackageReference Include="MAVN.Service.PartnerManagement.Client" Version="2.12.0" />
+    <PackageReference Include="MAVN.Service.PartnerManagement.Client" Version="2.13.0" />
     <PackageReference Include="MAVN.Service.PartnersIntegration.Client" Version="1.1.0" />
     <PackageReference Include="MAVN.Service.PaymentManagement.Client" Version="1.18.0" />
     <PackageReference Include="MAVN.Service.PrivateBlockchainFacade.Client" Version="1.1.0" />
     <PackageReference Include="MAVN.Service.PushNotifications.Client" Version="1.1.0" />
     <PackageReference Include="MAVN.Service.Referral.Client" Version="2.0.0" />
     <PackageReference Include="MAVN.Service.Sessions.Client" Version="1.0.1" />
-    <PackageReference Include="MAVN.Service.SmartVouchers.Client" Version="2.16.0" />
+    <PackageReference Include="MAVN.Service.SmartVouchers.Client" Version="2.16.1" />
     <PackageReference Include="MAVN.Service.Staking.Client" Version="1.1.1" />
     <PackageReference Include="MAVN.Service.Vouchers.Client" Version="1.1.0" />
     <PackageReference Include="MAVN.Service.WalletManagement.Client" Version="1.1.1" />
