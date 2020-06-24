@@ -89,6 +89,12 @@ namespace MAVN.Service.CustomerAPI.Controllers
                         RadiusInKm = radiusInKm,
                         CountryIso3Code = request.CountryIso3Code
                     });
+
+                if(partnersNearCoordinates == null || !partnersNearCoordinates.PartnersIds.Any())
+                    return new SmartVoucherCampaignsListResponse
+                    {
+                        SmartVoucherCampaigns = new List<SmartVoucherCampaignDetailsModel>(),
+                    };
             }
 
             var paginatedCampaigns = await _smartVouchersClient.CampaignsApi.GetAsync(
