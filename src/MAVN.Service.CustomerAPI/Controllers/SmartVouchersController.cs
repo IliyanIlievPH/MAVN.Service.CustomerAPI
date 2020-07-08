@@ -186,6 +186,47 @@ namespace MAVN.Service.CustomerAPI.Controllers
         }
 
         /// <summary>
+        /// Returns smart voucher campaign details.
+        /// </summary>
+        /// <returns>
+        /// 200 - smart voucher campaign.
+        /// </returns>
+        /// <remarks>
+        /// Error codes:
+        /// - **SmartVoucherCampaignNotFound**
+        /// </remarks>
+        [HttpGet("campaignOfTheDay")]
+        [ProducesResponseType(typeof(SmartVoucherCampaignDetailsModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<SmartVoucherCampaignDetailsModel> GetSmartVouchersCampaignOfTheDayAsync()
+        {
+            var campaign = await _smartVouchersClient.CampaignsApi.GetCampaignOfTheDayAsync();
+
+            if (campaign == null)
+                throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
+
+            var result = _mapper.Map<SmartVoucherCampaignDetailsModel>(campaign);
+
+            var partner = await _partnerManagementClient.Partners.GetByIdAsync(campaign.PartnerId);
+
+            if (partner == null)
+            {
+                _log.Warning("Smart voucher campaign partner does not exist", context: new { campaign.PartnerId, campaignId = campaign.Id });
+                throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
+            }
+
+            var geolocations = partner.Locations.Where(l => l.Longitude.HasValue && l.Latitude.HasValue)
+                .Select(l => new GeolocationModel { Latitude = l.Latitude.Value, Longitude = l.Longitude.Value, Address = l.Address })
+                .ToList();
+
+            result.Vertical = (BusinessVertical?)partner.BusinessVertical;
+            result.PartnerName = partner.Name;
+            result.Geolocations = geolocations;
+
+            return result;
+        }
+
+        /// <summary>
         /// Reserves a smart voucher
         /// </summary>
         /// <returns>
@@ -484,6 +525,66 @@ namespace MAVN.Service.CustomerAPI.Controllers
                 case TransferVoucherErrorCodes.VoucherCampaignNotFound:
                     throw LykkeApiErrorException.BadRequest(ApiErrorCodes.Service.SmartVoucherCampaignNotFound);
             }
+        }
+
+        /// <summary>
+        /// Returns soonest to expire voucher for logged customer
+        /// </summary>
+        /// <returns>
+        /// 200 - smart voucher details
+        /// </returns>
+        /// <remarks>
+        /// Error codes:
+        /// - **SmartVoucherNotFound**
+        /// </remarks>
+        [HttpGet("soonestToExpire")]
+        [ProducesResponseType(typeof(SmartVoucherResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<SmartVoucherResponse> GetSoonestToExpireVoucherAsync()
+        {
+            var customerId = Guid.Parse(_requestContext.UserId);
+            var voucherResponse = await _smartVouchersClient.VouchersApi.GetCustomerSoonestToExpireVouchersAsync(customerId);
+
+            if (voucherResponse == null)
+                throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherNotFound);
+
+            var result = _mapper.Map<SmartVoucherResponse>(voucherResponse);
+
+            var partner = await _partnerManagementClient.Partners.GetByIdAsync(voucherResponse.PartnerId);
+
+            result.PartnerName = partner?.Name;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns soonest to expire voucher for logged customer
+        /// </summary>
+        /// <returns>
+        /// 200 - smart voucher details
+        /// </returns>
+        /// <remarks>
+        /// Error codes:
+        /// - **SmartVoucherNotFound**
+        /// </remarks>
+        [HttpGet("reserved")]
+        [ProducesResponseType(typeof(SmartVoucherResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<SmartVoucherResponse> GetReservedVoucherAsync()
+        {
+            var customerId = Guid.Parse(_requestContext.UserId);
+            var voucherResponse = await _smartVouchersClient.VouchersApi.GetCustomerReservedVouchersAsync(customerId);
+
+            if (voucherResponse == null)
+                throw LykkeApiErrorException.NotFound(ApiErrorCodes.Service.SmartVoucherNotFound);
+
+            var result = _mapper.Map<SmartVoucherResponse>(voucherResponse);
+
+            var partner = await _partnerManagementClient.Partners.GetByIdAsync(voucherResponse.PartnerId);
+
+            result.PartnerName = partner?.Name;
+
+            return result;
         }
     }
 }

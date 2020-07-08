@@ -267,7 +267,8 @@ namespace MAVN.Service.CustomerAPI.Infrastructure.AutoMapperProfiles
 
             CreateMap<VoucherRedemptionRequest, VoucherRedeptionModel>()
                 .ForMember(x => x.SellerCustomerId, opt => opt.Ignore());
-
+            CreateMap<VoucherWithCampaignInfoResponse, SmartVoucherResponse>()
+                .ForMember(x => x.PartnerName, opt => opt.Ignore());
         }
 
 
